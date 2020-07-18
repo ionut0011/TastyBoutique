@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique", "TastyBoutique\TastyBoutique.csproj", "{8112502A-84BE-47CD-9AAA-8887614E83BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique.Presentation", "TastyBoutique\TastyBoutique.Presentation.csproj", "{8112502A-84BE-47CD-9AAA-8887614E83BE}"
 	ProjectSection(ProjectDependencies) = postProject
 		{66FC72FC-9D8A-4047-A42E-C4862D51E970} = {66FC72FC-9D8A-4047-A42E-C4862D51E970}
 	EndProjectSection
@@ -11,6 +11,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique.Business", "TastyBoutique.Business\TastyBoutique.Business.csproj", "{66FC72FC-9D8A-4047-A42E-C4862D51E970}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique.Database", "TastyBoutique.Database\TastyBoutique.Database.csproj", "{9A4B892C-6068-47E6-A8B7-E67430F225E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TastyBoutique.Persistance", "TastyBoutique.Persistance\TastyBoutique.Persistance.csproj", "{2F41CF5F-7FDB-418A-BE37-B848E0AF1638}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,10 @@ Global
 		{9A4B892C-6068-47E6-A8B7-E67430F225E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A4B892C-6068-47E6-A8B7-E67430F225E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A4B892C-6068-47E6-A8B7-E67430F225E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F41CF5F-7FDB-418A-BE37-B848E0AF1638}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F41CF5F-7FDB-418A-BE37-B848E0AF1638}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F41CF5F-7FDB-418A-BE37-B848E0AF1638}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F41CF5F-7FDB-418A-BE37-B848E0AF1638}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
