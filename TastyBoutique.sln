@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique.Presentation", "TastyBoutique\TastyBoutique.Presentation.csproj", "{8112502A-84BE-47CD-9AAA-8887614E83BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique.API", "TastyBoutique\TastyBoutique.API.csproj", "{8112502A-84BE-47CD-9AAA-8887614E83BE}"
 	ProjectSection(ProjectDependencies) = postProject
 		{66FC72FC-9D8A-4047-A42E-C4862D51E970} = {66FC72FC-9D8A-4047-A42E-C4862D51E970}
 	EndProjectSection
@@ -12,7 +12,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique.Business", "T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique.Database", "TastyBoutique.Database\TastyBoutique.Database.csproj", "{9A4B892C-6068-47E6-A8B7-E67430F225E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TastyBoutique.Persistance", "TastyBoutique.Persistance\TastyBoutique.Persistance.csproj", "{2F41CF5F-7FDB-418A-BE37-B848E0AF1638}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique.Persistance", "TastyBoutique.Persistance\TastyBoutique.Persistance.csproj", "{2F41CF5F-7FDB-418A-BE37-B848E0AF1638}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01. Presentation", "01. Presentation", "{54F9940C-0E41-4D06-B22F-DD2D82EBC752}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Business", "02. Business", "{3C194489-6F4C-401B-B6A2-98C99BCEFB79}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. Database", "03. Database", "{8CE9C253-6EE1-4B2F-AF21-85F3360F048D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04. Persistance", "04. Persistance", "{E2892FFE-08C9-477B-941F-6FBAF6BC2691}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +47,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8112502A-84BE-47CD-9AAA-8887614E83BE} = {54F9940C-0E41-4D06-B22F-DD2D82EBC752}
+		{66FC72FC-9D8A-4047-A42E-C4862D51E970} = {3C194489-6F4C-401B-B6A2-98C99BCEFB79}
+		{9A4B892C-6068-47E6-A8B7-E67430F225E2} = {8CE9C253-6EE1-4B2F-AF21-85F3360F048D}
+		{2F41CF5F-7FDB-418A-BE37-B848E0AF1638} = {E2892FFE-08C9-477B-941F-6FBAF6BC2691}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F1A447D8-0AEC-4B35-B3AE-BF563591306B}
