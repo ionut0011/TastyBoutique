@@ -13,7 +13,7 @@ namespace TastyBoutique.Database.Models
         public TastyBoutiqueContext(DbContextOptions<TastyBoutiqueContext> options)
             : base(options)
         {
- 
+            Database.Migrate();
         }
 
         public virtual DbSet<Filters> Filters { get; set; }
