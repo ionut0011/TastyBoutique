@@ -11,5 +11,6 @@ namespace TastyBoutique.Database.Models
         public string Description { get; set; }
 
         public virtual Recipes IdRecipeNavigation { get; set; }
+        
     }
 }
