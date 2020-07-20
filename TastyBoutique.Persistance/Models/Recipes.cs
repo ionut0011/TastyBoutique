@@ -19,6 +19,7 @@ namespace TastyBoutique.Persistance.Models
             SavedRecipes = new HashSet<SavedRecipes>();
         }
 
+
         public string Name { get; set; }
         public string Access { get; set; }
         public string Description { get; set; }

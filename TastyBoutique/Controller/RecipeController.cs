@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TastyBoutique.Business.Recipes.Models.Recipe;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
@@ -32,6 +29,20 @@ namespace TastyBoutique.API.Controller
         {
             var result = await _recipeService.Add(model);
             return Created(result.Id.ToString(), null);
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpsertRecipeModel model)
+        {
+            await _recipeService.Update(id, model);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            await _recipeService.Delete(id);
+            return NoContent();
         }
     }
 }
