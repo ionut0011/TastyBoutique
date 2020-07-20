@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TastyBoutique.Business.Recipes.Services.Implementations;
+using TastyBoutique.Business.Recipes.Services.Interfaces;
 
 namespace TastyBoutique
 {
@@ -27,6 +29,9 @@ namespace TastyBoutique
                 .AddMvc();
             services
                 .AddSwaggerGen();
+            services
+                .AddScoped<IRecipeService, RecipeService>();
+
 
         }
 

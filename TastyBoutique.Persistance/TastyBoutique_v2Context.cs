@@ -12,6 +12,7 @@ namespace TastyBoutique.Persistance.Models
         public TastyBoutique_v2Context(DbContextOptions<TastyBoutique_v2Context> options)
             : base(options)
         {
+            Database.Migrate();
         }
 
         public virtual DbSet<Filters> Filters { get; set; }
