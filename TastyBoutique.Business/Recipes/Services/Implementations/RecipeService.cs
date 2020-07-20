@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using TastyBoutique.Business.Recipes.Extensions;
 using TastyBoutique.Business.Recipes.Models.Recipe;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
 using TastyBoutique.Persistance.Recipes;
@@ -21,6 +22,19 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
             _mapper = mapper;
         }
 
+        public async Task<PaginatedList<RecipeModel>> Get(SearchModel model)
+        {
+            var spec = model.ToSpecification<Persistance.Models.Recipes>();
+
+            var entities = await _repository.Get(spec);
+            var count = await _repository.CountAsync();
+
+            return new PaginatedList<RecipeModel>(
+                model.PageIndex,
+                entities.Count,
+                count,
+                _mapper.Map<IList<RecipeModel>>(entities));
+        }
         public async Task<RecipeModel> Add(UpsertRecipeModel model)
         {
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
