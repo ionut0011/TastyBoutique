@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TastyBoutique.Database.Models
+namespace TastyBoutique.Persistance.Models
 {
-    public partial class Recipes
+    public partial class Recipes : Entity
     {
         public Recipes()
         {
@@ -12,7 +12,6 @@ namespace TastyBoutique.Database.Models
             SavedRecipes = new HashSet<SavedRecipes>();
         }
 
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Access { get; set; }
         public string Description { get; set; }

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TastyBoutique.Database.Models
+namespace TastyBoutique.Persistance.Models
 {
-    public partial class Filters
+    public partial class Filters : Entity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

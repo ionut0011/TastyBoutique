@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TastyBoutique.Database.Models
+namespace TastyBoutique.Persistance.Models
 {
-    public partial class RecipeComment
+    public partial class RecipeComment : Entity
     {
-        public int Id { get; set; }
-        public int IdRecipe { get; set; }
-        public int IdUser { get; set; }
+        public Guid IdRecipe { get; set; }
+        public Guid IdUser { get; set; }
         public string Comment { get; set; }
         public string Review { get; set; }
 

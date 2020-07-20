@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
-using TastyBoutique.Database.Models;
+using TastyBoutique.Persistance.Models;
 
-namespace TastyBoutique.Persistence
+namespace TastyBoutique.Persistance
 {
     public abstract class Repository<T> : IRepository<T>
         where T : Entity
     {
-        protected readonly TastyBoutiqueContext context;
+        protected readonly TastyBoutique_v2Context context;
 
-        protected Repository(TastyBoutiqueContext context)
+        protected Repository(TastyBoutique_v2Context context)
         {
             this.context = context;
         }

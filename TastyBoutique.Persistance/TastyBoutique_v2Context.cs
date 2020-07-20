@@ -1,19 +1,17 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 
-namespace TastyBoutique.Database.Models
+namespace TastyBoutique.Persistance.Models
 {
-    public partial class TastyBoutiqueContext : DbContext
+    public partial class TastyBoutique_v2Context : DbContext
     {
-        public TastyBoutiqueContext()
+        public TastyBoutique_v2Context()
         {
         }
 
-        public TastyBoutiqueContext(DbContextOptions<TastyBoutiqueContext> options)
+        public TastyBoutique_v2Context(DbContextOptions<TastyBoutique_v2Context> options)
             : base(options)
         {
-            Database.Migrate();
         }
 
         public virtual DbSet<Filters> Filters { get; set; }
@@ -42,6 +40,8 @@ namespace TastyBoutique.Database.Models
         {
             modelBuilder.Entity<Filters>(entity =>
             {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -49,6 +49,8 @@ namespace TastyBoutique.Database.Models
 
             modelBuilder.Entity<Ingredients>(entity =>
             {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Description).HasMaxLength(100);
 
                 entity.Property(e => e.Name)
@@ -58,6 +60,10 @@ namespace TastyBoutique.Database.Models
 
             modelBuilder.Entity<Notifications>(entity =>
             {
+                entity.HasIndex(e => e.IdRecipe);
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(250);
@@ -75,6 +81,12 @@ namespace TastyBoutique.Database.Models
 
             modelBuilder.Entity<RecipeComment>(entity =>
             {
+                entity.HasIndex(e => e.IdRecipe);
+
+                entity.HasIndex(e => e.IdUser);
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Comment)
                     .IsRequired()
                     .HasMaxLength(250);
@@ -101,6 +113,8 @@ namespace TastyBoutique.Database.Models
             {
                 entity.HasNoKey();
 
+                entity.HasIndex(e => e.RecipeId);
+
                 entity.Property(e => e.RecipeId).HasColumnName("RecipeID");
 
                 entity.Property(e => e.Type)
@@ -116,6 +130,8 @@ namespace TastyBoutique.Database.Models
 
             modelBuilder.Entity<Recipes>(entity =>
             {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Access)
                     .IsRequired()
                     .HasMaxLength(25);
@@ -137,6 +153,10 @@ namespace TastyBoutique.Database.Models
             {
                 entity.HasNoKey();
 
+                entity.HasIndex(e => e.FilterId);
+
+                entity.HasIndex(e => e.RecipeId);
+
                 entity.HasOne(d => d.Filter)
                     .WithMany()
                     .HasForeignKey(d => d.FilterId)
@@ -154,6 +174,10 @@ namespace TastyBoutique.Database.Models
             {
                 entity.HasNoKey();
 
+                entity.HasIndex(e => e.IngredientId);
+
+                entity.HasIndex(e => e.RecipeId);
+
                 entity.HasOne(d => d.Ingredient)
                     .WithMany()
                     .HasForeignKey(d => d.IngredientId)
@@ -169,6 +193,12 @@ namespace TastyBoutique.Database.Models
 
             modelBuilder.Entity<SavedRecipes>(entity =>
             {
+                entity.HasIndex(e => e.IdRecipe);
+
+                entity.HasIndex(e => e.IdUser);
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.HasOne(d => d.IdRecipeNavigation)
                     .WithMany(p => p.SavedRecipes)
                     .HasForeignKey(d => d.IdRecipe)
@@ -184,6 +214,8 @@ namespace TastyBoutique.Database.Models
 
             modelBuilder.Entity<Student>(entity =>
             {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Age).HasColumnType("numeric(2, 0)");
 
                 entity.Property(e => e.Email).HasMaxLength(50);
@@ -195,6 +227,12 @@ namespace TastyBoutique.Database.Models
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.HasIndex(e => e.IdStudent);
+
+                entity.HasIndex(e => e.IdUserType);
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -224,6 +262,8 @@ namespace TastyBoutique.Database.Models
 
             modelBuilder.Entity<UserType>(entity =>
             {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(50);

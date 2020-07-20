@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TastyBoutique.Database.Models
+namespace TastyBoutique.Persistance.Models
 {
-    public partial class RecipesFilters
+    public partial class RecipesFilters 
     {
-        public int RecipeId { get; set; }
-        public int FilterId { get; set; }
+        public Guid RecipeId { get; set; }
+        public Guid FilterId { get; set; }
 
         public virtual Filters Filter { get; set; }
         public virtual Recipes Recipe { get; set; }
