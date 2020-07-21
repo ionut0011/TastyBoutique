@@ -1,0 +1,16 @@
+.tile{
+    width:260px;
+    height:260px;
+    border:solid;
+
+}
+
+.header{
+    height:180px;
+    background-color:red;
+}
+
+.body{
+    height:80px;
+    background-color:blanchedalmond;
+}
