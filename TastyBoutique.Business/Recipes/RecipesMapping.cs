@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
+using TastyBoutique.Business.Collections.Models;
 using TastyBoutique.Business.Recipes.Models.Recipe;
+using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Business.Recipes
 {
@@ -12,6 +14,8 @@ namespace TastyBoutique.Business.Recipes
         {
             CreateMap<UpsertRecipeModel, Persistance.Models.Recipes>();
             CreateMap<Persistance.Models.Recipes, RecipeModel>();
+            CreateMap<SavedRecipes, SavedRecipeModel>();
+            CreateMap<SavedRecipeModel, SavedRecipes>();
         }
     }
 }
