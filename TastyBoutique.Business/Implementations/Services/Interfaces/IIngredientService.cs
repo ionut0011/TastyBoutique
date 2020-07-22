@@ -12,7 +12,7 @@ namespace TastyBoutique.Business.Recipes.Services.Interfaces
     {
         Task<IngredientModel> Add(CreateIngredientModel model);
         Task<PaginatedList<IngredientModel>> Get(SearchModel model);
-        Task<Entity> GetId(string Name);
+        Task<IngredientModel> GetId(PaginatedList<IngredientModel> model, string name);
 
     }
 }

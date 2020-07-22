@@ -45,9 +45,15 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
             return _mapper.Map<IngredientModel>(ingredient);
         }
 
-        public Task<Entity> GetId(string Name)
+        public async Task<IngredientModel> GetId(PaginatedList<IngredientModel> model, string name)
         {
-            throw new NotImplementedException();
+            foreach (var res in model.Results)
+            {
+                if (res.Name.ToUpper().Equals(name.ToUpper()))
+                    return _mapper.Map<IngredientModel>(res);
+            }
+
+            return null;
         }
     }
 }
