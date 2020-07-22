@@ -1,6 +1,12 @@
-
+<app-header></app-header>
 <div class="container">
-<app-tile></app-tile>
-<app-tile></app-tile>
-
-</div>
+    <app-tile label="Recipes"
+              icon="list"
+              (click)="goToPage('list')"></app-tile>
+    <app-tile label="Create Recipe"
+              icon="create"
+              (click)="goToPage('create-recipe')"></app-tile>
+    <app-tile label="Notifications"
+              icon="notifications"
+              (click)="goToPage('notifications')"></app-tile>
+  </div>
