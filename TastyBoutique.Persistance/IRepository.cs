@@ -10,6 +10,8 @@ namespace TastyBoutique.Persistance
     {
         Task<T> GetById(Guid id);
 
+        Task<T> GetId(string Name);
+
         Task Add(T entity);
 
         void Update(T entity);

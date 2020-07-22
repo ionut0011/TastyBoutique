@@ -26,7 +26,7 @@ namespace TastyBoutique.API.Controller
         }
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] UpsertRecipeModel model)
-        {
+        { 
             var result = await _recipeService.Add(model);
             return Created(result.Id.ToString(), null);
         }

@@ -22,6 +22,9 @@ namespace TastyBoutique.Persistance
         public async Task Add(T entity)
             => await this.context.Set<T>().AddAsync(entity);
 
+        public async Task<T> GetId(string Name)
+            => await this.context.Set<T>().FindAsync(Name);
+
         public void Update(T entity)
             => this.context.Set<T>().Update(entity);
 
