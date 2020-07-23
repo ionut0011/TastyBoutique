@@ -33,7 +33,7 @@ namespace TastyBoutique.API.Controller
             return Ok(result);
         }
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateIngredientModel model)
+        public async Task<IActionResult> Add([FromQuery] CreateIngredientModel model)
         {
             var result = await _ingredientService.Add(model);
             return Created(result.Id.ToString(), null);

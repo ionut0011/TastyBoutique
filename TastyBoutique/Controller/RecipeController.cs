@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TastyBoutique.Business.Implementations.Models.Recipe;
 using TastyBoutique.Business.Recipes.Models.Recipe;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
 
@@ -25,16 +26,16 @@ namespace TastyBoutique.API.Controller
             return Ok(result);
         }
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] UpsertRecipeModel model)
+        public async Task<IActionResult> Add([FromQuery] UpsertRecipeModel model, [FromForm] GetPhotoModel pmodel)
         { 
-            var result = await _recipeService.Add(model);
+            var result = await _recipeService.Add(model,pmodel);
             return Created(result.Id.ToString(), null);
         }
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpsertRecipeModel model)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpsertRecipeModel model, [FromForm] GetPhotoModel pmodel)
         {
-            await _recipeService.Update(id, model);
+            await _recipeService.Update(id, model, pmodel);
             return NoContent();
         }
 

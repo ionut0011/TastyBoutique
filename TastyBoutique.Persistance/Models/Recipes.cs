@@ -6,6 +6,10 @@ namespace TastyBoutique.Persistance.Models
 {
     public sealed class Recipes : Entity
     {
+        public Recipes() {
+
+        }
+
         public Recipes(string name, string access, string description, byte[] image, string link, string notifications)
         {
             Name = name;

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using TastyBoutique.Business.Implementations.Models.Recipe;
 using TastyBoutique.Business.Recipes.Extensions;
 using TastyBoutique.Business.Recipes.Models.Recipe;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
@@ -35,9 +37,15 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
                 count,
                 _mapper.Map<IList<RecipeModel>>(entities));
         }
-        public async Task<RecipeModel> Add(UpsertRecipeModel model)
+        public async Task<RecipeModel> Add(UpsertRecipeModel model, GetPhotoModel pmodel)
         {
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
+
+            using var stream = new MemoryStream();
+            await pmodel.Image.CopyToAsync(stream);
+            recipe.Image = stream.ToArray();
+
+
             await _repository.Add(recipe);
             await _repository.SaveChanges();
 
@@ -51,10 +59,14 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
             return recipe;
         }
 
-        public async Task Update(Guid id, UpsertRecipeModel model)
+        public async Task Update(Guid id, UpsertRecipeModel model, GetPhotoModel pmodel)
         {
             var recipe = await _repository.GetById(id);
-            recipe.Update(model.Name, model.Access, model.Notifications, model.Image, model.Link, model.Notifications);
+
+            using var stream = new MemoryStream();
+            await pmodel.Image.CopyToAsync(stream);
+
+            recipe.Update(model.Name, model.Access, model.Notifications, stream.ToArray(), model.Link, model.Notifications);
 
             _repository.Update(recipe);
             await _repository.SaveChanges();
