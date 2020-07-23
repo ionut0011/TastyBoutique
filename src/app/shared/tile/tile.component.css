@@ -53,10 +53,10 @@
   }
   
   .tile.job .header {
-    background: linear-gradient(to bottom right, #b6b1ff, #4d3af3);
+    background: linear-gradient(to bottom right, #ffe4b1, #f3b83a);
   }
   
   
   .tile.job .body {
-    color: #2c51ca;
+    color: #ca802c;
   }

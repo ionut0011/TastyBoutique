@@ -17,20 +17,28 @@
                         
                         
                                 <ng-container *ngIf="isSetRegistered">
-                                <label>Full name:</label>
-                                <input type="text" />
-                                </ng-container>
+                                        <label>Full name:</label>
+                                        <input type="text" />
+                                        <label>Age:</label>
+                                        <input type="number" min="14" max="50">
+                                        <label>Email:</label>
+                                        <input type="email" />
+                                        </ng-container>
                         
-              
+
+                        
+
                         <span class="not-registered">
                                 <input type="checkbox" (click)="setRegister()" />
-                                <p>{{isSetRegistered? 'Go back to log in': 'I am not registered yet'}}</p>
+                                <p>{{isSetRegistered? 'Go back to log in page': 'I am not registered yet'}}</p>
                         </span>
-   
+
                         <span class="admin">
                                 <input type="checkbox" (click)="setAdmin()">
-                                <p>I want to be an admin</p>
-                        </span>      
+                                        <p>I want to be an admin</p>
+                                </span>  
+   
+                         
 
                         <button (click)="clickedLogin()" type="button">Login</button>
                 </div>
