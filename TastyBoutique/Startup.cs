@@ -18,12 +18,7 @@ using TastyBoutique.Persistance.Recipes;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using TastyBoutique.Business;
 using TastyBoutique.Business.Identity.Models;
-using TastyBoutique.Business.Implementations.Services.Implementations;
-using TastyBoutique.Business.Implementations.Services.Interfaces;
-using TastyBoutique.Persistance.Ingredients;
-using TastyBoutique.Persistance.Repositories.Filters;
 using TripLooking.API.Extensions;
 
 namespace TastyBoutique
@@ -47,24 +42,18 @@ namespace TastyBoutique
             services
                 .AddScoped<IRecipeService, RecipeService>()
                 .AddScoped<IRecipeRepo, RecipeRepo>()
-                .AddScoped<IIngredientService,IngredientService>()
-                .AddScoped<IIngredientsRepo,IngredientsRepo>()
-                .AddScoped<IFilterService,FilterService>()
-                .AddScoped<IFiltersRepo,FiltersRepo>()
+                .AddScoped<IRecipeCommentService, RecipeCommentService>()
+
                 .AddDbContext<TastyBoutique_v2Context>(config =>
                     config.UseSqlServer(Configuration.GetConnectionString("TastyConnection")));
             services
                 .AddAutoMapper(c =>
                 {
-                    c.AddProfile<Mapping>();
-                }, typeof(RecipeService), typeof(IngredientService), typeof(FilterService))
-
+                    c.AddProfile<RecipesMapping>();
+                }, typeof(RecipeService))
                 .AddHttpContextAccessor()
                 .AddSwagger();
-            services.AddControllers().AddXmlDataContractSerializerFormatters();
-
-
-
+                
             AddAuthentication(services);
 
 
