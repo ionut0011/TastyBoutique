@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 
 namespace TastyBoutique.Persistance.Models
@@ -39,6 +40,21 @@ namespace TastyBoutique.Persistance.Models
             Image = image;
             Link = link;
             Notifications = notifications;
+        }
+
+        public void AddComment(RecipeComment comment)
+        {
+            this.RecipeComment.Add(comment);
+        }
+
+        public void RemoveComment(Guid commentId)
+        {
+            var comment = this.RecipeComment.FirstOrDefault(c => c.Id == commentId);
+
+            if (comment != null)
+            {
+                this.RecipeComment.Remove(comment);
+            }
         }
     }
 }

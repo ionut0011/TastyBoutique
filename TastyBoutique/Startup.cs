@@ -42,6 +42,8 @@ namespace TastyBoutique
             services
                 .AddScoped<IRecipeService, RecipeService>()
                 .AddScoped<IRecipeRepo, RecipeRepo>()
+                .AddScoped<IRecipeCommentService, RecipeCommentService>()
+
                 .AddDbContext<TastyBoutique_v2Context>(config =>
                     config.UseSqlServer(Configuration.GetConnectionString("TastyConnection")));
             services

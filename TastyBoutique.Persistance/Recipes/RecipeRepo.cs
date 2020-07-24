@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using LinqBuilder.Core;
 using Microsoft.EntityFrameworkCore;
@@ -15,5 +16,11 @@ namespace TastyBoutique.Persistance.Recipes
 
         public async Task<int> CountAsync()
             => await this.context.Recipes.CountAsync();
+
+        public async Task<Models.Recipes> GetByIdWithComments(Guid id)
+            => await this.context.Recipes
+            .Include(recipe => recipe.RecipeComment)
+            .FirstAsync(recipe => recipe.Id == id);
+
     }
 }
