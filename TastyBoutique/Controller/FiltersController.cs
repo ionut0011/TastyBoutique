@@ -37,12 +37,12 @@ namespace TastyBoutique.API.Controller
             return Created(result.Id.ToString(), null);
         }
 
-        [HttpGet("{name}")]
-        public async Task<IActionResult> GetId([FromRoute] string name)
+        [HttpGet("{recipeId}")]
+        public async Task<IActionResult> GetFilters([FromRoute] Guid recipeId)
         {
-            var result = await _filterService.Get(new SearchModel());
+            var result = await _filterService.GetFiltersByRecipeId(recipeId);
 
-            return Ok(_filterService.GetId(result, name).Result.Id);
+            return Ok(result);
         }
     }
 }

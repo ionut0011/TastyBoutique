@@ -6,8 +6,10 @@ using AutoMapper;
 using TastyBoutique.Business.Implementations.Models.Filter;
 using TastyBoutique.Business.Implementations.Services.Interfaces;
 using TastyBoutique.Business.Recipes.Extensions;
+using TastyBoutique.Business.Recipes.Models.Ingredients;
 using TastyBoutique.Business.Recipes.Models.Recipe;
 using TastyBoutique.Persistance.Ingredients;
+using TastyBoutique.Persistance.Models;
 using TastyBoutique.Persistance.Repositories.Filters;
 
 namespace TastyBoutique.Business.Implementations.Services.Implementations
@@ -55,6 +57,20 @@ namespace TastyBoutique.Business.Implementations.Services.Implementations
             }
 
             return null;
+        }
+        public async Task<PaginatedList<FilterModel>> GetFiltersByRecipeId(Guid id)
+        {
+            var filters = _repository.GetFiltersByRecipeId(id);
+
+            IList<Filters> filM = new List<Filters>();
+            foreach (var fil in filters.Result)
+                filM.Add(fil.Filter);
+
+            return new PaginatedList<FilterModel>(
+                1,
+                filters.Result.Count,
+                await _repository.CountAsync(),
+                _mapper.Map<IList<FilterModel>>(filM));
         }
     }
 }

@@ -14,5 +14,7 @@ namespace TastyBoutique.Business.Recipes.Services.Interfaces
         Task<PaginatedList<IngredientModel>> Get(SearchModel model);
         Task<IngredientModel> GetId(PaginatedList<IngredientModel> model, string name);
 
+        Task<PaginatedList<IngredientModel>> GetIngredientsByRecipeId(Guid id);
+
     }
 }

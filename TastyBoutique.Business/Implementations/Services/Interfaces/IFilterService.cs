@@ -13,5 +13,7 @@ namespace TastyBoutique.Business.Implementations.Services.Interfaces
         Task<FilterModel> Add(CreateFilterModel model);
         Task<PaginatedList<FilterModel>> Get(SearchModel model);
         Task<FilterModel> GetId(PaginatedList<FilterModel> model, string name);
+
+        Task<PaginatedList<FilterModel>> GetFiltersByRecipeId(Guid id);
     }
 }

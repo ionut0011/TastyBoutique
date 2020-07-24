@@ -5,6 +5,7 @@ namespace TastyBoutique.Persistance.Models
 {
     public partial class RecipesIngredients
     {
+
         public Guid RecipeId { get; set; }
         public Guid IngredientId { get; set; }
 

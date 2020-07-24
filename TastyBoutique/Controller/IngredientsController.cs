@@ -39,13 +39,14 @@ namespace TastyBoutique.API.Controller
             return Created(result.Id.ToString(), null);
         }
 
-        [HttpGet("{name}")]
-        public async Task<IActionResult> GetId([FromRoute] string name)
+        [HttpGet("{recipeId}")]
+        public async Task<IActionResult> GetIngredients([FromRoute] Guid recipeId)
         {
-            var result = await _ingredientService.Get(new SearchModel());
+            var result = await _ingredientService.GetIngredientsByRecipeId(recipeId);
 
-            return Ok(_ingredientService.GetId(result, name).Result.Id);
+            return Ok(result);
         }
+        
 
     }
 }

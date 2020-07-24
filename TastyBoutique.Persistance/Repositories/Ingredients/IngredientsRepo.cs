@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LinqBuilder.Core;
@@ -18,5 +19,12 @@ namespace TastyBoutique.Persistance.Ingredients
 
         public async Task<int> CountAsync()
             => await this.context.Ingredients.CountAsync();
+
+     
+        public async Task<IList<Models.RecipesIngredients>> GetIngredientsByRecipeId(Guid id)
+            => await this.context.RecipesIngredients
+                .Include(i => i.Ingredient)
+                .Where(i => i.RecipeId == id)
+                .ToListAsync();
     }
 }
