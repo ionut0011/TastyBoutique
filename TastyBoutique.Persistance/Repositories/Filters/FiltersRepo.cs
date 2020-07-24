@@ -19,10 +19,6 @@ namespace TastyBoutique.Persistance.Repositories.Filters
         public async Task<int> CountAsync()
             => await this.context.Filters.CountAsync();
 
-        public async Task<IList<Models.RecipesFilters>> GetFiltersByRecipeId(Guid id)
-            => await this.context.RecipesFilters
-                .Include(i => i.Filter)
-                .Where(i => i.RecipeId == id)
-                .ToListAsync();
+       
     }
 }

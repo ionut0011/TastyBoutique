@@ -57,19 +57,6 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
 
             return null;
         }
-        public async Task<PaginatedList<IngredientModel>> GetIngredientsByRecipeId(Guid id)
-        {
-            var ingredients = _repository.GetIngredientsByRecipeId(id);
-            
-            IList<Ingredients> igM = new List<Ingredients>();
-            foreach (var ing in ingredients.Result)
-                igM.Add(ing.Ingredient);
-
-            return new PaginatedList<IngredientModel>(
-                1,
-                ingredients.Result.Count,
-                await _repository.CountAsync(),
-                _mapper.Map<IList<IngredientModel>>(igM));
-        }
+        
     }
 }

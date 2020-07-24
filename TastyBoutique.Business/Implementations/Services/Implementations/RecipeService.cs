@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using TastyBoutique.Business.Implementations.Models.Filter;
 using TastyBoutique.Business.Implementations.Models.Recipe;
 using TastyBoutique.Business.Recipes.Extensions;
 using TastyBoutique.Business.Recipes.Models.Ingredients;
 using TastyBoutique.Business.Recipes.Models.Recipe;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
+using TastyBoutique.Persistance.Models;
 using TastyBoutique.Persistance.Recipes;
 
 namespace TastyBoutique.Business.Recipes.Services.Implementations
@@ -79,7 +81,33 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
             _repository.Delete(recipe);
             await _repository.SaveChanges();
         }
+        public async Task<PaginatedList<FilterModel>> GetFiltersByRecipeId(Guid id)
+        {
+            var filters = _repository.GetFiltersByRecipeId(id);
 
-       
+            var filM = new List<Filters>();
+            foreach (var fil in filters.Result)
+                filM.Add(fil.Filter);
+
+            return new PaginatedList<FilterModel>(
+                1,
+                filters.Result.Count,
+                await _repository.CountAsync(),
+                _mapper.Map<IList<FilterModel>>(filM));
+        }
+        public async Task<PaginatedList<IngredientModel>> GetIngredientsByRecipeId(Guid id)
+        {
+            var ingredients = _repository.GetIngredientsByRecipeId(id);
+
+            IList<Ingredients> igM = new List<Ingredients>();
+            foreach (var ing in ingredients.Result)
+                igM.Add(ing.Ingredient);
+
+            return new PaginatedList<IngredientModel>(
+                1,
+                ingredients.Result.Count,
+                await _repository.CountAsync(),
+                _mapper.Map<IList<IngredientModel>>(igM));
+        }
     }
 }

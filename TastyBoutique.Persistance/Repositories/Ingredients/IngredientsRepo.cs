@@ -21,10 +21,6 @@ namespace TastyBoutique.Persistance.Ingredients
             => await this.context.Ingredients.CountAsync();
 
      
-        public async Task<IList<Models.RecipesIngredients>> GetIngredientsByRecipeId(Guid id)
-            => await this.context.RecipesIngredients
-                .Include(i => i.Ingredient)
-                .Where(i => i.RecipeId == id)
-                .ToListAsync();
+       
     }
 }

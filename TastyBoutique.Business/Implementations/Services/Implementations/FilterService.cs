@@ -58,19 +58,6 @@ namespace TastyBoutique.Business.Implementations.Services.Implementations
 
             return null;
         }
-        public async Task<PaginatedList<FilterModel>> GetFiltersByRecipeId(Guid id)
-        {
-            var filters = _repository.GetFiltersByRecipeId(id);
-
-            IList<Filters> filM = new List<Filters>();
-            foreach (var fil in filters.Result)
-                filM.Add(fil.Filter);
-
-            return new PaginatedList<FilterModel>(
-                1,
-                filters.Result.Count,
-                await _repository.CountAsync(),
-                _mapper.Map<IList<FilterModel>>(filM));
-        }
+       
     }
 }

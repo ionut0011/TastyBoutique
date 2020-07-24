@@ -14,7 +14,7 @@ namespace TastyBoutique.API.Controller
 {
 
     [ApiController]
-    [Route("api/v1/ingredient")]
+    [Route("api/v1/ingredients")]
 
     public sealed class IngredientsController : Microsoft.AspNetCore.Mvc.Controller
     {
@@ -30,22 +30,16 @@ namespace TastyBoutique.API.Controller
         {
             var result = await _ingredientService.Get(model);
 
-            return Ok(result);
+            return Ok(result.Results);
         }
         [HttpPost]
-        public async Task<IActionResult> Add([FromQuery] CreateIngredientModel model)
+        public async Task<IActionResult> Add([FromBody] CreateIngredientModel model)
         {
             var result = await _ingredientService.Add(model);
             return Created(result.Id.ToString(), null);
         }
 
-        [HttpGet("{recipeId}")]
-        public async Task<IActionResult> GetIngredients([FromRoute] Guid recipeId)
-        {
-            var result = await _ingredientService.GetIngredientsByRecipeId(recipeId);
-
-            return Ok(result);
-        }
+       
         
 
     }

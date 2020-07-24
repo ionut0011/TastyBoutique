@@ -61,7 +61,10 @@ namespace TastyBoutique
 
                 .AddHttpContextAccessor()
                 .AddSwagger();
-                
+            services.AddControllers().AddXmlDataContractSerializerFormatters();
+
+
+
             AddAuthentication(services);
 
 
