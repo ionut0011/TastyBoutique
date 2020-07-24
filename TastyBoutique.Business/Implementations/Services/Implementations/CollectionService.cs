@@ -33,9 +33,15 @@ namespace TastyBoutique.Business.Collections.Services.Implementation
 
         public async Task Delete(SavedRecipeModel model)
         {
-            var recipe = _mapper.Map<SavedRecipes>(model);
+            var recipe = await _repository.Get(model.IdUser, model.IdRecipe);
             _repository.Delete(recipe);
             await _repository.SaveChanges();
+        }
+
+        public async Task<IList<SavedRecipeModel>> GetAllByIdUser(Guid idUser)
+        {
+            var result = await _repository.GetAllByIdUser(idUser);
+            return _mapper.Map<IList<SavedRecipeModel>>(result);
         }
     }
 }

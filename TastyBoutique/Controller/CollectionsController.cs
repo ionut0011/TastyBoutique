@@ -10,13 +10,13 @@ using TastyBoutique.Business.Recipes.Models.Recipe;
 
 namespace TastyBoutique.API.Controller
 {
-    [Route("api/v1/profile/collection")]
+    [Route("api/v1/{idUser}/collection")]
     [ApiController]
-    public class CollectionController : ControllerBase
+    public class CollectionsController : ControllerBase
     {
         private readonly ICollectionService _collectionService;
 
-        public CollectionController(ICollectionService collectionService)
+        public CollectionsController(ICollectionService collectionService)
         {
             _collectionService = collectionService;
         }
@@ -35,11 +35,12 @@ namespace TastyBoutique.API.Controller
             return NoContent();
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetAll([FromBody] Guid user)
-        //{
-
-        //}
+        [HttpGet]
+        public async Task<IActionResult> GetAllByIdUser([FromRoute] Guid idUser)
+        {
+            var result = await _collectionService.GetAllByIdUser(idUser);
+            return Ok(result);
+        }
 
     }
 }
