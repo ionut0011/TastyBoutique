@@ -10,7 +10,7 @@ using TastyBoutique.Business.Recipes.Models.Recipe;
 
 namespace TastyBoutique.API.Controller
 {
-    [Route("api/v1/recipe/{recipeId}/collection")]
+    [Route("api/v1/profile/collection")]
     [ApiController]
     public class CollectionController : ControllerBase
     {
@@ -24,9 +24,22 @@ namespace TastyBoutique.API.Controller
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] SavedRecipeModel model)
         {
-            var result = await _collectionService.Add(model);
+            await _collectionService.Add(model);
             return NoContent();
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] SavedRecipeModel model)
+        {
+            await _collectionService.Delete(model);
+            return NoContent();
+        }
+
+        //[HttpGet]
+        //public async Task<IActionResult> GetAll([FromBody] Guid user)
+        //{
+
+        //}
 
     }
 }
