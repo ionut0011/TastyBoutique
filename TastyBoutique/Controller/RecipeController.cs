@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using TastyBoutique.Business.Implementations.Models.Recipe;
 using TastyBoutique.Business.Recipes.Models.Recipe;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
 
@@ -32,26 +31,25 @@ namespace TastyBoutique.API.Controller
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] UpsertRecipeModel model, [FromForm] GetPhotoModel photomodel)
+        public async Task<IActionResult> Add([FromBody] UpsertRecipeModel model)
         { 
             
-            var result = await _recipeService.Add(model, photomodel);
-            
+            var result = await _recipeService.Add(model);
             
             return Created(result.Id.ToString(), null);
         }
 
-        [HttpPatch("{recipeid}")]
-        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpsertRecipeModel model, [FromForm] GetPhotoModel pmodel)
+        [HttpPatch("{recipeId}")]
+        public async Task<IActionResult> Update([FromRoute] Guid recipeId, [FromBody] UpsertRecipeModel model)
         {
-            await _recipeService.Update(id, model, pmodel);
+            await _recipeService.Update(recipeId, model);
             return NoContent();
         }
 
-        [HttpDelete("{recipeid}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        [HttpDelete("{recipeId}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid recipeId)
         {
-            await _recipeService.Delete(id);
+            await _recipeService.Delete(recipeId);
             return NoContent();
         }
         [HttpGet("{recipeId}/ingredients")]

@@ -5,13 +5,17 @@ namespace TastyBoutique.Persistance.Models
 {
     public partial class Ingredients : Entity
     {
-        public Ingredients(string name, string description)
+        public Ingredients()
+        {
+
+        }
+
+        public Ingredients(string name)
         {
             Name = name;
-            Description = description;
         }
 
         public string Name { get; set; }
-        public string Description { get; set; }
+        
     }
 }

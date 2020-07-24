@@ -52,8 +52,6 @@ namespace TastyBoutique.Persistance.Models
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Description).HasMaxLength(100);
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
