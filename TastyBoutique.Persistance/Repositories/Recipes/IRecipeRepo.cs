@@ -14,5 +14,7 @@ namespace TastyBoutique.Persistance.Recipes
 
         Task<IList<Models.RecipesIngredients>> GetIngredientsByRecipeId(Guid id);
         Task<IList<Models.RecipesFilters>> GetFiltersByRecipeId(Guid id);
+
+        
     }
 }

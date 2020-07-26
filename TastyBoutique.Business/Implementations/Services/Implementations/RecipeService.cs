@@ -11,24 +11,24 @@ using TastyBoutique.Business.Recipes.Extensions;
 using TastyBoutique.Business.Recipes.Models.Ingredients;
 using TastyBoutique.Business.Recipes.Models.Recipe;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
+using TastyBoutique.Persistance;
 using TastyBoutique.Persistance.Ingredients;
 using TastyBoutique.Persistance.Models;
 using TastyBoutique.Persistance.Recipes;
+using TastyBoutique.Persistance.Repositories.Filters;
 
 namespace TastyBoutique.Business.Recipes.Services.Implementations
 {
     public sealed class RecipeService : IRecipeService
     {
-        private readonly IRecipeRepo _repository;
-        private readonly IIngredientsRepo _ingredientsRepo;
+        private readonly IRecipeRepo _repository;  
         private readonly IMapper _mapper;
-
-        public RecipeService(IRecipeRepo repo, IMapper mapper, IIngredientsRepo irepo)
+      
+        public RecipeService(IRecipeRepo repo, IMapper mapper)
         {
             _repository = repo;
             _mapper = mapper;
-            _ingredientsRepo = irepo;
-
+      
         }
 
         public async Task<PaginatedList<RecipeModel>> Get(SearchModel model)
@@ -44,19 +44,19 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
                 count,
                 _mapper.Map<IList<RecipeModel>>(entities));
         }
+
         public async Task<RecipeModel> Add(UpsertRecipeModel model)
         {
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
+            
+            foreach (var x in model.IngredientsList)
+                recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, x));
+            
 
-            // a foreach for adding non-existing ingredients to the database
-            foreach (var ingredient in model.IngredientsList)
-                if(!_ingredientsRepo.Get(new SearchModel().ToSpecification<Ingredients>()).Result.Contains(ingredient))
-                    await _ingredientsRepo.Add(_mapper.Map<Ingredients>(ingredient));
-                
-                
-                
+            foreach (var y in model.FiltersList)
+                recipe.RecipesFilters.Add(new RecipesFilters(recipe, y));
+
             await _repository.Add(recipe);
-
             await _repository.SaveChanges();
 
             return _mapper.Map<RecipeModel>(recipe);
@@ -103,7 +103,7 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         {
             var ingredients = _repository.GetIngredientsByRecipeId(id);
 
-            IList<Ingredients> igM = new List<Ingredients>();
+            var igM = new List<Ingredients>();
             foreach (var ing in ingredients.Result)
                 igM.Add(ing.Ingredient);
 

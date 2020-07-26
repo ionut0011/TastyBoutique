@@ -20,7 +20,6 @@ namespace TastyBoutique.Persistance.Ingredients
         public async Task<int> CountAsync()
             => await this.context.Ingredients.CountAsync();
 
-     
        
     }
 }

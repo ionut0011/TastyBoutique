@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TastyBoutique.Business.Recipes.Models.Ingredients;
 using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Business.Recipes.Models.Recipe

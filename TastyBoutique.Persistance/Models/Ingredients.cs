@@ -13,9 +13,11 @@ namespace TastyBoutique.Persistance.Models
         public Ingredients(string name)
         {
             Name = name;
+            RecipesIngredients = new HashSet<RecipesIngredients>();
         }
 
         public string Name { get; set; }
-        
+
+        public ICollection<RecipesIngredients> RecipesIngredients { get; set; }
     }
 }

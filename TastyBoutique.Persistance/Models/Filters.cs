@@ -13,8 +13,11 @@ namespace TastyBoutique.Persistance.Models
         public Filters(string name)
         {
             Name = name;
+            RecipesFilters = new HashSet<RecipesFilters>();
 
         }
         public string Name { get; set; }
+
+        public ICollection<RecipesFilters> RecipesFilters { get; set; }
     }
 }
