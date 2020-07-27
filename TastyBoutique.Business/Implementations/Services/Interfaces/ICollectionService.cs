@@ -10,9 +10,9 @@ namespace TastyBoutique.Business.Collections.Services.Interfaces
 {
     public interface ICollectionService
     {
-        Task<SavedRecipeModel> Add(SavedRecipeModel model);
+        Task Add(SavedRecipeModel model);
         Task Delete(SavedRecipeModel model);
         Task Update(SavedRecipeModel model);
-        public Task<IList<SavedRecipeModel>> GetAllByIdUser(Guid idUser);
+        public Task<IList<RecipeModel>> GetAllByIdUser(Guid idUser);
     }
 }

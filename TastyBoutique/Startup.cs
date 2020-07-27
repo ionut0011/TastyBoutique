@@ -25,6 +25,8 @@ using TastyBoutique.Persistance.Models;
 using TastyBoutique.Persistance.Recipes;
 using TripLooking.API.Extensions;
 using Newtonsoft.Json;
+using TastyBoutique.Business.Implementations.Services.Interfaces;
+
 namespace TastyBoutique
 {
     public class Startup
@@ -52,6 +54,7 @@ namespace TastyBoutique
                 .AddScoped<Business.Identity.Services.Interfaces.IAuthenticationService,Business.Identity.Services.Implementations.AuthenticationService>()
                 .AddScoped<ICollectionService, CollectionService>()
                 .AddScoped<ICollectionRepo,CollectionRepo>()
+                .AddScoped<INotificationService, NotificationService>()
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddDbContext<TastyBoutique_v2Context>(config =>
                     config.UseSqlServer(Configuration.GetConnectionString("TastyConnection")));
@@ -92,6 +95,7 @@ namespace TastyBoutique
                 .UseHttpsRedirection()
                 .UseStaticFiles()
                 .UseRouting()
+                .UseAuthentication()
                 .UseAuthorization()
                 .UseEndpoints(endpoints => endpoints.MapControllers());
         }

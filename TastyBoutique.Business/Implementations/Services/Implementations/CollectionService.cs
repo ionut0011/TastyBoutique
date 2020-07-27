@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using TastyBoutique.Business.Collections.Models;
 using TastyBoutique.Business.Collections.Services.Interfaces;
+using TastyBoutique.Business.Recipes.Models.Recipe;
 using TastyBoutique.Persistance;
 using TastyBoutique.Persistance.Models;
 using TastyBoutique.Persistance.Recipes;
@@ -23,15 +24,11 @@ namespace TastyBoutique.Business.Collections.Services.Implementation
             _mapper = mapper;
         }
 
-        public async Task<SavedRecipeModel> Add(SavedRecipeModel model)
+        public async Task Add(SavedRecipeModel model)
         {
             var recipe = _mapper.Map<SavedRecipes>(model);
-            recipe.IdRecipeNavigation = await _recipeRepo.GetById(recipe.IdRecipe);
-            recipe.Version = recipe.IdRecipeNavigation.Version;
             await _repository.Add(recipe);
             await _repository.SaveChanges();
-
-            return _mapper.Map<SavedRecipeModel>(recipe);
         }
 
         public async Task Delete(SavedRecipeModel model)
@@ -45,14 +42,14 @@ namespace TastyBoutique.Business.Collections.Services.Implementation
         {
             var savedRecipe = await _repository.Get(model.IdUser, model.IdRecipe);
             savedRecipe.IdRecipeNavigation = await _recipeRepo.GetById(savedRecipe.IdRecipe);
-            savedRecipe.Version = savedRecipe.IdRecipeNavigation.Version;
+            savedRecipe.NeedUpdate = false;
             await _repository.SaveChanges();
         }
 
-        public async Task<IList<SavedRecipeModel>> GetAllByIdUser(Guid idUser)
+        public async Task<IList<RecipeModel>> GetAllByIdUser(Guid idUser)
         {
-            var result = await _repository.GetAllByIdUser(idUser);
-            return _mapper.Map<IList<SavedRecipeModel>>(result);
+            var result = await _repository.GetAllSavedByIdUser(idUser);
+            return _mapper.Map<IList<RecipeModel>>(result);
         }
     }
 }
