@@ -30,7 +30,8 @@ namespace TastyBoutique.Persistance.Recipes
                 .Include(i => i.Ingredient)
                 .Where(i => i.RecipeId == id)
                 .ToListAsync();
-
+        public async Task<Models.Ingredients> GetByName(string Name)
+            => await this.context.Ingredients.Where(i => i.Name.Equals(Name)).FirstAsync();
 
     }
 }

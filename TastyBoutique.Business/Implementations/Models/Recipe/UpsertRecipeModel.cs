@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TastyBoutique.Business.Implementations.Models.Filter;
 using TastyBoutique.Business.Recipes.Models.Ingredients;
 using TastyBoutique.Persistance.Models;
 
@@ -18,8 +19,8 @@ namespace TastyBoutique.Business.Recipes.Models.Recipe
         public string Link { get; set; }
         public string Notifications { get; set; }
 
-        public IList<Persistance.Models.Ingredients> IngredientsList { get; set; }
+        public IList<CreateIngredientModel> IngredientsList { get; set; }
 
-        public IList<Filters> FiltersList { get; set; }
+        public IList<CreateFilterModel> FiltersList { get; set; }
     }
 }

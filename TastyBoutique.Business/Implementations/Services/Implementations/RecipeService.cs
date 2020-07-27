@@ -48,13 +48,13 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         public async Task<RecipeModel> Add(UpsertRecipeModel model)
         {
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
-            
+
             foreach (var x in model.IngredientsList)
-                recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, x));
+                recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, _mapper.Map<Ingredients>(x)));
             
 
             foreach (var y in model.FiltersList)
-                recipe.RecipesFilters.Add(new RecipesFilters(recipe, y));
+                recipe.RecipesFilters.Add(new RecipesFilters(recipe, _mapper.Map<Filters>(y)));
 
             await _repository.Add(recipe);
             await _repository.SaveChanges();
