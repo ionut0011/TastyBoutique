@@ -8,8 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Newtonsoft.Json;
 using TastyBoutique.Business.Collections.Services.Implementation;
 using TastyBoutique.Business.Collections.Services.Interfaces;
+using TastyBoutique.Business.Identity;
 using TastyBoutique.Business.Identity.Models;
 using TastyBoutique.Business.Identity.Services.Implementations;
 using TastyBoutique.Business.Identity.Services.Interfaces;
@@ -18,12 +20,11 @@ using TastyBoutique.Business.Recipes;
 using TastyBoutique.Business.Recipes.Services.Implementations;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
 using TastyBoutique.Persistance;
+using TastyBoutique.Persistance.Identity;
 using TastyBoutique.Persistance.Models;
 using TastyBoutique.Persistance.Recipes;
 using TripLooking.API.Extensions;
-using AuthenticationService = Microsoft.AspNetCore.Authentication.AuthenticationService;
-using IAuthenticationService = Microsoft.AspNetCore.Authentication.IAuthenticationService;
-
+using Newtonsoft.Json;
 namespace TastyBoutique
 {
     public class Startup
@@ -38,6 +39,7 @@ namespace TastyBoutique
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services
                 .AddMvc();
             services
@@ -47,19 +49,24 @@ namespace TastyBoutique
                 .AddScoped<IRecipeRepo, RecipeRepo>()
                 .AddScoped<IRecipeCommentService, RecipeCommentService>()
                 .AddScoped<IPasswordHasher, PasswordHasher>()
-                .AddScoped<IAuthenticationService, AuthenticationService>()
+                .AddScoped<Business.Identity.Services.Interfaces.IAuthenticationService,Business.Identity.Services.Implementations.AuthenticationService>()
                 .AddScoped<ICollectionService, CollectionService>()
                 .AddScoped<ICollectionRepo,CollectionRepo>()
+                .AddScoped<IUserRepository, UserRepository>()
                 .AddDbContext<TastyBoutique_v2Context>(config =>
                     config.UseSqlServer(Configuration.GetConnectionString("TastyConnection")));
             services
                 .AddAutoMapper(c =>
-                {
-                    c.AddProfile<Mapping>();
-                }, typeof(RecipeService), typeof(IngredientService), typeof(FilterService), typeof(CollectionService), typeof(RecipeCommentService), typeof(AuthenticationService))
+                    {
+                        c.AddProfile<Mapping>();
+                        c.AddProfile<IdentityMappingProfile>();
+                    }, typeof(RecipeService), typeof(IngredientService), typeof(FilterService),
+                    typeof(CollectionService),
+                    typeof(RecipeCommentService))
 
                 .AddHttpContextAccessor()
-                .AddSwagger();
+                .AddSwagger()
+                .AddControllers();
             services.AddControllers().AddXmlDataContractSerializerFormatters();
 
 
@@ -79,7 +86,7 @@ namespace TastyBoutique
 
             app
                 .UseSwagger()
-                .UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Trips API"));
+                .UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TastyBoutique API"));
 
             app
                 .UseHttpsRedirection()

@@ -8,7 +8,7 @@ namespace TastyBoutique.Business.Recipes.Services.Interfaces
 {
     public interface IRecipeCommentService
     {
-        Task<IEnumerable<RecipeCommentModel>> Get(Guid IdRecipe);
+        Task<IEnumerable<RecipeCommentModel>> Get(Guid idRecipe);
 
         Task<RecipeCommentModel> Add(Guid IdRecipe, CreateRecipeCommentModel model);
 

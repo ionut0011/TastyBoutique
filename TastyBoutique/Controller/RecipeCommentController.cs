@@ -14,7 +14,8 @@ namespace TastyBoutique.API.Controller
 {
     
     [ApiController]
-    [Route("api/v1/recipe/comments")]
+    [Route("api/v1/recipe")]
+    [Authorize]
     public sealed class RecipeCommentController : ControllerBase
     {
         private readonly IRecipeCommentService _commentsService;
@@ -24,18 +25,19 @@ namespace TastyBoutique.API.Controller
             _commentsService = commentsService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get([FromRoute] Guid IdRecipe)
+        [HttpGet("{recipeId}/comments")]
+        public async Task<IActionResult> Get([FromRoute] Guid recipeId)
         {
-            var result = await _commentsService.Get(IdRecipe);
+            var result = await _commentsService.Get(recipeId);
 
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Add([FromRoute] Guid IdRecipe, [System.Web.Http.FromBody] CreateRecipeCommentModel model)
+        [HttpPost("{recipeId}/comments")]
+
+        public async Task<IActionResult> Add([FromRoute] Guid recipeId, [FromBody] CreateRecipeCommentModel model)
         {
-            var result = await _commentsService.Add(IdRecipe, model);
+            var result = await _commentsService.Add(recipeId, model);
 
             return Created(result.IdRecipe.ToString(),null);
         }

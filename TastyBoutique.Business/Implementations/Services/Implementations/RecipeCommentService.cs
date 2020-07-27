@@ -24,11 +24,12 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
             this._mapper = _mapper;
             this._accessor=_accessor;
         }
-        public async Task<RecipeCommentModel> Add(Guid IdRecipe, CreateRecipeCommentModel model)
+        public async Task<RecipeCommentModel> Add(Guid idRecipe, CreateRecipeCommentModel model)
         {
+            var claim = _accessor.HttpContext.User.Claims;
             model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var comment = _mapper.Map<RecipeComment>(model);
-            var recipe = await _repository.GetById(IdRecipe);
+            var recipe = await _repository.GetById(idRecipe);
 
             recipe.AddComment(comment);
             _repository.Update(recipe);
@@ -48,9 +49,9 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         }
 
 
-        public async Task<IEnumerable<RecipeCommentModel>> Get(Guid IdRecipe)
+        public async Task<IEnumerable<RecipeCommentModel>> Get(Guid idRecipe)
         {
-            var recipe = await _repository.GetById(IdRecipe);
+            var recipe = await _repository.GetById(idRecipe);
             return _mapper.Map<IEnumerable<RecipeCommentModel>>(recipe.RecipeComment);
         }
  
