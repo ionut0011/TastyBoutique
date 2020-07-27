@@ -1,6 +1,7 @@
 ﻿using LinqBuilder.Core;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -17,5 +18,7 @@ namespace TastyBoutique.Persistance.Repositories.Filters
 
         public async Task<int> CountAsync()
             => await this.context.Filters.CountAsync();
+
+       
     }
 }

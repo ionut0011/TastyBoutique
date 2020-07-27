@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TastyBoutique.Persistance.Models;
@@ -14,6 +15,7 @@ namespace TastyBoutique.Persistance
         protected Repository(TastyBoutique_v2Context context)
         {
             this.context = context;
+            
         }
 
         public async Task<T> GetById(Guid id)
@@ -22,8 +24,6 @@ namespace TastyBoutique.Persistance
         public async Task Add(T entity)
             => await this.context.Set<T>().AddAsync(entity);
 
-        public async Task<T> GetId(string Name)
-            => await this.context.Set<T>().FindAsync(Name);
 
         public void Update(T entity)
             => this.context.Set<T>().Update(entity);
@@ -33,5 +33,7 @@ namespace TastyBoutique.Persistance
 
         public Task SaveChanges()
             => this.context.SaveChangesAsync();
+
+      
     }
 }

@@ -7,7 +7,6 @@ namespace TastyBoutique.Business.Recipes.Models.Ingredients
     public sealed class CreateIngredientModel
     {
         public string Name { get; set; }
-        public string Description { get; set; }
 
     }
 }

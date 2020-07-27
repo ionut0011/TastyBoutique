@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance
 {
@@ -10,7 +11,6 @@ namespace TastyBoutique.Persistance
     {
         Task<T> GetById(Guid id);
 
-        Task<T> GetId(string Name);
 
         Task Add(T entity);
 
@@ -19,5 +19,7 @@ namespace TastyBoutique.Persistance
         void Delete(T entity);
 
         Task SaveChanges();
+
+      
     }
 }

@@ -56,7 +56,10 @@ namespace TastyBoutique
                 }, typeof(RecipeService), typeof(CollectionService))
                 .AddHttpContextAccessor()
                 .AddSwagger();
-                
+            services.AddControllers().AddXmlDataContractSerializerFormatters();
+
+
+
             AddAuthentication(services);
 
 

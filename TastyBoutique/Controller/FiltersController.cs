@@ -28,8 +28,9 @@ namespace TastyBoutique.API.Controller
         {
             var result = await _filterService.Get(model);
 
-            return Ok(result);
+            return Ok(result.Results);
         }
+
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateFilterModel model)
         {
@@ -37,12 +38,5 @@ namespace TastyBoutique.API.Controller
             return Created(result.Id.ToString(), null);
         }
 
-        [HttpGet("{name}")]
-        public async Task<IActionResult> GetId([FromRoute] string name)
-        {
-            var result = await _filterService.Get(new SearchModel());
-
-            return Ok(_filterService.GetId(result, name).Result.Id);
-        }
     }
 }

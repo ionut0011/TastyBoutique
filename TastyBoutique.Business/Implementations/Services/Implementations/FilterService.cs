@@ -6,8 +6,10 @@ using AutoMapper;
 using TastyBoutique.Business.Implementations.Models.Filter;
 using TastyBoutique.Business.Implementations.Services.Interfaces;
 using TastyBoutique.Business.Recipes.Extensions;
+using TastyBoutique.Business.Recipes.Models.Ingredients;
 using TastyBoutique.Business.Recipes.Models.Recipe;
 using TastyBoutique.Persistance.Ingredients;
+using TastyBoutique.Persistance.Models;
 using TastyBoutique.Persistance.Repositories.Filters;
 
 namespace TastyBoutique.Business.Implementations.Services.Implementations
@@ -56,5 +58,6 @@ namespace TastyBoutique.Business.Implementations.Services.Implementations
 
             return null;
         }
+       
     }
 }
