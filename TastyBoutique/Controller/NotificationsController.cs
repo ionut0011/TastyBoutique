@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TastyBoutique.API.Controller
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/notifications")]
     [ApiController]
     public class NotificationsController : ControllerBase
     {
+        //[HttpGet]
+
     }
 }
