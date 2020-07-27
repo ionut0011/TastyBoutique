@@ -19,8 +19,9 @@ namespace TastyBoutique.Persistance.Identity
             this._context = context;
         }
 
-        public async Task<User> GetByEmail(string email) =>
-            await _context.User.Where(x => x.Email == email).FirstOrDefaultAsync();
-        
+        public async Task<User> GetByEmail(string email)
+        {
+            return await _context.User.Where(x => x.Email.Equals(email)).FirstOrDefaultAsync();
+        }
     }
 }
