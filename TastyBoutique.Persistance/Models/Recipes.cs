@@ -27,6 +27,7 @@ namespace TastyBoutique.Persistance.Models
         public string Link { get; set; }
         public string Notifications { get; set; }
 
+        public int Version { get; set; }
         public ICollection<Notifications> NotificationsNavigation { get; set; }
         public ICollection<RecipeComment> RecipeComment { get; set; }
         public ICollection<SavedRecipes> SavedRecipes { get; set; }
