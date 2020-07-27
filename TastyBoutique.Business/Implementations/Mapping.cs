@@ -21,6 +21,7 @@ namespace TastyBoutique.Business.Recipes
 
             CreateMap<CreateFilterModel, Persistance.Models.Filters>();
             CreateMap<Persistance.Models.Filters, FilterModel>();
+
         }
     }
 }

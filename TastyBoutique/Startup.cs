@@ -1,34 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TastyBoutique.Business.Recipes;
-using TastyBoutique.Business.Recipes.Services.Implementations;
-using TastyBoutique.Business.Recipes.Services.Interfaces;
-using TastyBoutique.Persistance.Models;
-using TastyBoutique.Persistance.Recipes;
-using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using TastyBoutique.Business;
+using System.Text;
 using TastyBoutique.Business.Collections.Services.Implementation;
 using TastyBoutique.Business.Collections.Services.Interfaces;
 using TastyBoutique.Business.Identity.Models;
 using TastyBoutique.Business.Identity.Services.Implementations;
 using TastyBoutique.Business.Identity.Services.Interfaces;
 using TastyBoutique.Business.Implementations.Services.Implementations;
-using TastyBoutique.Business.Implementations.Services.Interfaces;
-using TastyBoutique.Persistance.Ingredients;
-using TastyBoutique.Persistance.Repositories.Filters;
+using TastyBoutique.Business.Recipes;
+using TastyBoutique.Business.Recipes.Services.Implementations;
+using TastyBoutique.Business.Recipes.Services.Interfaces;
+using TastyBoutique.Persistance;
+using TastyBoutique.Persistance.Models;
+using TastyBoutique.Persistance.Recipes;
 using TripLooking.API.Extensions;
 using AuthenticationService = Microsoft.AspNetCore.Authentication.AuthenticationService;
 using IAuthenticationService = Microsoft.AspNetCore.Authentication.IAuthenticationService;
@@ -58,6 +49,7 @@ namespace TastyBoutique
                 .AddScoped<IPasswordHasher, PasswordHasher>()
                 .AddScoped<IAuthenticationService, AuthenticationService>()
                 .AddScoped<ICollectionService, ICollectionService>()
+                .AddScoped<ICollectionRepo,CollectionRepo>()
                 .AddDbContext<TastyBoutique_v2Context>(config =>
                     config.UseSqlServer(Configuration.GetConnectionString("TastyConnection")));
             services
@@ -84,7 +76,7 @@ namespace TastyBoutique
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app
                 .UseSwagger()
                 .UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Trips API"));
