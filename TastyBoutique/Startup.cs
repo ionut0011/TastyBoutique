@@ -17,14 +17,21 @@ using TastyBoutique.Persistance.Models;
 using TastyBoutique.Persistance.Recipes;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using TastyBoutique.Business;
+using TastyBoutique.Business.Collections.Services.Implementation;
+using TastyBoutique.Business.Collections.Services.Interfaces;
 using TastyBoutique.Business.Identity.Models;
+using TastyBoutique.Business.Identity.Services.Implementations;
+using TastyBoutique.Business.Identity.Services.Interfaces;
 using TastyBoutique.Business.Implementations.Services.Implementations;
 using TastyBoutique.Business.Implementations.Services.Interfaces;
 using TastyBoutique.Persistance.Ingredients;
 using TastyBoutique.Persistance.Repositories.Filters;
 using TripLooking.API.Extensions;
+using AuthenticationService = Microsoft.AspNetCore.Authentication.AuthenticationService;
+using IAuthenticationService = Microsoft.AspNetCore.Authentication.IAuthenticationService;
 
 namespace TastyBoutique
 {
@@ -47,13 +54,17 @@ namespace TastyBoutique
             services
                 .AddScoped<IRecipeService, RecipeService>()
                 .AddScoped<IRecipeRepo, RecipeRepo>()
+                .AddScoped<IRecipeCommentService, RecipeCommentService>()
+                .AddScoped<IPasswordHasher, PasswordHasher>()
+                .AddScoped<IAuthenticationService, AuthenticationService>()
+                .AddScoped<ICollectionService, ICollectionService>()
                 .AddDbContext<TastyBoutique_v2Context>(config =>
                     config.UseSqlServer(Configuration.GetConnectionString("TastyConnection")));
             services
                 .AddAutoMapper(c =>
                 {
                     c.AddProfile<Mapping>();
-                }, typeof(RecipeService), typeof(IngredientService), typeof(FilterService))
+                }, typeof(RecipeService), typeof(IngredientService), typeof(FilterService), typeof(CollectionService), typeof(RecipeCommentService), typeof(AuthenticationService))
 
                 .AddHttpContextAccessor()
                 .AddSwagger();
