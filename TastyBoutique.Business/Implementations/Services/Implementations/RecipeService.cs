@@ -56,6 +56,7 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
             foreach (var y in model.FiltersList)
                 recipe.RecipesFilters.Add(new RecipesFilters(recipe, _mapper.Map<Filters>(y)));
 
+            
             await _repository.Add(recipe);
             await _repository.SaveChanges();
 

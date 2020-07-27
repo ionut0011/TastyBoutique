@@ -39,10 +39,6 @@ namespace TastyBoutique.Persistance.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -162,11 +158,13 @@ namespace TastyBoutique.Persistance.Migrations
 
             modelBuilder.Entity("TastyBoutique.Persistance.Models.RecipesFilters", b =>
                 {
+                    b.Property<Guid>("RecipeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("FilterId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RecipeId")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasKey("RecipeId", "FilterId");
 
                     b.HasIndex("FilterId");
 
@@ -177,11 +175,13 @@ namespace TastyBoutique.Persistance.Migrations
 
             modelBuilder.Entity("TastyBoutique.Persistance.Models.RecipesIngredients", b =>
                 {
+                    b.Property<Guid>("RecipeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("IngredientId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RecipeId")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasKey("RecipeId", "IngredientId");
 
                     b.HasIndex("IngredientId");
 
@@ -200,6 +200,9 @@ namespace TastyBoutique.Persistance.Migrations
 
                     b.Property<Guid>("IdUser")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Version")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -326,13 +329,13 @@ namespace TastyBoutique.Persistance.Migrations
             modelBuilder.Entity("TastyBoutique.Persistance.Models.RecipesFilters", b =>
                 {
                     b.HasOne("TastyBoutique.Persistance.Models.Filters", "Filter")
-                        .WithMany()
+                        .WithMany("RecipesFilters")
                         .HasForeignKey("FilterId")
                         .HasConstraintName("FK_RecipesFilters_Filters")
                         .IsRequired();
 
                     b.HasOne("TastyBoutique.Persistance.Models.Recipes", "Recipe")
-                        .WithMany()
+                        .WithMany("RecipesFilters")
                         .HasForeignKey("RecipeId")
                         .HasConstraintName("FK_RecipesFilters_Recipes")
                         .IsRequired();
@@ -341,13 +344,13 @@ namespace TastyBoutique.Persistance.Migrations
             modelBuilder.Entity("TastyBoutique.Persistance.Models.RecipesIngredients", b =>
                 {
                     b.HasOne("TastyBoutique.Persistance.Models.Ingredients", "Ingredient")
-                        .WithMany()
+                        .WithMany("RecipesIngredients")
                         .HasForeignKey("IngredientId")
                         .HasConstraintName("FK_RecipesIngredients_Ingredients")
                         .IsRequired();
 
                     b.HasOne("TastyBoutique.Persistance.Models.Recipes", "Recipe")
-                        .WithMany()
+                        .WithMany("RecipesIngredients")
                         .HasForeignKey("RecipeId")
                         .HasConstraintName("FK_RecipesIngredients_Recipes")
                         .IsRequired();

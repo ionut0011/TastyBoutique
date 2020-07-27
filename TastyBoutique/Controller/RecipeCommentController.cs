@@ -15,7 +15,6 @@ namespace TastyBoutique.API.Controller
     
     [ApiController]
     [Route("api/v1/recipe")]
-    [Authorize]
     public sealed class RecipeCommentController : ControllerBase
     {
         private readonly IRecipeCommentService _commentsService;

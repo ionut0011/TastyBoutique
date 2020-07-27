@@ -10,8 +10,8 @@ using TastyBoutique.Persistance.Models;
 namespace TastyBoutique.Persistance.Migrations
 {
     [DbContext(typeof(TastyBoutique_v2Context))]
-    [Migration("20200727122931_UpdateIngredients")]
-    partial class UpdateIngredients
+    [Migration("20200727183815_UpdateVersion")]
+    partial class UpdateVersion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -153,9 +153,6 @@ namespace TastyBoutique.Persistance.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
 
-                    b.Property<int>("Version")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Recipes");
@@ -206,8 +203,8 @@ namespace TastyBoutique.Persistance.Migrations
                     b.Property<Guid>("IdUser")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Version")
-                        .HasColumnType("int");
+                    b.Property<bool>("Version")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
