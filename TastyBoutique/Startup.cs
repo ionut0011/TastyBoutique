@@ -48,7 +48,7 @@ namespace TastyBoutique
                 .AddScoped<IRecipeCommentService, RecipeCommentService>()
                 .AddScoped<IPasswordHasher, PasswordHasher>()
                 .AddScoped<IAuthenticationService, AuthenticationService>()
-                .AddScoped<ICollectionService, ICollectionService>()
+                .AddScoped<ICollectionService, CollectionService>()
                 .AddScoped<ICollectionRepo,CollectionRepo>()
                 .AddDbContext<TastyBoutique_v2Context>(config =>
                     config.UseSqlServer(Configuration.GetConnectionString("TastyConnection")));
