@@ -20,9 +20,6 @@ namespace TastyBoutique.Persistance.Models
         public string Email { get; set; }
         public string Status { get; set; }
         public string Password { get; set; }
-        public Student Student { get; set; }
-
-
 
         public virtual Student IdStudentNavigation { get; set; }
         public virtual UserType IdUserTypeNavigation { get; set; }
