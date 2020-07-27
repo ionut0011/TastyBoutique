@@ -35,7 +35,7 @@ namespace TastyBoutique.Persistance.Recipes
 
         public Task<Models.Recipes> GetByIdWithComments(Guid id)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }
