@@ -18,6 +18,8 @@ namespace TastyBoutique.Persistance.Models
             NotificationsNavigation = new HashSet<Notifications>();
             RecipeComment = new HashSet<RecipeComment>();
             SavedRecipes = new HashSet<SavedRecipes>();
+            RecipesIngredients = new HashSet<RecipesIngredients>();
+            RecipesFilters = new HashSet<RecipesFilters>();
         }
 
         public string Name { get; set; }
@@ -31,6 +33,10 @@ namespace TastyBoutique.Persistance.Models
         public ICollection<Notifications> NotificationsNavigation { get; set; }
         public ICollection<RecipeComment> RecipeComment { get; set; }
         public ICollection<SavedRecipes> SavedRecipes { get; set; }
+
+        public ICollection<RecipesIngredients> RecipesIngredients { get; set; }
+
+        public ICollection<RecipesFilters> RecipesFilters { get; set; }
 
         public void Update(string name, string access, string description, byte[] image, string link,
             string notifications)
