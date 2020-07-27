@@ -245,6 +245,8 @@ namespace TastyBoutique.Persistance.Models
                 entity.Property(e => e.Status)
                     .IsRequired()
                     .HasMaxLength(50);
+                    
+                    
 
                 entity.Property(e => e.Username)
                     .IsRequired()

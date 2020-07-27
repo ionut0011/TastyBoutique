@@ -20,6 +20,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using TastyBoutique.Business.Identity.Models;
 using TripLooking.API.Extensions;
+using TastyBoutique.Business.Identity.Services.Interfaces;
+using TastyBoutique.Business.Identity.Services.Implementations;
+using TastyBoutique.Persistance.Identity;
 
 namespace TastyBoutique
 {
@@ -43,9 +46,15 @@ namespace TastyBoutique
                 .AddScoped<IRecipeService, RecipeService>()
                 .AddScoped<IRecipeRepo, RecipeRepo>()
                 .AddScoped<IRecipeCommentService, RecipeCommentService>()
+                .AddScoped<IPasswordHasher, PasswordHasher>()
+                .AddScoped<IAuthenticationService, AuthenticationService>();
+           
 
+            services
                 .AddDbContext<TastyBoutique_v2Context>(config =>
                     config.UseSqlServer(Configuration.GetConnectionString("TastyConnection")));
+            services
+                 .AddScoped<IUserRepository, UserRepository>();
             services
                 .AddAutoMapper(c =>
                 {
