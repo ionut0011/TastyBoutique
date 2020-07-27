@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using TastyBoutique.Business.Collections.Models;
 using TastyBoutique.Business.Collections.Services.Interfaces;
-using TastyBoutique.Business.Recipes.Models.Recipe;
 using TastyBoutique.Persistance;
 using TastyBoutique.Persistance.Models;
 
