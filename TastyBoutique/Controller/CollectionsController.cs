@@ -35,14 +35,15 @@ namespace TastyBoutique.API.Controller
             return NoContent();
         }
 
-        [HttpPut]
+        [HttpPatch]
         public async Task<IActionResult> Update([FromBody] SavedRecipeModel model)
         {
             await _collectionService.Update(model);
             return NoContent();
         }
 
-        [HttpGet ("{idUser}")]
+
+        [HttpGet("{idUser}")]
         public async Task<IActionResult> GetAllByIdUser([FromRoute] Guid idUser)
         {
             var result = await _collectionService.GetAllByIdUser(idUser);

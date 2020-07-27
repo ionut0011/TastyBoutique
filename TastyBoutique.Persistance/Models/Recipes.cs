@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Security.Cryptography;
 
 namespace TastyBoutique.Persistance.Models
 {
     public sealed class Recipes : Entity
     {
-        public Recipes() {
-
-        }
-
         public Recipes(string name, string access, string description, byte[] image, string link, string notifications)
         {
             Name = name;
@@ -26,7 +22,6 @@ namespace TastyBoutique.Persistance.Models
             RecipesIngredients = new HashSet<RecipesIngredients>();
             RecipesFilters = new HashSet<RecipesFilters>();
         }
-
 
         public string Name { get; set; }
         public string Access { get; set; }
@@ -54,6 +49,21 @@ namespace TastyBoutique.Persistance.Models
             Link = link;
             Notifications = notifications;
             ++Version;
+        }
+
+        public void AddComment(RecipeComment comment)
+        {
+            this.RecipeComment.Add(comment);
+        }
+
+        public void RemoveComment(Guid commentId)
+        {
+            var comment = this.RecipeComment.FirstOrDefault(c => c.Id == commentId);
+
+            if (comment != null)
+            {
+                this.RecipeComment.Remove(comment);
+            }
         }
     }
 }
