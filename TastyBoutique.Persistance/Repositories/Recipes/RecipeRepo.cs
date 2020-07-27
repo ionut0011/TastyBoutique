@@ -33,9 +33,9 @@ namespace TastyBoutique.Persistance.Recipes
         public async Task<Models.Ingredients> GetByName(string Name)
             => await this.context.Ingredients.Where(i => i.Name.Equals(Name)).FirstAsync();
 
-        public Task<Models.Recipes> GetByIdWithComments(Guid id)
-        {
-            return null;
-        }
+        public async Task<Models.Recipes> GetByIdWithComments(Guid id)
+          => await this.context.Recipes
+          .Include(recipe => recipe.RecipeComment)
+          .FirstAsync(recipe => recipe.Id == id);
     }
 }
