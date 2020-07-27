@@ -1,29 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Newtonsoft.Json;
+using TastyBoutique.Business.Collections.Services.Implementation;
+using TastyBoutique.Business.Collections.Services.Interfaces;
+using TastyBoutique.Business.Identity;
+using TastyBoutique.Business.Identity.Models;
+using TastyBoutique.Business.Identity.Services.Implementations;
+using TastyBoutique.Business.Identity.Services.Interfaces;
+using TastyBoutique.Business.Implementations.Services.Implementations;
 using TastyBoutique.Business.Recipes;
 using TastyBoutique.Business.Recipes.Services.Implementations;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
+using TastyBoutique.Persistance;
+using TastyBoutique.Persistance.Identity;
 using TastyBoutique.Persistance.Models;
 using TastyBoutique.Persistance.Recipes;
-using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using TastyBoutique.Business.Collections.Services.Implementation;
-using TastyBoutique.Business.Collections.Services.Interfaces;
-using TastyBoutique.Business.Identity.Models;
-using TastyBoutique.Persistance;
 using TripLooking.API.Extensions;
-
+using Newtonsoft.Json;
 namespace TastyBoutique
 {
     public class Startup
@@ -38,6 +39,7 @@ namespace TastyBoutique
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services
                 .AddMvc();
             services
@@ -45,17 +47,26 @@ namespace TastyBoutique
             services
                 .AddScoped<IRecipeService, RecipeService>()
                 .AddScoped<IRecipeRepo, RecipeRepo>()
+                .AddScoped<IRecipeCommentService, RecipeCommentService>()
+                .AddScoped<IPasswordHasher, PasswordHasher>()
+                .AddScoped<Business.Identity.Services.Interfaces.IAuthenticationService,Business.Identity.Services.Implementations.AuthenticationService>()
                 .AddScoped<ICollectionService, CollectionService>()
-                .AddScoped<ICollectionRepo, CollectionRepo>()
+                .AddScoped<ICollectionRepo,CollectionRepo>()
+                .AddScoped<IUserRepository, UserRepository>()
                 .AddDbContext<TastyBoutique_v2Context>(config =>
                     config.UseSqlServer(Configuration.GetConnectionString("TastyConnection")));
             services
                 .AddAutoMapper(c =>
-                {
-                    c.AddProfile<RecipesMapping>();
-                }, typeof(RecipeService), typeof(CollectionService))
+                    {
+                        c.AddProfile<Mapping>();
+                        c.AddProfile<IdentityMappingProfile>();
+                    }, typeof(RecipeService), typeof(IngredientService), typeof(FilterService),
+                    typeof(CollectionService),
+                    typeof(RecipeCommentService))
+
                 .AddHttpContextAccessor()
-                .AddSwagger();
+                .AddSwagger()
+                .AddControllers();
             services.AddControllers().AddXmlDataContractSerializerFormatters();
 
 
@@ -72,10 +83,10 @@ namespace TastyBoutique
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app
                 .UseSwagger()
-                .UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Trips API"));
+                .UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TastyBoutique API"));
 
             app
                 .UseHttpsRedirection()

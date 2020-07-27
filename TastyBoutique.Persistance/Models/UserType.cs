@@ -5,9 +5,11 @@ namespace TastyBoutique.Persistance.Models
 {
     public partial class UserType : Entity
     {
-        public UserType()
+        public UserType(string name, string description)
         {
             User = new HashSet<User>();
+            this.Name = name;
+            this.Description = description;
         }
 
         public string Name { get; set; }

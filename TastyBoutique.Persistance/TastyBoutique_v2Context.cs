@@ -33,15 +33,12 @@ namespace TastyBoutique.Persistance.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=TastyBoutique;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLExpress;Database=TastyBoutique_v3;Trusted_Connection=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            
-
             modelBuilder.Entity<Filters>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
@@ -54,6 +51,7 @@ namespace TastyBoutique.Persistance.Models
             modelBuilder.Entity<Ingredients>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
+
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -133,7 +131,7 @@ namespace TastyBoutique.Persistance.Models
             modelBuilder.Entity<Recipes>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
-                
+
                 entity.Property(e => e.Access)
                     .IsRequired()
                     .HasMaxLength(25);
@@ -150,10 +148,9 @@ namespace TastyBoutique.Persistance.Models
 
                 entity.Property(e => e.Notifications).HasMaxLength(250);
             });
-
             modelBuilder.Entity<RecipesFilters>(entity =>
             {
-                entity.HasKey(d => new {d.RecipeId, d.FilterId});
+                entity.HasKey(d => new { d.RecipeId, d.FilterId });
 
                 entity.HasIndex(e => e.FilterId);
 
@@ -174,7 +171,7 @@ namespace TastyBoutique.Persistance.Models
 
             modelBuilder.Entity<RecipesIngredients>(entity =>
             {
-                entity.HasKey(d => new {d.RecipeId, d.IngredientId});
+                entity.HasKey(d => new { d.RecipeId, d.IngredientId });
 
                 entity.HasIndex(e => e.IngredientId);
 
@@ -212,7 +209,6 @@ namespace TastyBoutique.Persistance.Models
                     .HasForeignKey(d => d.IdUser)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_SavedRecipes_User");
-                
             });
 
             modelBuilder.Entity<Student>(entity =>
@@ -240,11 +236,12 @@ namespace TastyBoutique.Persistance.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Password).HasMaxLength(50);
+                entity.Property(e => e.Password).HasMaxLength(250);
 
                 entity.Property(e => e.Status)
-                    .IsRequired()
                     .HasMaxLength(50);
+                    
+                    
 
                 entity.Property(e => e.Username)
                     .IsRequired()
