@@ -19,6 +19,7 @@ namespace TastyBoutique.Persistance.Models
             Image = image;
             Link = link;
             Notifications = notifications;
+            Version = 1;
             NotificationsNavigation = new HashSet<Notifications>();
             RecipeComment = new HashSet<RecipeComment>();
             SavedRecipes = new HashSet<SavedRecipes>();
@@ -52,6 +53,7 @@ namespace TastyBoutique.Persistance.Models
             Image = image;
             Link = link;
             Notifications = notifications;
+            ++Version;
         }
     }
 }

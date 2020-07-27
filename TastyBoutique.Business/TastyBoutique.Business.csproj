@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Identity\Services\" />
+    <Folder Include="Implementations\Models\Notification\" />
   </ItemGroup>
 
 </Project>

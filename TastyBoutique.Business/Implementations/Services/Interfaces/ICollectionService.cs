@@ -12,6 +12,7 @@ namespace TastyBoutique.Business.Collections.Services.Interfaces
     {
         Task<SavedRecipeModel> Add(SavedRecipeModel model);
         Task Delete(SavedRecipeModel model);
+        Task Update(SavedRecipeModel model);
         public Task<IList<SavedRecipeModel>> GetAllByIdUser(Guid idUser);
     }
 }
