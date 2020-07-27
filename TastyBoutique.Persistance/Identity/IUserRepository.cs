@@ -7,5 +7,6 @@ namespace TastyBoutique.Persistance.Identity
     {
 
         Task<User> GetByEmail(string email);
+       
     }
 }

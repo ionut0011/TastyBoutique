@@ -41,13 +41,16 @@ namespace TastyBoutique.Business.Identity.Services.Implementations
 
         public async Task<UserModel> Register(UserRegisterModel userRegisterModel)
         {
-            var user = await _userRepository.GetByEmail(userRegisterModel.Email);
+            /*var user = await _userRepository.GetByEmail(userRegisterModel.Email);
             if (user != null)
             {
                 return null;
-            }
-
+            }*/
+            var newStudent = new Student(userRegisterModel.studentModel.Name, userRegisterModel.studentModel.Age, userRegisterModel.Email);
             var newUser = new User(userRegisterModel.Username, userRegisterModel.Email, _passwordHasher.CreateHash(userRegisterModel.Password));
+            newUser.IdStudentNavigation = newStudent;
+           
+
             await _userRepository.Add(newUser);
             await _userRepository.SaveChanges();
 
