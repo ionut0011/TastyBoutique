@@ -49,7 +49,7 @@ namespace TastyBoutique.Business.Identity.Services.Implementations
             var newStudent = new Student(userRegisterModel.studentModel.Name, userRegisterModel.studentModel.Age, userRegisterModel.Email);
             var newUser = new User(userRegisterModel.Username, userRegisterModel.Email, _passwordHasher.CreateHash(userRegisterModel.Password));
             newUser.IdStudentNavigation = newStudent;
-           
+            newUser.IdUserTypeNavigation = new UserType("a","b");
 
             await _userRepository.Add(newUser);
             await _userRepository.SaveChanges();
