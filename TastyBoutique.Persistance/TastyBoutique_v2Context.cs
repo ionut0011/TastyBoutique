@@ -33,7 +33,7 @@ namespace TastyBoutique.Persistance.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLExpress;Database=TastyBoutique_v3;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLExpress;Database=TastyBoutique_v4;Trusted_Connection=True;");
             }
         }
 
@@ -121,13 +121,6 @@ namespace TastyBoutique.Persistance.Models
                     .IsRequired()
                     .HasMaxLength(20);
 
-                /*
-                 *  entity.HasOne<Filters>(d => d.Filter)
-                    .WithMany(d => d.RecipesFilters)
-                    .HasForeignKey(d => d.FilterId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_RecipesFilters_Filters");
-                 */
                 entity.HasOne<Recipes>(d => d.Recipe)
                     .WithOne(d => d.RecipeType)
                     .OnDelete(DeleteBehavior.ClientSetNull)

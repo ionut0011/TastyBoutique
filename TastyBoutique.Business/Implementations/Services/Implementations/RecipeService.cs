@@ -41,6 +41,7 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
 
             foreach (var recipe in recipes)
                 recipe.Type = _repository.GetRecipeTypeById(recipe.Id).Result.Type;
+            
 
             return new PaginatedList<RecipeModel>(
                 model.PageIndex,
