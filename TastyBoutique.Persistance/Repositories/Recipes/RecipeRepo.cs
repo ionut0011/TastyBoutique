@@ -41,5 +41,6 @@ namespace TastyBoutique.Persistance.Recipes
         public async Task<Models.RecipeType> GetRecipeTypeById(Guid id)
             => await this.context.RecipeType
                 .FirstOrDefaultAsync(recipeType => recipeType.RecipeId == id);
+
     }
 }
