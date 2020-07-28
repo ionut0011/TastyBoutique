@@ -1,1 +1,12 @@
-<p>recipes-list works!</p>
+<app-header></app-header>
+  <div class="page-container">
+    <h1>
+
+    </h1>
+
+    <div class="cards">
+      <app-tile  *ngFor="let recipe of recipesList" label="{{recipe.name}}" background="{{recipe.backgroundImage}}"  (click)="goToRecipe(recipe.id)"></app-tile>
+    </div>
+
+  </div>
+
