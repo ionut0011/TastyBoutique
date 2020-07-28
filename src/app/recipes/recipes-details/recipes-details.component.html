@@ -11,7 +11,7 @@
 
     <div class="form-group">
 
-      <input type="text"
+      <input type="text" class="title"
              placeholder="Enter recipe name"
              [(ngModel)]="name"
              [disabled]="!isEditing">
@@ -20,7 +20,7 @@
 
 
     <div class="form-group">
-      <p *ngIf="!isEditing; else notEditable">{{description}}</p>
+      <p *ngIf="!isEditing; else notEditable"  >{{description}}</p>
 
       <ng-template #notEditable>
         <label> Add ingredients:</label>
@@ -28,9 +28,10 @@
       (keyup.enter)="addIngredients(newIngredient.value)"
       (blur)="addIngredients(newIngredient.value); newIngredient.value='';">
 
-    <button type="button" class="btn" (click)="addIngredients(newIngredient.value)">Add</button>
+      <button type="button" class="btn" (click)="addIngredients(newIngredient.value)">Add</button>
 
-    <ul class="ingred" ><li  *ngFor="let ingredient of ingredients">{{ingredient}} </li></ul>
+      <ul class="ingred" ><li  *ngFor="let ingredient of ingredients">{{ingredient}} </li></ul>
+
 
 
 

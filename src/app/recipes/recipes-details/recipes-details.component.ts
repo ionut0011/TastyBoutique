@@ -20,6 +20,7 @@ export class RecipesDetailsComponent implements OnInit
   filterss = new FormControl();
   filtersList: string[] = ['Gluten free', 'Vegan', 'Sugar free'];
   ingredients:string[] =[];
+  foodordrink:string[] =[];
   photos: Blob[] = [];
 
   constructor(private router: Router) { }
@@ -56,6 +57,7 @@ export class RecipesDetailsComponent implements OnInit
     if (newIngredient!="") {
       this.ingredients.push(newIngredient);
     }
+    console.log(this.ingredients);
   }
 
   handleFileInput(file: FileList) {

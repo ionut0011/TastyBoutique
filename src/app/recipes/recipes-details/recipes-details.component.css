@@ -11,8 +11,23 @@ h1 {
 .ingred{
   display:flex;
   list-style-type:none;
- justify-content: space-around;
+  flex-direction: row;
+  padding-left: 0;
+
+
 }
+
+
+li {
+  justify-content: space-between;
+  display: flex;
+  width: 25%;
+}
+
+.title{
+  margin-bottom: 20px;
+}
+
 
 .filtre{
   position: relative;

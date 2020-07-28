@@ -19,6 +19,13 @@ const routes: Routes = [
   path:'dashboard',
   loadChildren: () => import('./dashboard/dashboard.module').then(m=>m.DashboardModule)
 },
+{
+  path: 'notifications',
+  loadChildren: () =>
+    import('./notifications/notifications.module').then(
+      (m) => m.NotificationsModule
+    ),
+},
 { path: 'list', component: RecipesListComponent },
 { path: 'create-recipe', component: RecipesDetailsComponent },
 {
