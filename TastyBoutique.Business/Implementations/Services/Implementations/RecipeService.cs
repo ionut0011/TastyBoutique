@@ -25,13 +25,15 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         private readonly IMapper _mapper;
         private readonly IIngredientsRepo _ingredients;
         private readonly IFiltersRepo _filters;
+        private readonly ICollectionRepo _collections;
       
-        public RecipeService(IRecipeRepo repo, IMapper mapper, IFiltersRepo filter, IIngredientsRepo ingredient)
+        public RecipeService(IRecipeRepo repo, IMapper mapper, IFiltersRepo filter, IIngredientsRepo ingredient, ICollectionRepo collection)
         {
             _repository = repo;
             _mapper = mapper;
             _ingredients = ingredient;
             _filters = filter;
+            _collections = collection;
         }
 
         public async Task<PaginatedList<RecipeModel>> Get(SearchModel model)
@@ -88,7 +90,7 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
             var recipe = await _repository.GetById(id);
 
             recipe.Update(model.Name, model.Access, model.Notifications, model.Image, model.Link, model.Notifications);
-            
+            await _collections.SetAllByIdRecipe(recipe.Id);
             _repository.Update(recipe);
             await _repository.SaveChanges();
         }
