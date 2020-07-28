@@ -25,5 +25,4 @@
   <ItemGroup>
     <ProjectReference Include="..\TastyBoutique.Persistance\TastyBoutique.Persistance.csproj" />
   </ItemGroup>
-
 </Project>

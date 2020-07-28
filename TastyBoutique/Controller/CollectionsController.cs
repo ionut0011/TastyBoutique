@@ -10,7 +10,7 @@ using TastyBoutique.Business.Recipes.Models.Recipe;
 
 namespace TastyBoutique.API.Controller
 {
-    [Route("api/v1/{idUser}/collection")]
+    [Route("api/v1/collections")]
     [ApiController]
     public class CollectionsController : ControllerBase
     {
@@ -35,7 +35,15 @@ namespace TastyBoutique.API.Controller
             return NoContent();
         }
 
-        [HttpGet]
+        //[HttpPatch]
+        //public async Task<IActionResult> Update([FromBody] SavedRecipeModel model)
+        //{
+        //    await _collectionService.Update(model);
+        //    return NoContent();
+        //}
+
+
+        [HttpGet("{idUser}")]
         public async Task<IActionResult> GetAllByIdUser([FromRoute] Guid idUser)
         {
             var result = await _collectionService.GetAllByIdUser(idUser);

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance.Migrations
 {
     [DbContext(typeof(TastyBoutique_v2Context))]
-    partial class TastyBoutique_v2ContextModelSnapshot : ModelSnapshot
+    [Migration("20200727184659_BoolLogicNotiications")]
+    partial class BoolLogicNotiications
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,8 +118,6 @@ namespace TastyBoutique.Persistance.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
-                    b.HasKey("RecipeId");
-
                     b.HasIndex("RecipeId");
 
                     b.ToTable("RecipeType");
@@ -160,10 +160,10 @@ namespace TastyBoutique.Persistance.Migrations
 
             modelBuilder.Entity("TastyBoutique.Persistance.Models.RecipesFilters", b =>
                 {
-                    b.Property<Guid>("FilterId")
+                    b.Property<Guid>("RecipeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RecipeId")
+                    b.Property<Guid>("FilterId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("RecipeId", "FilterId");
@@ -280,7 +280,12 @@ namespace TastyBoutique.Persistance.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -296,7 +301,6 @@ namespace TastyBoutique.Persistance.Migrations
                         .WithMany("NotificationsNavigation")
                         .HasForeignKey("IdRecipe")
                         .HasConstraintName("FK_Notifications_Recipes")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -306,7 +310,6 @@ namespace TastyBoutique.Persistance.Migrations
                         .WithMany("RecipeComment")
                         .HasForeignKey("IdRecipe")
                         .HasConstraintName("FK_RecipeComment_Recipes")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TastyBoutique.Persistance.Models.User", "IdUserNavigation")
@@ -319,10 +322,9 @@ namespace TastyBoutique.Persistance.Migrations
             modelBuilder.Entity("TastyBoutique.Persistance.Models.RecipeType", b =>
                 {
                     b.HasOne("TastyBoutique.Persistance.Models.Recipes", "Recipe")
-                        .WithOne("RecipeType")
-                        .HasForeignKey("TastyBoutique.Persistance.Models.RecipeType", "RecipeId")
+                        .WithMany()
+                        .HasForeignKey("RecipeId")
                         .HasConstraintName("FK_RecipeType_Recipes")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -338,7 +340,6 @@ namespace TastyBoutique.Persistance.Migrations
                         .WithMany("RecipesFilters")
                         .HasForeignKey("RecipeId")
                         .HasConstraintName("FK_RecipesFilters_Recipes")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -354,7 +355,6 @@ namespace TastyBoutique.Persistance.Migrations
                         .WithMany("RecipesIngredients")
                         .HasForeignKey("RecipeId")
                         .HasConstraintName("FK_RecipesIngredients_Recipes")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -364,7 +364,6 @@ namespace TastyBoutique.Persistance.Migrations
                         .WithMany("SavedRecipes")
                         .HasForeignKey("IdRecipe")
                         .HasConstraintName("FK_SavedRecipes_Recipes")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TastyBoutique.Persistance.Models.User", "IdUserNavigation")

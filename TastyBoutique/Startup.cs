@@ -59,6 +59,7 @@ namespace TastyBoutique
                 .AddScoped<Business.Identity.Services.Interfaces.IAuthenticationService,Business.Identity.Services.Implementations.AuthenticationService>()
                 .AddScoped<ICollectionService, CollectionService>()
                 .AddScoped<ICollectionRepo,CollectionRepo>()
+                .AddScoped<INotificationService, NotificationService>()
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<IIngredientsRepo, IngredientsRepo>()
                 .AddScoped<IIngredientService, IngredientService>()
@@ -104,8 +105,6 @@ namespace TastyBoutique
             app
                 .UseHttpsRedirection()
                 .UseRouting()
-                .UseCors(options => options.AllowAnyOrigin().AllowAnyMethod())
-                .UseAuthentication()
                 .UseAuthorization()
                 .UseEndpoints(endpoints => endpoints.MapControllers());
         }
