@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using TastyBoutique.Business.Collections.Models;
 using TastyBoutique.Business.Collections.Services.Interfaces;
+using TastyBoutique.Business.Recipes.Extensions;
 using TastyBoutique.Business.Recipes.Models.Recipe;
 using TastyBoutique.Persistance;
 using TastyBoutique.Persistance.Models;
@@ -46,10 +47,18 @@ namespace TastyBoutique.Business.Collections.Services.Implementation
             await _repository.SaveChanges();
         }
 
-        public async Task<IList<RecipeModel>> GetAllByIdUser(Guid idUser)
+        public async Task<PaginatedList<RecipeModel>> GetAllByIdUser(Guid idUser, SearchModel model)
         {
-            var result = await _repository.GetAllSavedByIdUser(idUser);
-            return _mapper.Map<IList<RecipeModel>>(result);
+            var spec = model.ToSpecification<Persistance.Models.Recipes>();
+            var result = await _repository.GetAllSavedByIdUser(idUser, spec);
+
+            var count = await _repository.CountAsync();
+
+            return new PaginatedList<RecipeModel>(
+                model.PageIndex,
+                result.Count,
+                count,
+                _mapper.Map<IList<RecipeModel>>(result));
         }
     }
 }

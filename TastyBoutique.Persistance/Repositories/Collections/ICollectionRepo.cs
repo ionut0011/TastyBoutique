@@ -8,9 +8,10 @@ namespace TastyBoutique.Persistance
 {
     public interface ICollectionRepo : IRepository<Models.SavedRecipes>
     {
-        Task<IList<Models.Recipes>> GetAllSavedByIdUser(Guid idUser);
+        Task<IList<Models.Recipes>> GetAllSavedByIdUser(Guid idUser, ISpecification<Models.Recipes> spec);
         Task<IList<Models.Recipes>> GetAllNotificationsByIdUser(Guid idUser);
         Task<Models.SavedRecipes> Get(Guid idUser, Guid idRecipe);
         Task SetAllByIdRecipe(Guid idRecipe);
+        Task<int> CountAsync();
     }
 }
