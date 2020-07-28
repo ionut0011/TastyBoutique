@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 
 namespace TastyBoutique.Persistance.Models
 {
-    public sealed class Recipes : Entity
+    public class Recipes : Entity
     {
         public Recipes(string name, string access, string description, byte[] image, string link, string notifications)
         {
@@ -29,7 +29,8 @@ namespace TastyBoutique.Persistance.Models
         public string Link { get; set; }
         public string Notifications { get; set; }
 
-        
+        public virtual RecipeType RecipeType { get; set; }
+
         public ICollection<Notifications> NotificationsNavigation { get; set; }
         public ICollection<RecipeComment> RecipeComment { get; set; }
         public ICollection<SavedRecipes> SavedRecipes { get; set; }

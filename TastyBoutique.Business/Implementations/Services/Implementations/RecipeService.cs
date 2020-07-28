@@ -37,12 +37,16 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
 
             var entities = await _repository.Get(spec);
             var count = await _repository.CountAsync();
+            var recipes = _mapper.Map<IList<RecipeModel>>(entities);
+
+            foreach (var recipe in recipes)
+                recipe.Type = _repository.GetRecipeTypeById(recipe.Id).Result.Type;
 
             return new PaginatedList<RecipeModel>(
                 model.PageIndex,
                 entities.Count,
                 count,
-                _mapper.Map<IList<RecipeModel>>(entities));
+                recipes);
         }
 
         public async Task<RecipeModel> Add(UpsertRecipeModel model)
@@ -56,7 +60,8 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
             foreach (var y in model.FiltersList)
                 recipe.RecipesFilters.Add(new RecipesFilters(recipe, _mapper.Map<Filters>(y)));
 
-            
+
+            recipe.RecipeType = (model.Type == 1) ? new RecipeType(recipe, "Food") : new RecipeType(recipe, "Drink");
             await _repository.Add(recipe);
             await _repository.SaveChanges();
 
@@ -67,6 +72,7 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         {
             var entity = _repository.GetById(id);
             var recipe = _mapper.Map<RecipeModel>(entity);
+            recipe.Type = entity.Result.RecipeType.Type;
             return recipe;
         }
 

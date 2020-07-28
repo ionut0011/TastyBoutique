@@ -111,7 +111,7 @@ namespace TastyBoutique.Persistance.Models
 
             modelBuilder.Entity<RecipeType>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(d => new {d.RecipeId});
 
                 entity.HasIndex(e => e.RecipeId);
 
@@ -121,9 +121,15 @@ namespace TastyBoutique.Persistance.Models
                     .IsRequired()
                     .HasMaxLength(20);
 
-                entity.HasOne(d => d.Recipe)
-                    .WithMany()
-                    .HasForeignKey(d => d.RecipeId)
+                /*
+                 *  entity.HasOne<Filters>(d => d.Filter)
+                    .WithMany(d => d.RecipesFilters)
+                    .HasForeignKey(d => d.FilterId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RecipesFilters_Filters");
+                 */
+                entity.HasOne<Recipes>(d => d.Recipe)
+                    .WithOne(d => d.RecipeType)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_RecipeType_Recipes");
             });
@@ -264,11 +270,8 @@ namespace TastyBoutique.Persistance.Models
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Name)
+             
+                entity.Property(e => e.Type)
                     .IsRequired()
                     .HasMaxLength(50);
             });

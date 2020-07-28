@@ -28,6 +28,9 @@ using TripLooking.API.Extensions;
 using AuthenticationService = Microsoft.AspNetCore.Authentication.AuthenticationService;
 using IAuthenticationService = Microsoft.AspNetCore.Authentication.IAuthenticationService;
 using TastyBoutique.Business.Identity.Services.Validators;
+using TastyBoutique.Business.Implementations.Services.Interfaces;
+using TastyBoutique.Persistance.Ingredients;
+using TastyBoutique.Persistance.Repositories.Filters;
 
 namespace TastyBoutique
 {
@@ -57,6 +60,11 @@ namespace TastyBoutique
                 .AddScoped<ICollectionService, CollectionService>()
                 .AddScoped<ICollectionRepo,CollectionRepo>()
                 .AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IIngredientsRepo, IngredientsRepo>()
+                .AddScoped<IIngredientService, IngredientService>()
+                .AddScoped<IRecipeCommentService, RecipeCommentService>()
+                .AddScoped<IFiltersRepo, FiltersRepo>()
+                .AddScoped<IFilterService, FilterService>()
                 .AddDbContext<TastyBoutique_v2Context>(config =>
                     config.UseSqlServer(Configuration.GetConnectionString("TastyConnection")));
             services
