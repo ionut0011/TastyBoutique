@@ -14,7 +14,7 @@ namespace TastyBoutique.API.Controller
 {
 
     [ApiController]
-    [Route("api/v1/ingredients")]
+    [Route("api/v1/ingredient")]
 
     public sealed class IngredientsController : Microsoft.AspNetCore.Mvc.Controller
     {

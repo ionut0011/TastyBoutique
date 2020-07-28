@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using FluentValidation;
 using Newtonsoft.Json;
 using TastyBoutique.Business.Collections.Services.Implementation;
 using TastyBoutique.Business.Collections.Services.Interfaces;
@@ -24,8 +25,12 @@ using TastyBoutique.Persistance.Identity;
 using TastyBoutique.Persistance.Models;
 using TastyBoutique.Persistance.Recipes;
 using TripLooking.API.Extensions;
-using Newtonsoft.Json;
+using AuthenticationService = Microsoft.AspNetCore.Authentication.AuthenticationService;
+using IAuthenticationService = Microsoft.AspNetCore.Authentication.IAuthenticationService;
+using TastyBoutique.Business.Identity.Services.Validators;
 using TastyBoutique.Business.Implementations.Services.Interfaces;
+using TastyBoutique.Persistance.Ingredients;
+using TastyBoutique.Persistance.Repositories.Filters;
 
 namespace TastyBoutique
 {
@@ -56,6 +61,11 @@ namespace TastyBoutique
                 .AddScoped<ICollectionRepo,CollectionRepo>()
                 .AddScoped<INotificationService, NotificationService>()
                 .AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IIngredientsRepo, IngredientsRepo>()
+                .AddScoped<IIngredientService, IngredientService>()
+                .AddScoped<IRecipeCommentService, RecipeCommentService>()
+                .AddScoped<IFiltersRepo, FiltersRepo>()
+                .AddScoped<IFilterService, FilterService>()
                 .AddDbContext<TastyBoutique_v2Context>(config =>
                     config.UseSqlServer(Configuration.GetConnectionString("TastyConnection")));
             services
@@ -70,7 +80,8 @@ namespace TastyBoutique
                 .AddHttpContextAccessor()
                 .AddSwagger()
                 .AddControllers();
-            services.AddControllers().AddXmlDataContractSerializerFormatters();
+
+            services.AddTransient<IValidator<UserRegisterModel>, UserRegisterModelValidator>();
 
 
 
@@ -93,9 +104,7 @@ namespace TastyBoutique
 
             app
                 .UseHttpsRedirection()
-                .UseStaticFiles()
                 .UseRouting()
-                .UseAuthentication()
                 .UseAuthorization()
                 .UseEndpoints(endpoints => endpoints.MapControllers());
         }

@@ -23,12 +23,17 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
     {
         private readonly IRecipeRepo _repository;  
         private readonly IMapper _mapper;
+        private readonly IIngredientsRepo _ingredients;
+        private readonly IFiltersRepo _filters;
+        private readonly ICollectionRepo _collections;
       
-        public RecipeService(IRecipeRepo repo, IMapper mapper)
+        public RecipeService(IRecipeRepo repo, IMapper mapper, IFiltersRepo filter, IIngredientsRepo ingredient, ICollectionRepo collection)
         {
             _repository = repo;
             _mapper = mapper;
-      
+            _ingredients = ingredient;
+            _filters = filter;
+            _collections = collection;
         }
 
         public async Task<PaginatedList<RecipeModel>> Get(SearchModel model)
@@ -37,25 +42,35 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
 
             var entities = await _repository.Get(spec);
             var count = await _repository.CountAsync();
+            var recipes = _mapper.Map<IList<RecipeModel>>(entities);
+
+            foreach (var recipe in recipes)
+                recipe.Type = _repository.GetRecipeTypeById(recipe.Id).Result.Type;
+            
 
             return new PaginatedList<RecipeModel>(
                 model.PageIndex,
                 entities.Count,
                 count,
-                _mapper.Map<IList<RecipeModel>>(entities));
+                recipes);
         }
 
         public async Task<RecipeModel> Add(UpsertRecipeModel model)
         {
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
-
             foreach (var x in model.IngredientsList)
-                recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, _mapper.Map<Ingredients>(x)));
-            
+            {
+                var ingredient = await _ingredients.GetByName(x.Name);
+                recipe.RecipesIngredients.Add((ingredient == null) ? new RecipesIngredients(recipe, _mapper.Map<Ingredients>(x)) : new RecipesIngredients(recipe,ingredient) );
+            }
 
             foreach (var y in model.FiltersList)
-                recipe.RecipesFilters.Add(new RecipesFilters(recipe, _mapper.Map<Filters>(y)));
+            {
+                var filter = await _filters.GetByName(y.Name);
+                recipe.RecipesFilters.Add( (filter == null ) ? new RecipesFilters(recipe, _mapper.Map<Filters>(y)) : new RecipesFilters(recipe, filter));
+            }
 
+            recipe.RecipeType = (model.Type == 1) ? new RecipeType(recipe, "Food") : new RecipeType(recipe, "Drink");
             await _repository.Add(recipe);
             await _repository.SaveChanges();
 
@@ -66,6 +81,7 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         {
             var entity = _repository.GetById(id);
             var recipe = _mapper.Map<RecipeModel>(entity);
+            recipe.Type = entity.Result.RecipeType.Type;
             return recipe;
         }
 
@@ -74,7 +90,7 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
             var recipe = await _repository.GetById(id);
 
             recipe.Update(model.Name, model.Access, model.Notifications, model.Image, model.Link, model.Notifications);
-
+            await _collections.SetAllByIdRecipe(recipe.Id);
             _repository.Update(recipe);
             await _repository.SaveChanges();
         }

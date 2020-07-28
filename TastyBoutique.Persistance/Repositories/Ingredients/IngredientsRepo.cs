@@ -21,6 +21,7 @@ namespace TastyBoutique.Persistance.Ingredients
             => await this.context.Ingredients.CountAsync();
 
         public async Task<Models.Ingredients> GetByName(string Name)
-            => await this.context.Ingredients.Where(i => i.Name.Equals(Name)).FirstAsync();
+            => await this.context.Ingredients.Where(i => i.Name.Equals(Name)).FirstOrDefaultAsync();
+
     }
 }

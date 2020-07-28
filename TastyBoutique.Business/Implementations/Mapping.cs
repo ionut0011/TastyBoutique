@@ -6,6 +6,7 @@ using TastyBoutique.Business.Collections.Models;
 using TastyBoutique.Business.Implementations.Models.Filter;
 using TastyBoutique.Business.Recipes.Models.Ingredients;
 using TastyBoutique.Business.Recipes.Models.Recipe;
+using TastyBoutique.Business.Recipes.Models.RecipeComment;
 using TastyBoutique.Persistance;
 using TastyBoutique.Persistance.Models;
 
@@ -27,6 +28,9 @@ namespace TastyBoutique.Business.Recipes
 
             CreateMap<SavedRecipes, SavedRecipeModel>();
             CreateMap<SavedRecipeModel, SavedRecipes>();
+
+            CreateMap<RecipeComment, RecipeCommentModel>();
+            CreateMap<CreateRecipeCommentModel, RecipeComment>();
         }
     }
 }

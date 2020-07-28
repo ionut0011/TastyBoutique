@@ -31,11 +31,16 @@ namespace TastyBoutique.Persistance.Recipes
                 .Where(i => i.RecipeId == id)
                 .ToListAsync();
         public async Task<Models.Ingredients> GetByName(string Name)
-            => await this.context.Ingredients.Where(i => i.Name.Equals(Name)).FirstAsync();
+            => await this.context.Ingredients.Where(i => i.Name.Equals(Name)).FirstOrDefaultAsync();
 
         public async Task<Models.Recipes> GetByIdWithComments(Guid id)
           => await this.context.Recipes
-          .Include(recipe => recipe.RecipeComment)
-          .FirstAsync(recipe => recipe.Id == id);
+              .Include(recipe => recipe.RecipeComment)
+              .FirstOrDefaultAsync(recipe => recipe.Id == id);
+
+        public async Task<Models.RecipeType> GetRecipeTypeById(Guid id)
+            => await this.context.RecipeType
+                .FirstOrDefaultAsync(recipeType => recipeType.RecipeId == id);
+
     }
 }

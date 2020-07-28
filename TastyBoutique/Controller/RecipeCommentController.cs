@@ -15,7 +15,6 @@ namespace TastyBoutique.API.Controller
     
     [ApiController]
     [Route("api/v1/recipe")]
-    [Authorize]
     public sealed class RecipeCommentController : ControllerBase
     {
         private readonly IRecipeCommentService _commentsService;
@@ -42,10 +41,10 @@ namespace TastyBoutique.API.Controller
             return Created(result.IdRecipe.ToString(),null);
         }
 
-        [HttpDelete("{commentId}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid IdRecipe, [FromRoute] Guid commentId)
+        [HttpDelete("{recipeId}/{commentId}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid recipeId, [FromRoute] Guid commentId)
         {
-            await _commentsService.Delete(IdRecipe, commentId);
+            await _commentsService.Delete(recipeId, commentId);
 
             return NoContent();
         }

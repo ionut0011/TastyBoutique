@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TastyBoutique.Persistance.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class UpdatingDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,8 +24,7 @@ namespace TastyBoutique.Persistance.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    Description = table.Column<string>(maxLength: 100, nullable: true)
+                    Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,8 +67,7 @@ namespace TastyBoutique.Persistance.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    Description = table.Column<string>(maxLength: 50, nullable: false)
+                    Type = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -93,7 +91,7 @@ namespace TastyBoutique.Persistance.Migrations
                         column: x => x.IdRecipe,
                         principalTable: "Recipes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -105,6 +103,7 @@ namespace TastyBoutique.Persistance.Migrations
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_RecipesFilters", x => new { x.RecipeId, x.FilterId });
                     table.ForeignKey(
                         name: "FK_RecipesFilters_Filters",
                         column: x => x.FilterId,
@@ -116,7 +115,7 @@ namespace TastyBoutique.Persistance.Migrations
                         column: x => x.RecipeId,
                         principalTable: "Recipes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -128,6 +127,7 @@ namespace TastyBoutique.Persistance.Migrations
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_RecipesIngredients", x => new { x.RecipeId, x.IngredientId });
                     table.ForeignKey(
                         name: "FK_RecipesIngredients_Ingredients",
                         column: x => x.IngredientId,
@@ -139,7 +139,7 @@ namespace TastyBoutique.Persistance.Migrations
                         column: x => x.RecipeId,
                         principalTable: "Recipes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -151,12 +151,13 @@ namespace TastyBoutique.Persistance.Migrations
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_RecipeType", x => x.RecipeID);
                     table.ForeignKey(
                         name: "FK_RecipeType_Recipes",
                         column: x => x.RecipeID,
                         principalTable: "Recipes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -168,8 +169,8 @@ namespace TastyBoutique.Persistance.Migrations
                     IdUserType = table.Column<Guid>(nullable: false),
                     Username = table.Column<string>(maxLength: 50, nullable: false),
                     Email = table.Column<string>(maxLength: 50, nullable: false),
-                    Status = table.Column<string>(maxLength: 50, nullable: false),
-                    Password = table.Column<string>(maxLength: 50, nullable: true)
+                    Status = table.Column<string>(maxLength: 50, nullable: true),
+                    Password = table.Column<string>(maxLength: 250, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -206,7 +207,7 @@ namespace TastyBoutique.Persistance.Migrations
                         column: x => x.IdRecipe,
                         principalTable: "Recipes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RecipeComment_User",
                         column: x => x.IdUser,
@@ -221,7 +222,8 @@ namespace TastyBoutique.Persistance.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     IdRecipe = table.Column<Guid>(nullable: false),
-                    IdUser = table.Column<Guid>(nullable: false)
+                    IdUser = table.Column<Guid>(nullable: false),
+                    NeedUpdate = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -231,7 +233,7 @@ namespace TastyBoutique.Persistance.Migrations
                         column: x => x.IdRecipe,
                         principalTable: "Recipes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SavedRecipes_User",
                         column: x => x.IdUser,

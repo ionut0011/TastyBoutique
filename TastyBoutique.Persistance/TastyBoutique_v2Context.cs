@@ -33,7 +33,7 @@ namespace TastyBoutique.Persistance.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLExpress;Database=TastyBoutique_v3;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLExpress;Database=TastyBoutique_v4;Trusted_Connection=True;");
             }
         }
 
@@ -75,7 +75,7 @@ namespace TastyBoutique.Persistance.Models
                 entity.HasOne(d => d.IdRecipeNavigation)
                     .WithMany(p => p.NotificationsNavigation)
                     .HasForeignKey(d => d.IdRecipe)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Notifications_Recipes");
             });
 
@@ -99,7 +99,7 @@ namespace TastyBoutique.Persistance.Models
                 entity.HasOne(d => d.IdRecipeNavigation)
                     .WithMany(p => p.RecipeComment)
                     .HasForeignKey(d => d.IdRecipe)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_RecipeComment_Recipes");
 
                 entity.HasOne(d => d.IdUserNavigation)
@@ -111,7 +111,7 @@ namespace TastyBoutique.Persistance.Models
 
             modelBuilder.Entity<RecipeType>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(d => new {d.RecipeId});
 
                 entity.HasIndex(e => e.RecipeId);
 
@@ -121,10 +121,9 @@ namespace TastyBoutique.Persistance.Models
                     .IsRequired()
                     .HasMaxLength(20);
 
-                entity.HasOne(d => d.Recipe)
-                    .WithMany()
-                    .HasForeignKey(d => d.RecipeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                entity.HasOne<Recipes>(d => d.Recipe)
+                    .WithOne(d => d.RecipeType)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_RecipeType_Recipes");
             });
 
@@ -165,7 +164,7 @@ namespace TastyBoutique.Persistance.Models
                 entity.HasOne<Recipes>(d => d.Recipe)
                     .WithMany(d => d.RecipesFilters)
                     .HasForeignKey(d => d.RecipeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_RecipesFilters_Recipes");
             });
 
@@ -186,7 +185,7 @@ namespace TastyBoutique.Persistance.Models
                 entity.HasOne<Recipes>(d => d.Recipe)
                     .WithMany(d => d.RecipesIngredients)
                     .HasForeignKey(d => d.RecipeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_RecipesIngredients_Recipes");
             });
 
@@ -201,7 +200,7 @@ namespace TastyBoutique.Persistance.Models
                 entity.HasOne(d => d.IdRecipeNavigation)
                     .WithMany(p => p.SavedRecipes)
                     .HasForeignKey(d => d.IdRecipe)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_SavedRecipes_Recipes");
 
                 entity.HasOne(d => d.IdUserNavigation)
@@ -264,11 +263,8 @@ namespace TastyBoutique.Persistance.Models
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Name)
+             
+                entity.Property(e => e.Type)
                     .IsRequired()
                     .HasMaxLength(50);
             });
