@@ -13,6 +13,6 @@ namespace TastyBoutique.Persistance.Ingredients
         Task<int> CountAsync();
         Task<Models.Ingredients> GetByName(string Name);
 
-
+        Task<IList<Models.Ingredients>> GetIngredientsAsList();
     }
 }

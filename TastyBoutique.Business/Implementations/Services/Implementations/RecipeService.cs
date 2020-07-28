@@ -23,12 +23,15 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
     {
         private readonly IRecipeRepo _repository;  
         private readonly IMapper _mapper;
+        private readonly IIngredientsRepo _ingredients;
+        private readonly IFiltersRepo _filters;
       
-        public RecipeService(IRecipeRepo repo, IMapper mapper)
+        public RecipeService(IRecipeRepo repo, IMapper mapper, IFiltersRepo filter, IIngredientsRepo ingredient)
         {
             _repository = repo;
             _mapper = mapper;
-      
+            _ingredients = ingredient;
+            _filters = filter;
         }
 
         public async Task<PaginatedList<RecipeModel>> Get(SearchModel model)
@@ -53,14 +56,19 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         public async Task<RecipeModel> Add(UpsertRecipeModel model)
         {
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
-
+            var ingredients = _ingredients.GetIngredientsAsList().Result;
+            var filters = _filters.GetFiltersAsList().Result;
             foreach (var x in model.IngredientsList)
-                recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, _mapper.Map<Ingredients>(x)));
-            
+            {
+                if (!ingredients.Contains(_mapper.Map<Ingredients>(x)))
+                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, _mapper.Map<Ingredients>(x)));
+            }
 
             foreach (var y in model.FiltersList)
-                recipe.RecipesFilters.Add(new RecipesFilters(recipe, _mapper.Map<Filters>(y)));
-
+            {
+                if(!filters.Contains(_mapper.Map<Filters>(y)))
+                    recipe.RecipesFilters.Add(new RecipesFilters(recipe, _mapper.Map<Filters>(y)));
+            }
 
             recipe.RecipeType = (model.Type == 1) ? new RecipeType(recipe, "Food") : new RecipeType(recipe, "Drink");
             await _repository.Add(recipe);
