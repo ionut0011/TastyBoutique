@@ -160,10 +160,10 @@ namespace TastyBoutique.Persistance.Migrations
 
             modelBuilder.Entity("TastyBoutique.Persistance.Models.RecipesFilters", b =>
                 {
-                    b.Property<Guid>("FilterId")
+                    b.Property<Guid>("RecipeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RecipeId")
+                    b.Property<Guid>("FilterId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("RecipeId", "FilterId");
