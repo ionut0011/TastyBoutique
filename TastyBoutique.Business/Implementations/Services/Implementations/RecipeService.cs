@@ -56,18 +56,16 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         public async Task<RecipeModel> Add(UpsertRecipeModel model)
         {
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
-            var ingredients = _ingredients.GetIngredientsAsList().Result;
-            var filters = _filters.GetFiltersAsList().Result;
             foreach (var x in model.IngredientsList)
             {
-                if (!ingredients.Contains(_mapper.Map<Ingredients>(x)))
-                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, _mapper.Map<Ingredients>(x)));
+                var ingredient = await _ingredients.GetByName(x.Name);
+                recipe.RecipesIngredients.Add((ingredient == null) ? new RecipesIngredients(recipe, _mapper.Map<Ingredients>(x)) : new RecipesIngredients(recipe,ingredient) );
             }
 
             foreach (var y in model.FiltersList)
             {
-                if(!filters.Contains(_mapper.Map<Filters>(y)))
-                    recipe.RecipesFilters.Add(new RecipesFilters(recipe, _mapper.Map<Filters>(y)));
+                var filter = await _filters.GetByName(y.Name);
+                recipe.RecipesFilters.Add( (filter == null ) ? new RecipesFilters(recipe, _mapper.Map<Filters>(y)) : new RecipesFilters(recipe, filter));
             }
 
             recipe.RecipeType = (model.Type == 1) ? new RecipeType(recipe, "Food") : new RecipeType(recipe, "Drink");
@@ -90,7 +88,7 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
             var recipe = await _repository.GetById(id);
 
             recipe.Update(model.Name, model.Access, model.Notifications, model.Image, model.Link, model.Notifications);
-
+            
             _repository.Update(recipe);
             await _repository.SaveChanges();
         }

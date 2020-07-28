@@ -18,8 +18,9 @@ namespace TastyBoutique.Persistance.Repositories.Filters
 
         public async Task<int> CountAsync()
             => await this.context.Filters.CountAsync();
-        public async Task<IList<Models.Filters>> GetFiltersAsList()
-            => await this.context.Filters.ToListAsync();
+
+        public async Task<Models.Filters> GetByName(string Name)
+            => await this.context.Filters.Where(i => i.Name.Equals(Name)).FirstOrDefaultAsync();
 
     }
 }

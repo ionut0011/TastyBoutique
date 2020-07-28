@@ -12,7 +12,9 @@ namespace TastyBoutique.Persistance.Repositories.Filters
 
         Task<int> CountAsync();
 
-        Task<IList<Models.Filters>> GetFiltersAsList();
+      
+
+        Task<Models.Filters> GetByName(string Name);
 
     }
 }
