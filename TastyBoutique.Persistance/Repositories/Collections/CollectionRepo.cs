@@ -15,9 +15,9 @@ namespace TastyBoutique.Persistance
     {
         public CollectionRepo(TastyBoutique_v2Context context) : base(context) { }
 
-        public async Task<IList<Models.Recipes>> GetAllSavedByIdUser(Guid idUser)
+        public async Task<IList<Models.Recipes>> GetAllSavedByIdUser(Guid idUser, ISpecification<Models.Recipes> spec)
             =>  await (from recipe in context.SavedRecipes where recipe.IdUser == idUser
-                select recipe.IdRecipeNavigation).ToListAsync();
+                select recipe.IdRecipeNavigation).ExeSpec(spec).ToListAsync();
 
         public async Task<IList<Models.Recipes>> GetAllNotificationsByIdUser(Guid idUser)
             =>  await (from recipe in context.SavedRecipes
@@ -35,5 +35,8 @@ namespace TastyBoutique.Persistance
             foreach (var savedRecipe in savedRecipes)
                 savedRecipe.NeedUpdate = true;
         }
+
+        public async Task<int> CountAsync()
+            => await this.context.Recipes.CountAsync();
     }
 }

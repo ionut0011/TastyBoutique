@@ -25,7 +25,7 @@ namespace TastyBoutique.API.Controller
         public async Task<IActionResult> GetAllByIdUser([FromRoute] Guid idUser)
         {
             var result = await _notificationService.GetAllByIdUser(idUser);
-            return Ok(result);
+            return Ok(result.Results);
         }
 
         [HttpPatch]

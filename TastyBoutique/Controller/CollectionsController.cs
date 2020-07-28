@@ -44,10 +44,10 @@ namespace TastyBoutique.API.Controller
 
 
         [HttpGet("{idUser}")]
-        public async Task<IActionResult> GetAllByIdUser([FromRoute] Guid idUser)
+        public async Task<IActionResult> GetAllByIdUser([FromRoute] Guid idUser, [FromQuery]SearchModel model)
         {
-            var result = await _collectionService.GetAllByIdUser(idUser);
-            return Ok(result);
+            var result = await _collectionService.GetAllByIdUser(idUser, model);
+            return Ok(result.Results);
         }
 
     }
