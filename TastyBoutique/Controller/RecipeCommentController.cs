@@ -41,10 +41,10 @@ namespace TastyBoutique.API.Controller
             return Created(result.IdRecipe.ToString(),null);
         }
 
-        [HttpDelete("comments/{commentId}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid IdRecipe, [FromRoute] Guid commentId)
+        [HttpDelete("{recipeId}/{commentId}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid recipeId, [FromRoute] Guid commentId)
         {
-            await _commentsService.Delete(IdRecipe, commentId);
+            await _commentsService.Delete(recipeId, commentId);
 
             return NoContent();
         }
