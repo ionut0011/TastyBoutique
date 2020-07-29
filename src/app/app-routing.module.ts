@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { RecipesDetailsComponent } from './recipes/recipes-details/recipes-details.component';
 import { RecipesListComponent } from './recipes/recipes-list/recipes-list.component';
+import { LoginComponent } from './login/login/login.component';
+import { RegisterComponent } from './login/register/register.component';
 
 const routes: Routes = [
 
@@ -12,9 +14,11 @@ const routes: Routes = [
   redirectTo: 'login',
 },
 {
-  path:'login',
+  path:'login2',
   loadChildren: () => import('./login/login.module').then(m=>m.LoginModule)
 },
+{ path: 'register', component: RegisterComponent },
+{ path: 'login', component: LoginComponent },
 {
   path:'dashboard',
   loadChildren: () => import('./dashboard/dashboard.module').then(m=>m.DashboardModule)

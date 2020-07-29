@@ -23,20 +23,20 @@
       <div class="card">
         <div class="card-header">
 
-          <span class="login-label">{{isForgotten? 'Change Password': 'Log in'}} </span>
+          <span class="login-label">Register </span>
 
 
         </div>
         <div class="card-body">
           <form>
-            <div class="input-group form-group"  *ngIf="isLogin">
+            <div class="input-group form-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-user"></i></span>
               </div>
               <input type="text" [(ngModel)]="username" name="username"  class="form-control" placeholder="username">
 
             </div>
-            <div class="input-group form-group" *ngIf="isLogin">
+            <div class="input-group form-group" >
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-key"></i></span>
               </div>
@@ -44,48 +44,39 @@
             </div>
 
 
-
-
-            <ng-container *ngIf="isForgotten">
-
               <div class="input-group form-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-key"></i></span>
+                  <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                 </div>
-              <input type="text" [(ngModel)]="password" name="password" class="form-control" placeholder="new password" />
+              <input type="text" [(ngModel)]="fullname" name="fullname" class="form-control" placeholder="fullname" />
               </div>
 
               <div class="input-group form-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-key"></i></span>
+                  <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                 </div>
-                <input type="text" [(ngModel)]="password" name="newpassword" class="form-control"  placeholder="new password">
+                <input type="number" [(ngModel)]="age" name="age" class="form-control" min="14" max="50" placeholder="age">
+              </div>
+              <div class="input-group form-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                </div>
+              <input type="email" [(ngModel)]="email" name="email" class="form-control" placeholder="email" />
               </div>
 
-            </ng-container>
+              <span class="admin">
+                <input type="checkbox" (click)="setAdmin()">
+                <p>I want to be an admin</p>
+              </span>
 
 
-            <span class="not-registered" >
-              <input type="checkbox" (click)="forgotPassword()" />
-              <p>{{isForgotten? 'Go back to log in page': 'Change Password'}}</p>
-            </span>
+
 
             <div class="form-group">
-              <input type="submit" value="Login"  class="btn float-right login_btn" (click)="clickedLogin()" type="button">
+              <input type="submit" value="Register"  class="btn float-right login_btn" (click)="clickedLogin()" type="button">
             </div>
 
           </form>
-
-
-        </div>
-
-        <div class="registerdiv">
-          <div>
-          <h3>Not registered?</h3>
-        </div>
-        <div>
-          <input type="submit" value="Register" class="regbtn" (click)="goToPage('register')">
-        </div>
         </div>
 
       </div>

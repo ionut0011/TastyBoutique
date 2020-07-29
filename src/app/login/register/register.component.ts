@@ -1,30 +1,31 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import {Router} from '@angular/router'
-
-
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class LoginComponent implements OnInit,OnDestroy {
+
+export class RegisterComponent implements OnInit,OnDestroy {
 
   public username:string=null;
+  public email:string=null;
   public password:string=null;
+  public fullname:string=null;
+  public age:number=null;
 
-  isForgotten=false;
-  isLogin=true;
+  isAdmin=true;
+
 
   constructor(private router: Router) { }
 
 
 
-  forgotPassword(): void{
-    this.isForgotten=!this.isForgotten;
-    this.isLogin=!this.isLogin;
-
-
+  setAdmin(): void {
+    this.isAdmin = !this.isAdmin;
   }
+
+
 
   ngOnInit(): void {
   }
@@ -45,3 +46,4 @@ export class LoginComponent implements OnInit,OnDestroy {
 
 
 }
+
