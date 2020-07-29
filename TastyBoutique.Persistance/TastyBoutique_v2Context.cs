@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-
 namespace TastyBoutique.Persistance.Models
 {
     public partial class TastyBoutique_v2Context : DbContext
@@ -16,26 +14,29 @@ namespace TastyBoutique.Persistance.Models
         }
 
         public virtual DbSet<Filters> Filters { get; set; }
+
         public virtual DbSet<Ingredients> Ingredients { get; set; }
+
         public virtual DbSet<Notifications> Notifications { get; set; }
+
         public virtual DbSet<RecipeComment> RecipeComment { get; set; }
+
         public virtual DbSet<RecipeType> RecipeType { get; set; }
+
         public virtual DbSet<Recipes> Recipes { get; set; }
+
         public virtual DbSet<RecipesFilters> RecipesFilters { get; set; }
+
         public virtual DbSet<RecipesIngredients> RecipesIngredients { get; set; }
+
         public virtual DbSet<SavedRecipes> SavedRecipes { get; set; }
+
         public virtual DbSet<Student> Student { get; set; }
+
         public virtual DbSet<User> User { get; set; }
+
         public virtual DbSet<UserType> UserType { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLExpress;Database=TastyBoutique_v4;Trusted_Connection=True;");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -269,9 +270,8 @@ namespace TastyBoutique.Persistance.Models
                     .HasMaxLength(50);
             });
 
-            OnModelCreatingPartial(modelBuilder);
+           
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

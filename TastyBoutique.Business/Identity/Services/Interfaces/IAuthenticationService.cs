@@ -12,5 +12,7 @@ namespace TastyBoutique.Business.Identity.Services.Interfaces
         Task<AuthenticationResponse> Authenticate(AuthenticationRequest userAuthenticationModel);
 
         Task<UserModel> Register(UserRegisterModel userRegisterModel);
+
+        Task<UserModel> ForgotPassword(UserNewPasswordModel userNewPasswordModel);
     }
 }

@@ -69,7 +69,8 @@ namespace TastyBoutique
                 .AddDbContext<TastyBoutique_v2Context>(config =>
                     config.UseSqlServer(Configuration.GetConnectionString("TastyConnection")));
             services
-                .AddAutoMapper(c =>
+                .AddAutoMapper(
+                    c =>
                     {
                         c.AddProfile<Mapping>();
                         c.AddProfile<IdentityMappingProfile>();

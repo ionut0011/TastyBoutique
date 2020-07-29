@@ -43,5 +43,15 @@ namespace TastyBoutique.API.Controller
 
             return Created(result.IdUser.ToString(), null);
         }
+
+        [HttpPost("recover")]
+        public async Task<IActionResult> ForgotPassword([FromBody] UserNewPasswordModel model)
+        {
+            var result = await _authenticationService.ForgotPassword(model);
+            if (result == null)
+                return BadRequest();
+
+            return Ok(result);
+        }
     }
 }

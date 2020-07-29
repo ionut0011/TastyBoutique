@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TastyBoutique.Business.Identity.Models
+﻿namespace TastyBoutique.Business.Identity.Models
 {
-   public sealed  class AuthenticationResponse
+   public sealed class AuthenticationResponse
     {
-        
-        public AuthenticationResponse(string Username, string Token, string Email)
+        public AuthenticationResponse(string username, string token, string email)
         {
-            this.Username = Username;
-            this.Token = Token;
-            this.Email = Email;
+            this.Username = username;
+            this.Token = token;
+            this.Email = email;
         }
 
         public string Username { get; private set; }

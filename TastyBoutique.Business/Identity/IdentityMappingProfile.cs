@@ -9,6 +9,7 @@ namespace TastyBoutique.Business.Identity
         public IdentityMappingProfile()
         {
             CreateMap<User, UserModel>();
+            CreateMap<User, UserRegisterModel>();
         }
 
     }
