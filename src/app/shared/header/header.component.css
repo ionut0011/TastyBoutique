@@ -27,9 +27,12 @@ header {
   }
 
   @media (max-width: 900px) {
-    #project-title {
-      display: none;
+    img {
+      height: 40px;
+      margin-left: 10px;
     }
+
   }
+
 
 

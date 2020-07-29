@@ -9,8 +9,11 @@ import {Router} from '@angular/router'
 })
 export class LoginComponent implements OnInit,OnDestroy {
 
-  email:string;
-  password:string;
+  public username:string=null;
+  public email:string=null;
+  public password:string=null;
+  public fullname:string=null;
+  public age:number=null;
 
   isSetRegistered = false;
   isAdmin = false;
