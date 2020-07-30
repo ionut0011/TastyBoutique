@@ -66,7 +66,7 @@ namespace TastyBoutique.Business.Identity.Services.Implementations
             }
             var newUser = new User(userRegisterModel.Username, userRegisterModel.Email, _passwordHasher.CreateHash(userRegisterModel.Password))
             {
-                IdStudentNavigation = new Student(userRegisterModel.studentModel.Name, userRegisterModel.studentModel.Age, userRegisterModel.Email),
+                IdStudentNavigation = new Student(userRegisterModel.Name, userRegisterModel.Age, userRegisterModel.Email),
                 IdUserTypeNavigation = new UserType("User")
             };
 
