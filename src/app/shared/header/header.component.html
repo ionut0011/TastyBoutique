@@ -14,16 +14,12 @@
     </div>
   </nav>
 
-  <section class="flex-row-end">
+  <section class="flex-row-end" *ngIf="userService.email | async as username">
     <img src="../../assets/images/profile.png">
     <h3 class="flex-row-end">
       Welcome, {{username}}
     </h3>
-    <img
-      class="logout"
-      src="../../assets/images/logout.svg"
-      (click)="logout()"
-    />
+    <input type="submit" value="logout"   (click)="logout()" type="button">
   </section>
 
 </header>

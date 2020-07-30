@@ -69,6 +69,15 @@ background-color: #FFC312;
 width: 100px;
 }
 
+
+.login_btn2{
+  color: black;
+  background-color: #FFC312;
+  width: 200px;
+  }
+
+
+
 .login_btn:hover{
 color: black;
 background-color: white;

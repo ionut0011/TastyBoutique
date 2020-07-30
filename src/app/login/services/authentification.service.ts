@@ -21,4 +21,8 @@ export class AuthentificationService {
     return this.httpClient.post(`${this.endpoint}/login`, data);
   }
 
+  public recover(data: unknown): Observable<unknown> {
+    return this.httpClient.post(`${this.endpoint}/recover`, data);
+  }
+
 }
