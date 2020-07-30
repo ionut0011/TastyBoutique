@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "trips"
+  "defaultProject": "trips",
+  "cli": {
+    "analytics": "73aec160-ef71-43aa-98f3-da6dc46464fc"
+  }
 }

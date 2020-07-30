@@ -16,7 +16,7 @@ export class RegisterComponent implements OnDestroy {
   public username:string=null;
   public email:string=null;
   public password:string=null;
-  public fullname:string=null;
+  public name:string=null;
   public age:number=null;
   public isAdmin:boolean=true;
 
@@ -40,7 +40,7 @@ export class RegisterComponent implements OnDestroy {
   {
     const registerModel:RegisterModel={
 
-    fullname:this.fullname,
+    name:this.name,
     age:this.age,
     username:this.username,
     email:this.email,
