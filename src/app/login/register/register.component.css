@@ -75,11 +75,36 @@ background-color: white;
 }
 
 .regbtn{
-  color: black;
-  background-color: rgba(0,0,0,0.5) !important;
-width: 100px;
-float: right;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  color: #262729;
+
+
+}
+
+.regbtn:hover{
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  color: white;
+
 
 }
 
 
+h3{
+  font-family: 'Numans', sans-serif;
+
+}
+
+
+
+
+
+.registerdiv
+{
+  display: inline-flex;
+
+}
