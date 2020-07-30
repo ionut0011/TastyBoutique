@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TastyBoutique.Business.Collections.Services.Implementation;
 using TastyBoutique.Business.Collections.Services.Interfaces;
@@ -46,8 +47,10 @@ namespace TastyBoutique
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services
                 .AddMvc();
+            
             services
                 .AddSwaggerGen();
             services
@@ -100,11 +103,15 @@ namespace TastyBoutique
                 .UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TastyBoutique API"));
 
             app
+                .UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader())
                 .UseHttpsRedirection()
+                .UseStaticFiles()
                 .UseRouting()
+               
                 .UseAuthentication()
                 .UseAuthorization()
                 .UseEndpoints(endpoints => endpoints.MapControllers());
+
         }
 
         private void AddAuthentication(IServiceCollection services)
