@@ -42,5 +42,21 @@ namespace TastyBoutique.Persistance.Recipes
             => await this.context.RecipeType
                 .FirstOrDefaultAsync(recipeType => recipeType.RecipeId == id);
 
+        public async Task<List<Models.Recipes>> GetRecipiesByIngredients(IList<Models.Ingredients> ingredients)
+        {
+            var ingredientsId = ingredients.Select(ingredient => ingredient.Id).ToList();
+
+            //var result = context.Recipes
+            //    .Include(recipe => recipe.RecipesIngredients)
+            //    .Where(recipe => recipe.RecipesIngredients.All(ingredient => ingredientsId.Contains(ingredient.IngredientId)))
+            //    .ToListAsync();
+            var result = context.Recipes
+                .Include(recipe => recipe.RecipesIngredients)
+                .Where(x=> ingredientsId.All(x.RecipesIngredients.Select(ri=>ri.IngredientId).Contains))
+                .ToListAsync();
+
+            return await result;
+        }
+
     }
 }
