@@ -83,9 +83,6 @@ namespace TastyBoutique
                 .AddControllers();
 
             services.AddTransient<IValidator<UserRegisterModel>, UserRegisterModelValidator>();
-
-
-
             AddAuthentication(services);
 
 
@@ -106,6 +103,8 @@ namespace TastyBoutique
             app
                 .UseHttpsRedirection()
                 .UseRouting()
+                .UseCors(options => options.AllowAnyOrigin().AllowAnyMethod())
+                .UseAuthentication()
                 .UseAuthorization()
                 .UseEndpoints(endpoints => endpoints.MapControllers());
         }
