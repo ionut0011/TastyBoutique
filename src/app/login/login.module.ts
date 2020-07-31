@@ -8,8 +8,9 @@ import {SharedModule} from '../shared/shared.module';
 import { RegisterComponent } from './register/register.component'
 import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { RecoverComponent } from './recover/recover.component';
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
+  declarations: [LoginComponent, RegisterComponent, RecoverComponent],
   imports: [
     CommonModule,
     LoginRoutingModule,

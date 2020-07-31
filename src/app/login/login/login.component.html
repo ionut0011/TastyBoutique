@@ -48,38 +48,22 @@
 
 
 
-            <ng-container *ngIf="isForgotten">
 
-              <div class="input-group form-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-user"></i></span>
-                </div>
-              <input type="text" [(ngModel)]="email" name="email" class="form-control" placeholder="email" />
-              </div>
+            <div class="registerdiv">
 
-              <div class="input-group form-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-key"></i></span>
-                </div>
-                <input type="text" [(ngModel)]="newPassword" name="newpassword" class="form-control"  placeholder="new password">
-              </div>
-
-            </ng-container>
+            <div>
+              <input type="submit" value="Forgot password?" class="regbtn" (click)="goToPage('recover')">
+            </div>
+            </div>
 
 
-            <span class="not-registered" >
-              <input type="checkbox" (click)="forgotPassword()" />
-              <p>{{isForgotten? 'Go back to log in page': 'Forgot password?'}}</p>
-            </span>
 
-            <div class="form-group" *ngIf="isLogin">
+
+            <div class="form-group">
               <input type="submit" value="Login"  class="btn float-right login_btn" (click)="clickedLogin()" type="button">
             </div>
 
-            <div class="form-group" *ngIf="isForgotten ">
-              <input type="submit" value="ChangePassword"  class="btn float-right login_btn2" (click)="clickedLogin()" [disabled]="click"  type="button">
 
-            </div>
 
 
 

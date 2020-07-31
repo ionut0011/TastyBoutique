@@ -7,16 +7,16 @@ import { RecoverModel } from '../models/recover.model';
 import { UserService } from '../../shared/user.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-recover',
+  templateUrl: './recover.component.html',
+  styleUrls: ['./recover.component.css']
 })
-export class LoginComponent implements OnInit,OnDestroy {
+
+export class RecoverComponent implements OnInit,OnDestroy {
   private subscription:Subscription;
   public email:string=null;
-  public password:string=null;
-  isForgotten=false;
-  isLogin=true;
+  public newPassword:string=null;
+
 
   constructor(
     private readonly authentificationService:AuthentificationService,
@@ -26,14 +26,6 @@ export class LoginComponent implements OnInit,OnDestroy {
       this.subscription=new Subscription();
      }
 
-
-
-  forgotPassword(): void{
-    this.isForgotten=!this.isForgotten;
-    this.isLogin=!this.isLogin;
-
-
-  }
 
   ngOnInit(): void {
   }
@@ -45,18 +37,20 @@ export class LoginComponent implements OnInit,OnDestroy {
 
   clickedLogin():void{
 
-    const loginModel:LoginModel={
 
-    email:this.email,
-    password:this.password,
-    };
+      const recoverModel:RecoverModel={
 
-    this.subscription.add(
-      this.authentificationService.login(loginModel).subscribe( (data)=>{
-        this.router.navigate(['dashboard']);
-        this.userService.email.next(loginModel.email);
-    })
-    );
+        email:this.email,
+        newPassword:this.newPassword,
+        };
+
+        this.subscription.add(
+          this.authentificationService.recover(recoverModel).subscribe( (data)=>{
+            this.router.navigate(['login']);
+
+            //this.userService.email.next(recoverModel.email);
+        })
+        );
 
   }
 
@@ -66,3 +60,4 @@ export class LoginComponent implements OnInit,OnDestroy {
 
 
 }
+

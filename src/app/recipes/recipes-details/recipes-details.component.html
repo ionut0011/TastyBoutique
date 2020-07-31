@@ -40,11 +40,23 @@
         <option *ngFor="let filter of filtersList" [value]="filter">{{filter}}</option>
       </select>
     </span>
+    <br>
 
-        <textarea class="recipe-description"
-                  contenteditable="true"
-                  placeholder="Enter recipe description">{{description}}</textarea>
-      </ng-template>
+    <label>Select type:</label>
+    <span class="filtre">
+    <select [(ngModel)]="type1" (change)="selected()" >
+
+      <option selected="" *ngFor="let typees of typeesList" [value]="typees" >{{typees}}</option>
+    </select>
+
+    </span>
+
+
+
+    <textarea class="recipe-description"
+      contenteditable="true"
+      placeholder="Enter recipe description">{{description}}</textarea>
+    </ng-template>
 
     </div>
 
