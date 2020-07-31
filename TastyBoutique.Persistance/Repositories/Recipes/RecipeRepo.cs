@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper.Internal;
 using LinqBuilder.Core;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance.Recipes
@@ -12,7 +14,7 @@ namespace TastyBoutique.Persistance.Recipes
     public sealed class RecipeRepo : Repository<Models.Recipes>, IRecipeRepo
     {
         public RecipeRepo(TastyBoutique_v2Context context) : base(context) { }
-
+        private int count = 0;
         public async Task<IList<Models.Recipes>> Get(ISpecification<Models.Recipes> spec)
             => await this.context.Recipes.ExeSpec(spec).ToListAsync();
 
@@ -44,18 +46,16 @@ namespace TastyBoutique.Persistance.Recipes
 
         public async Task<List<Models.Recipes>> GetRecipiesByIngredients(IList<Models.Ingredients> ingredients)
         {
-            var ingredientsId = ingredients.Select(ingredient => ingredient.Id).ToList();
+            var ingredientsIds = ingredients.Select(ingredient => ingredient.Id).ToList();
 
-            //var result = context.Recipes
-            //    .Include(recipe => recipe.RecipesIngredients)
-            //    .Where(recipe => recipe.RecipesIngredients.All(ingredient => ingredientsId.Contains(ingredient.IngredientId)))
-            //    .ToListAsync();
-            var result = context.Recipes
-                .Include(recipe => recipe.RecipesIngredients)
-                .Where(x=> ingredientsId.All(x.RecipesIngredients.Select(ri=>ri.IngredientId).Contains))
+            var getRecipes = await this.context.Recipes
+                .Include(r => r.RecipesIngredients)
                 .ToListAsync();
 
-            return await result;
+            var getSearchedRecipes = getRecipes.Where(x =>
+                x.RecipesIngredients.Select(y => y.IngredientId).Intersect(ingredientsIds).ToList().Count == ingredientsIds.Count).ToList();
+          
+            return getSearchedRecipes;
         }
 
     }
