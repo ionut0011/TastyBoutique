@@ -16,10 +16,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 200px;
-  float: right;
-  position: absolute;
-  left: 250px;
+
+  min-height: calc(100vh - var(--header-height));
 }
 
 app-tile :hover {

@@ -1,104 +1,84 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<div class="container">
+  <div class="d-flex justify-content-center justify-content-md-end h-100">
+    <div class="card">
+      <div class="card-header">
 
+        <span class="login-label">{{isForgotten? 'Change Password': 'Log in'}} </span>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Login Page</title>
-
-
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-</head>
-
-
- <body>
-  <div class="container" style="margin-left: 300px">
-    <div class="d-flex justify-content-center h-100">
-      <div class="card">
-        <div class="card-header">
-
-          <span class="login-label">{{isForgotten? 'Change Password': 'Log in'}} </span>
-
-
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="input-group form-group"  *ngIf="isLogin">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-user"></i></span>
-              </div>
-              <input type="text" [(ngModel)]="email" name="email"  class="form-control" placeholder="email">
-
-            </div>
-            <div class="input-group form-group" *ngIf="isLogin">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-key"></i></span>
-              </div>
-              <input type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="password">
-
-
-
-            </div>
-
-
-
-
-            <ng-container *ngIf="isForgotten">
-
-              <div class="input-group form-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-user"></i></span>
-                </div>
-              <input type="text" [(ngModel)]="email" name="email" class="form-control" placeholder="email" />
-              </div>
-
-              <div class="input-group form-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-key"></i></span>
-                </div>
-                <input type="text" [(ngModel)]="newPassword" name="newpassword" class="form-control"  placeholder="new password">
-              </div>
-
-            </ng-container>
-
-
-            <span class="not-registered" >
-              <input type="checkbox" (click)="forgotPassword()" />
-              <p>{{isForgotten? 'Go back to log in page': 'Forgot password?'}}</p>
-            </span>
-
-            <div class="form-group" *ngIf="isLogin">
-              <input type="submit" value="Login"  class="btn float-right login_btn" (click)="clickedLogin()" type="button">
-            </div>
-
-            <div class="form-group" *ngIf="isForgotten ">
-              <input type="submit" value="ChangePassword"  class="btn float-right login_btn2" (click)="clickedLogin()" [disabled]="click"  type="button">
-
-            </div>
-
-
-
-
-          </form>
-
-
-        </div>
-
-        <div class="registerdiv">
-          <div>
-          <h3>Not registered?</h3>
-        </div>
-        <div>
-          <input type="submit" value="Register" class="regbtn" (click)="goToPage('register')">
-        </div>
-        </div>
 
       </div>
+      <div class="card-body">
+        <form>
+          <div class="input-group form-group"  *ngIf="isLogin">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input type="text" [(ngModel)]="email" name="email"  class="form-control" placeholder="email">
+
+          </div>
+          <div class="input-group form-group" *ngIf="isLogin">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-key"></i></span>
+            </div>
+            <input type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="password">
+
+
+
+          </div>
+
+
+
+
+          <ng-container *ngIf="isForgotten">
+
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-user"></i></span>
+              </div>
+            <input type="text" [(ngModel)]="email" name="email" class="form-control" placeholder="email" />
+            </div>
+
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-key"></i></span>
+              </div>
+              <input type="text" [(ngModel)]="newPassword" name="newpassword" class="form-control"  placeholder="new password">
+            </div>
+
+          </ng-container>
+
+
+          <span class="not-registered" >
+            <input type="checkbox" (click)="forgotPassword()" />
+            <p>{{isForgotten? 'Go back to log in page': 'Forgot password?'}}</p>
+          </span>
+
+          <div class="form-group" *ngIf="isLogin">
+            <input type="submit" value="Login"  class="btn float-right login_btn" (click)="clickedLogin()" type="button">
+          </div>
+
+          <div class="form-group" *ngIf="isForgotten ">
+            <input type="submit" value="ChangePassword"  class="btn float-right login_btn2" (click)="clickedLogin()" [disabled]="click"  type="button">
+
+          </div>
+
+
+
+
+        </form>
+
+
+      </div>
+
+      <div class="registerdiv">
+        <div>
+        <h3>Not registered?</h3>
+      </div>
+      <div>
+        <input type="submit" value="Register" class="regbtn" (click)="goToPage('register')">
+      </div>
+      </div>
+
     </div>
   </div>
-  </body>
+</div>

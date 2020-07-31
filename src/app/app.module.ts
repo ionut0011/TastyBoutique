@@ -8,7 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { FormBuilder, FormControl, FormGroup, FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
