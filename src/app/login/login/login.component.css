@@ -6,12 +6,12 @@ font-family: 'Numans', sans-serif;
 }
 
 p{
-  color: white;
+  color: black;
 }
 
 .login-label{
   font-family: 'Numans', sans-serif;
-  color: white;
+  color: rgb(0, 0, 0);
   font-size: 150%;
   text-align: center;
 }
@@ -26,7 +26,7 @@ height: 570px;
 margin-top: 25px;
 
 width: 400px;
-background-color: rgba(0,0,0,0.5) !important;
+background-color: #ffa60bc4 !important
 }
 
 .social_icon span{
@@ -51,10 +51,10 @@ top: -45px;
 }
 
 .input-group-prepend span{
-width: 50px;
-background-color: #FFC312;
-color: black;
-border:0 !important;
+  width: 50px;
+  background-color: #161b1bd1;
+  color: #edfbff;
+  border: 0 !important;
 }
 
 input:focus{
@@ -64,15 +64,15 @@ box-shadow: 0 0 0 0 !important;
 }
 
 .login_btn{
-color: black;
-background-color: #FFC312;
-width: 100px;
+  color: white;
+  background-color: #161b1bd1;
+  width: 100px;
 }
 
 
 .login_btn2{
-  color: black;
-  background-color: #FFC312;
+  color: white;
+  background-color: #161b1bd1;
   width: 200px;
   }
 
