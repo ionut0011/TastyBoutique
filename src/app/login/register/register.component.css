@@ -22,12 +22,12 @@ align-content: center;
 }
 
 .card{
-height: 570px;
-margin-top: 10px;
-margin-bottom: auto;
-width: 400px;
-background-color: rgba(0,0,0,0.5) !important;
-}
+  height: 570px;
+  margin-top: 40px;
+
+  width: 400px;
+  background-color: rgba(0,0,0,0.5) !important;
+  }
 
 .social_icon span{
 font-size: 60px;

@@ -19,7 +19,7 @@ body {
   padding: 200px;
   float: right;
   position: absolute;
-  left: 450px;
+  left: 250px;
 }
 
 app-tile :hover {
