@@ -11,7 +11,7 @@
 
         </div>
         <div class="card-body">
-          <form>
+          <form [formGroup]="formGroup">
 
 
             <ng-container >
@@ -20,14 +20,14 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fa fa-user"></i></span>
                 </div>
-              <input type="text" [(ngModel)]="email" name="email" class="form-control" placeholder="email" />
+              <input type="text" formControlName="email"  name="email" class="form-control" placeholder="email" />
               </div>
 
               <div class="input-group form-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fa fa-key"></i></span>
                 </div>
-                <input type="password" [(ngModel)]="newPassword" name="newpassword" class="form-control"  placeholder="new password">
+                <input type="password" formControlName="newPassword" name="newpassword" class="form-control"  placeholder="new password">
               </div>
 
             </ng-container>

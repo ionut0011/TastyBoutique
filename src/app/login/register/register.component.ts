@@ -4,31 +4,36 @@ import { RegisterModel } from '../models/register.model';
 import { AuthentificationService } from '../services/authentification.service';
 import {Router} from '@angular/router'
 import { Subscription } from 'rxjs';
-import { UserService } from '../../shared/user.service';
+import { UserService } from '../../shared/services';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 
-export class RegisterComponent implements OnDestroy {
-  private subscription:Subscription;
-  public username:string=null;
-  public email:string=null;
-  public password:string=null;
-  public name:string=null;
-  public age:number=null;
-  public isAdmin:boolean=true;
+export class RegisterComponent  {
 
+
+  public isAdmin:boolean=true;
+  public formGroup: FormGroup;
 
 
 
   constructor(
     private readonly authentificationService:AuthentificationService,
     private router:Router,
-    private readonly userService:UserService
+    private readonly userService:UserService,
+    private readonly formBuilder: FormBuilder
     )
-    { this.subscription=new Subscription();}
+    { this.formGroup = this.formBuilder.group({
+      username: new FormControl(null),
+      email: new FormControl(null),
+      password: new FormControl(null),
+      name: new FormControl(null),
+      age: new FormControl(null),
+    });
+    this.userService.username.next('');}
 
 
 
@@ -38,25 +43,15 @@ export class RegisterComponent implements OnDestroy {
 
   authenticate() :void
   {
-    const registerModel:RegisterModel={
 
-    name:this.name,
-    age:this.age,
-    username:this.username,
-    email:this.email,
-    password:this.password,
-    };
+    const data: RegisterModel = this.formGroup.getRawValue();
 
-    this.subscription.add(
-      this.authentificationService.register(registerModel).subscribe( (data)=>{
-        this.router.navigate(['dashboard']);
-        this.userService.email.next(registerModel.email);
-    })
-    );
-  }
+    this.authentificationService.register(data).subscribe(() => {
+      this.userService.username.next(data.email);
+      this.router.navigate(['dashboard']);
+    });
 
-  ngOnDestroy(): void{
-      this.subscription.unsubscribe();
+
   }
 
 

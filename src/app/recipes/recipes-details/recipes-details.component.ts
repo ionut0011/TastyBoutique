@@ -1,90 +1,128 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import {FormControl} from '@angular/forms';
-import {  Input } from '@angular/core';
+import { Component, OnInit,OnDestroy} from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
+import { RecipesModel, RecipessModel } from '../models';
+import { RecipeService } from '../services/recipe.service';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-recipes-details',
   templateUrl: './recipes-details.component.html',
   styleUrls: ['./recipes-details.component.css']
 })
-export class RecipesDetailsComponent implements OnInit
+export class RecipesDetailsComponent implements OnInit,OnDestroy
 {
-  link:string
-  notifications:string
+
+
   fileToUpload: any;
   imageUrl: any;
-  name: string;
-  description: string;
-  isPrivate: boolean;
+
+  formGroup: FormGroup;
+
   isAdmin: boolean;
-  isEditing: boolean;
-  filtersList: string[] = ['Gluten free', 'Vegan', 'Sugar free'];
-  ingredients:string[] =[];
-  foodordrink:string[] =[];
+  isAddMode: boolean;
   photos: Blob[] = [];
-  selectedLevel;
-  type1:string;
-  typees:number;
+
+  private routeSub: Subscription = new Subscription();
+
+  get description(): string {
+    return this.formGroup.get('description').value;
+  }
+
+  get isFormDisabled(): boolean {
+    return this.formGroup.disabled;
+  }
+
+
+  filtersList: string[] = ['Gluten free', 'Vegan', 'Sugar free'];
+  ingredientsList:string[] =[];
+  type:number;
+
+
+  foodordrink:string[] =[];
+  type1:FormControl=new FormControl();
+
   typeesList: string[] = ['Food', 'Drink'];
 
 
 
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private service: RecipeService
+    ) { }
 
   ngOnInit(): void {
-    if (this.router.url === '/create-recipe') {
-      this.isEditing = true;
 
+    this.formGroup = this.formBuilder.group({
+      id: new FormControl(),
+      name: new FormControl(),
+      description: new FormControl(),
+      access: new FormControl(false)
+    })
+
+
+
+    if (this.router.url === '/create-recipe') {
+      this.isAddMode = true;
+    } else {
+
+      //Getting id from url
+      this.routeSub = this.activatedRoute.params.subscribe(params => {
+        //Getting details for the trip with the id found
+
+        this.service.get(params['id']).subscribe((data: RecipesModel) => {
+         // data.filtersList.push();
+         // data.ingredientsList.push();
+         // data.type=this.type;
+          this.formGroup.patchValue(data);
+          console.log(data);
+
+
+        })
+
+        this.formGroup.disable();
+      });
+      this.isAddMode = false;
     }
-    else {
-      this.name = "Add recipes";
-      this.description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
-      this.isEditing = false;
-    }
-    this.isPrivate = true;
     this.isAdmin = true;
+
 
   }
 
+  ngOnDestroy(): void{
+    this.routeSub.unsubscribe();
 
-  selected(){
-
-    if(this.type1=='Food')
-    {
-      this.typees=1;
-      console.log(this.typees);
-    }
-    else{
-      this.typees=0;
-      console.log(this.typees);
-
-    }
-
-
-   }
-
-
-
+  }
 
   startUpdating() {
-    this.isEditing = true;
+    this.formGroup.enable();
   }
 
   save() {
+      console.log(this.formGroup.getRawValue());
+      var finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
+
+      finalRecipeModel.ingredientsList=this.ingredientsList;
+      finalRecipeModel.filtersList=this.filtersList;
+      finalRecipeModel.type=this.type;
+    if (this.isAddMode) {
+
+
+      this.service.post(finalRecipeModel).subscribe();
+      this.router.navigate(['list']);
+    } else {
+      this.service.patch(finalRecipeModel).subscribe();
+    }
+
+
     this.photos.push(this.imageUrl);
     this.imageUrl = null;
-    this.isEditing = false;
-  }
-
-
-
-  addIngredients(newIngredient: string) {
-    if (newIngredient!="") {
-      this.ingredients.push(newIngredient);
-    }
-    console.log(this.ingredients);
+    this.formGroup.disable();
   }
 
   handleFileInput(file: FileList) {
@@ -96,5 +134,29 @@ export class RecipesDetailsComponent implements OnInit
     }
     reader.readAsDataURL(this.fileToUpload);
   }
+
+
+  selected(){
+
+    if(this.type1.value=='Food')
+    {
+      this.type=1;
+      console.log(this.type);
+    }
+    else{
+      this.type=0;
+      console.log(this.type);
+
+    }
+   }
+
+
+  addIngredients(newIngredient: string) {
+    if (newIngredient!="") {
+      this.ingredientsList.push(newIngredient);
+    }
+    console.log(this.ingredientsList);
+  }
+
 
 }

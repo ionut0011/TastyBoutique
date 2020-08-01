@@ -13,7 +13,7 @@ const routes: Routes = [
     component: RecipesListComponent,
   },
   {
-    path: 'details',
+    path: 'details/:id',
     pathMatch: 'full',
     component: RecipesDetailsComponent,
   },

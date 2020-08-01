@@ -4,8 +4,8 @@ import { AuthentificationService } from '../services/authentification.service';
 import { Subscription } from 'rxjs';
 import { LoginModel } from '../models/login.model';
 import { RecoverModel } from '../models/recover.model';
-import { UserService } from '../../shared/user.service';
-
+import { UserService } from '../../shared/services';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-recover',
   templateUrl: './recover.component.html',
@@ -13,7 +13,8 @@ import { UserService } from '../../shared/user.service';
 })
 
 export class RecoverComponent implements OnInit,OnDestroy {
-  private subscription:Subscription;
+
+  public formGroup: FormGroup;
   public email:string=null;
   public newPassword:string=null;
 
@@ -21,9 +22,15 @@ export class RecoverComponent implements OnInit,OnDestroy {
   constructor(
     private readonly authentificationService:AuthentificationService,
     private router: Router,
-    private readonly userService:UserService
+    private readonly userService:UserService,
+    private readonly formBuilder: FormBuilder
     ) {
-      this.subscription=new Subscription();
+      this.formGroup = this.formBuilder.group({
+        email: new FormControl(null),
+        newPassword: new FormControl(null),
+      });
+      this.userService.username.next('');
+
      }
 
 
@@ -32,26 +39,23 @@ export class RecoverComponent implements OnInit,OnDestroy {
 
   ngOnDestroy():void
   {
-    console.log("clicked login");
+    console.log("clicked recover");
   }
 
   clickedLogin():void{
 
 
     console.log('s-a apasat change password');
-      const recoverModel:RecoverModel={
+    const data: RecoverModel = this.formGroup.getRawValue();
 
-        email:this.email,
-        newPassword:this.newPassword,
-        };
+    this.authentificationService.recover(data).subscribe(() => {
 
-        this.subscription.add(
-          this.authentificationService.recover(recoverModel).subscribe( (data)=>{
-            this.router.navigate(['login']);
+      this.router.navigate(['login']);
+    });
 
-            //this.userService.email.next(recoverModel.email);
-        })
-        );
+
+
+
 
   }
 

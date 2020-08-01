@@ -10,7 +10,11 @@ export class AuthentificationService {
 
   public endpoint: string =
 
+<<<<<<< HEAD
     'http://tastyboutique.tk:5341/api/v1/auth';
+=======
+    'http://www.tastyboutique.tk:5341/api/v1/auth';
+>>>>>>> e973232b96f6a9adb410106c265b1baec283cf65
   constructor(private readonly httpClient: HttpClient) {}
 
 

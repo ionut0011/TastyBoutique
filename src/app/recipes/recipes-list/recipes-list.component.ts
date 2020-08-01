@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Recipes } from '../models/recipes';
+import { RecipesModel, RecipessModel } from '../models';
+import { RecipeService } from '../services/recipe.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -9,60 +10,23 @@ import { Recipes } from '../models/recipes';
   styleUrls: ['./recipes-list.component.css'],
 })
 export class RecipesListComponent implements OnInit {
-  public recipesList: Recipes[];
+  public recipeList: RecipessModel;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private service: RecipeService) {}
 
   public ngOnInit(): void {
-    this.recipesList = [
-      {
-        id: '1',
-        name: 'Paste fksdhfkjdshfkjhsdkjfhsdljf',
-        description:
-          'Delicios',
-        backgroundImage: '../../assets/images/paste.jpg',
-        isPrivate: false,
-      },
 
-      {
-        id: '2',
-        name: 'Clatite',
-        description: 'Yummy',
-        backgroundImage: '../../assets/images/clatite.jpg',
-        isPrivate: false,
-      },
+    this.service.getAll().subscribe((data: RecipessModel) => {
+      this.recipeList = data;
+      console.log(this.recipeList);
+    });
 
-      {
-        id: '3',
-        name: 'Smoothie cu banana',
-        description:
-          'Cea mai buna bautura',
-        backgroundImage: '../../assets/images/bananasmoothie.jpg',
-        isPrivate: false,
-      },
-      {
-        id: '4',
-        name: 'Supa de cartofi',
-        description:
-          '',
-        backgroundImage: '../../assets/images/soup.jpg',
-        isPrivate: false,
-      },
-
-      {
-        id: '5',
-        name: 'Pizza',
-        description: 'Yoummy',
-        backgroundImage: '../../assets/images/pizza.jpg',
-        isPrivate: false,
-      },
-
-
-    ];
   }
 
   goToRecipe(id: string): void {
     console.log(id);
-    this.router.navigate(['/recipes/details']);
+    this.router.navigate([`/recipes/details/${id}`]);
   }
 }

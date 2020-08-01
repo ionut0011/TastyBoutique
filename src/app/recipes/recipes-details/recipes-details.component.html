@@ -2,15 +2,20 @@
 
   <section class="form-section">
 
+    <form [formGroup]="formGroup">
+
     <div class="form-group">
 
-      <input type="text" class="title" placeholder="Enter recipe name" [(ngModel)]="name" [disabled]="!isEditing">
+      <input type="text" class="title"
+        placeholder="Enter recipe name"
+        formControlName="name"
+      >
     </div>
 
 
 
     <div class="form-group">
-      <p *ngIf="!isEditing; else notEditable">{{description}}</p>
+      <p *ngIf="isFormDisabled; else notEditable">{{description}}</p>
 
       <ng-template #notEditable>
         <label> Add ingredients:</label>
@@ -19,9 +24,7 @@
 
         <button type="button" class="btn" (click)="addIngredients(newIngredient.value)">Add</button>
 
-        <ul class="ingred">
-          <li *ngFor="let ingredient of ingredients">{{ingredient}} </li>
-        </ul>
+      <ul class="ingred" ><li  *ngFor="let ingredient of ingredientsList">{{ingredient}} </li></ul>
 
 
 
@@ -34,26 +37,28 @@
         </span>
         <br>
 
-        <label>Select type:</label>
-        <span class="filtre">
-          <select [(ngModel)]="type1" (change)="selected()">
+    <label>Select type:</label>
+    <span class="filtre">
+    <select [formControl]="type1" (change)="selected()" >
 
             <option selected="" *ngFor="let typees of typeesList" [value]="typees">{{typees}}</option>
           </select>
 
         </span>
 
-
-
-        <textarea class="recipe-description" contenteditable="true"
-          placeholder="Enter recipe description">{{description}}</textarea>
-      </ng-template>
+    <textarea class="recipe-description"
+      contenteditable="true"
+      placeholder="Enter recipe description"
+      formControlName="description"
+      >{{description}}</textarea>
+    </ng-template>
 
     </div>
 
     <div class="form-group">
       <label> Is this a private recipe</label>
-      <input type="checkbox" [disabled]="!isEditing" placeholder="Trip name" [(ngModel)]="isPrivate">
+      <input type="checkbox"
+             formControlName="access">
     </div>
     <br>
 
@@ -68,7 +73,8 @@
           <label *ngIf="photos.length === 0">No photos available</label>
         </ng-template>
 
-        <div class="add-photos" *ngIf="isEditing">
+        <div class="add-photos"
+          *ngIf="!isFormDisabled">
           <div class="photo-file-container">
 
             <img class="photo-file" *ngFor="let photo of photos" [src]="photo">
@@ -78,20 +84,25 @@
           <img class="photo-file" [src]="imageUrl">
         </div>
 
-        <div class="added-photos" *ngIf="!isEditing">
-          <img class="photo-file" *ngFor="let photo of photos" [src]="photo">
+        <div class="added-photos"
+          *ngIf="isFormDisabled">
+          <img class="photo-file"
+               *ngFor="let photo of photos"
+               [src]="photo">
         </div>
       </div>
 
     </div>
     <br>
 
-    <button type="button" *ngIf="!isEditing; else saveButton" (click)="startUpdating()"><span> Update
-        Recipe</span></button>
+    <button type="button"
+            *ngIf="isFormDisabled; else saveButton"
+            (click)="startUpdating()"><span> Update Recipe</span></button>
     <ng-template #saveButton>
       <button type="button" (click)="save()"><span>Save Recipe</span></button>
     </ng-template>
 
+  </form>
   </section>
 
 
