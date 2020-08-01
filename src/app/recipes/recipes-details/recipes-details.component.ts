@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {FormControl} from '@angular/forms';
-
+import {  Input } from '@angular/core';
 
 @Component({
   selector: 'app-recipes-details',
@@ -10,6 +10,8 @@ import {FormControl} from '@angular/forms';
 })
 export class RecipesDetailsComponent implements OnInit
 {
+  link:string
+  notifications:string
   fileToUpload: any;
   imageUrl: any;
   name: string;
@@ -17,17 +19,24 @@ export class RecipesDetailsComponent implements OnInit
   isPrivate: boolean;
   isAdmin: boolean;
   isEditing: boolean;
-  filterss = new FormControl();
   filtersList: string[] = ['Gluten free', 'Vegan', 'Sugar free'];
   ingredients:string[] =[];
   foodordrink:string[] =[];
   photos: Blob[] = [];
+  selectedLevel;
+  type1:string;
+  typees:number;
+  typeesList: string[] = ['Food', 'Drink'];
+
+
+
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
     if (this.router.url === '/create-recipe') {
       this.isEditing = true;
+
     }
     else {
       this.name = "Add recipes";
@@ -38,6 +47,24 @@ export class RecipesDetailsComponent implements OnInit
     this.isAdmin = true;
 
   }
+
+
+  selected(){
+
+    if(this.type1=='Food')
+    {
+      this.typees=1;
+      console.log(this.typees);
+    }
+    else{
+      this.typees=0;
+      console.log(this.typees);
+
+    }
+
+
+   }
+
 
 
 

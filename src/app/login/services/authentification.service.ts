@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 export class AuthentificationService {
 
   public endpoint: string =
-    'http://35.228.39.39:5341/api/v1/auth';
+
+    'http://www.tastyboutique.tk/api/v1/auth';
   constructor(private readonly httpClient: HttpClient) {}
 
 

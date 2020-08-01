@@ -5,6 +5,7 @@ import { RecipesDetailsComponent } from './recipes/recipes-details/recipes-detai
 import { RecipesListComponent } from './recipes/recipes-list/recipes-list.component';
 import { LoginComponent } from './login/login/login.component';
 import { RegisterComponent } from './login/register/register.component';
+import { RecoverComponent } from './login/recover/recover.component';
 
 const routes: Routes = [
 
@@ -18,6 +19,7 @@ const routes: Routes = [
   loadChildren: () => import('./login/login.module').then(m=>m.LoginModule)
 },
 { path: 'register', component: RegisterComponent },
+{ path: 'recover', component: RecoverComponent },
 { path: 'login', component: LoginComponent },
 {
   path:'dashboard',
