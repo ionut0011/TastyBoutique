@@ -9,6 +9,9 @@ import { RecipesDetailsComponent } from './recipes-details/recipes-details.compo
 import { RecipesListComponent } from './recipes-list/recipes-list.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon'
 
 
 @NgModule({
@@ -20,7 +23,11 @@ import { MatSelectModule } from '@angular/material/select';
     SharedModule,
     MatFormFieldModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule
+
   ],
   exports:[
     RecipesDetailsComponent,

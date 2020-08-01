@@ -1,12 +1,41 @@
-  <div class="page-container">
-    <h1>
-
-    </h1>
-
-
-    <div class="cards">
-      <app-tile  *ngFor="let recipe of recipesList" label="{{recipe.name}}" background="{{recipe.backgroundImage}}"  (click)="goToRecipe(recipe.id)"></app-tile>
-    </div>
+<div class="container" >
+  <div class="header">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 
   </div>
+  <div class="row">
+    <div *ngFor="let recipe of recipesList" class="col-12 col-md-4" >
+      <div class="card">
+        <img src="{{recipe.backgroundImage}}">
+        <div class="text">
+          <h1 class="food">
+            <h1>{{recipe.name}}</h1>
+          </h1>
+
+          <div class="icon">
+            <a href="#"><i class="fa fa-heart-o"></i></a>
+          </div>
+          <div class="details">
+          <i class="fa fa-clock-o"> 15 Mins</i>
+          <i class="fa fa-users"> Serves 2</i>
+        </div>
+
+          <div class="stars">
+            <li>
+              <a href="#"><i class="fa fa-star"></i></a>
+              <a href="#"><i class="fa fa-star"></i></a>
+              <a href="#"><i class="fa fa-star"></i></a>
+              <a href="#"><i class="fa fa-star"></i></a>
+              <a href="#"><i class="fa fa-star-o"></i></a>
+            </li>
+          </div>
+          <p class="info">{{recipe.description}}</p>
+          <a href="#" class="btn">Let's Cook!</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
 

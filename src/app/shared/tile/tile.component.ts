@@ -16,7 +16,7 @@ export class TileComponent implements OnInit {
     if (this.background) {
       this.background = "url('" + this.background + "')";
     } else {
-      this.background = "linear-gradient(to bottom right, #f21b51, #fab6b6)";
+      this.background = "linear-gradient(to right bottom, rgb(252 195 81), rgb(250, 182, 182))";
     }
 
 

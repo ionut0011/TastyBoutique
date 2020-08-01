@@ -17,10 +17,10 @@ export class RecipesListComponent implements OnInit {
     this.recipesList = [
       {
         id: '1',
-        name: 'Mancarica de cartofi',
+        name: 'Paste fksdhfkjdshfkjhsdkjfhsdljf',
         description:
           'Delicios',
-        backgroundImage: '../../assets/images/food.jpg',
+        backgroundImage: '../../assets/images/paste.jpg',
         isPrivate: false,
       },
 
@@ -28,7 +28,7 @@ export class RecipesListComponent implements OnInit {
         id: '2',
         name: 'Clatite',
         description: 'Yummy',
-        backgroundImage: '../../assets/images/food.jpg',
+        backgroundImage: '../../assets/images/clatite.jpg',
         isPrivate: false,
       },
 
@@ -37,7 +37,7 @@ export class RecipesListComponent implements OnInit {
         name: 'Smoothie cu banana',
         description:
           'Cea mai buna bautura',
-        backgroundImage: '../../assets/images/food.jpg',
+        backgroundImage: '../../assets/images/bananasmoothie.jpg',
         isPrivate: false,
       },
       {
@@ -45,15 +45,15 @@ export class RecipesListComponent implements OnInit {
         name: 'Supa de cartofi',
         description:
           '',
-        backgroundImage: '../../assets/images/food.jpg',
+        backgroundImage: '../../assets/images/soup.jpg',
         isPrivate: false,
       },
 
       {
         id: '5',
-        name: 'Sarmale',
-        description: 'E foarte frumos aici sa mai venim. Briza e minunata',
-        backgroundImage: '../../assets/images/food.jpg',
+        name: 'Pizza',
+        description: 'Yoummy',
+        backgroundImage: '../../assets/images/pizza.jpg',
         isPrivate: false,
       },
 
