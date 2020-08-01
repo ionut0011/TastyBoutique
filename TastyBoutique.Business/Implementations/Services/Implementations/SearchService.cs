@@ -37,17 +37,18 @@ namespace TastyBoutique.Business.Implementations.Services.Implementations
             return result;
         }
 
-        public async Task<PaginatedList<RecipeModel>> GetRecipiesByIngredients(IList<string> ingredientsList)
+        public async Task<PaginatedList<RecipeModel>> GetRecipiesByIngredients(IList<string> ingredientsList, SearchModel model)
         {
             var ingredients = await this.MapIngredients(ingredientsList);
 
             var result = await _recipeRepo.GetRecipiesByIngredients(ingredients);
 
             return new PaginatedList<RecipeModel>(
-                1,
+                model.PageIndex,
                 result.Count,
                 result.Count,
                 _mapper.Map<IList<RecipeModel>>(result));
         }
+
     }
 }

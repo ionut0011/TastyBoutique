@@ -24,7 +24,7 @@ namespace TastyBoutique.API.Controller
         [HttpGet]
         public async Task<IActionResult> Search([FromQuery] IList<string> ingredientsList, [FromQuery]SearchModel model)
         {
-            var result = await _searchService.GetRecipiesByIngredients(ingredientsList);
+            var result = await _searchService.GetRecipiesByIngredients(ingredientsList, model);
             return Ok(result.Results);
         }
     }

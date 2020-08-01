@@ -11,6 +11,6 @@ namespace TastyBoutique.Business.Implementations.Services.Interfaces
     public interface ISearchService
     {
         public Task<IList<Ingredients>> MapIngredients(IList<string> ingredientsList);
-        public Task<PaginatedList<RecipeModel>> GetRecipiesByIngredients(IList<string> ingredientsList);
+        public Task<PaginatedList<RecipeModel>> GetRecipiesByIngredients(IList<string> ingredientsList, SearchModel model);
     }
 }
