@@ -26,7 +26,8 @@
             </li>
           </div>
           <p class="info">{{recipe.description}}</p>
-          <a href="#" class="btn lets-cook-btn">Let's Cook!</a>
+
+          <div class="btn lets-cook-btn" (click)="goToRecipe(recipe.id)">Let's Cook!</div>
         </div>
       </div>
 
