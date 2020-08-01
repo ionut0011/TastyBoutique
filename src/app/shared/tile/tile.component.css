@@ -5,17 +5,13 @@
   margin-left: 20px;
   float: left;
   cursor: pointer;
-
 }
 
-  .tile .header {
-    height: 180px;
-    color: rgb(0, 0, 0);
-    font-weight: 300;
-
-  }
-
-
+.tile .header {
+  height: 180px;
+  color: rgb(0, 0, 0);
+  font-weight: 300;
+}
 
 .tile .header .count {
   font-size: 64px;
@@ -23,14 +19,12 @@
   padding: 40px 0;
   display: flex;
   justify-content: center;
-
 }
 
 mat-icon {
   font-size: 80px;
   width: 100px;
   height: 80px;
-
 }
 
 .tile .header .title {
@@ -42,7 +36,6 @@ mat-icon {
   color: #333333;
   background-color: white;
   padding-top: 20px;
-
 }
 
 .tile .body .title {
@@ -55,7 +48,6 @@ mat-icon {
 .tile.job .header {
   background-color: linear-gradient(to bottom right, #ffe4b1, #f3b83a);
 }
-
 
 .tile.job .body {
   color: black;
