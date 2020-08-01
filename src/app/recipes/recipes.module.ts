@@ -7,9 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { RecipesRoutingModule } from './recipes-routing.module';
 import { RecipesDetailsComponent } from './recipes-details/recipes-details.component';
 import { RecipesListComponent } from './recipes-list/recipes-list.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { CreateComponent } from './create/create.component';
+
 
 
 @NgModule({
@@ -18,10 +16,8 @@ import { CreateComponent } from './create/create.component';
     CommonModule,
     RecipesRoutingModule,
     FormsModule,
-    SharedModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   exports:[
     RecipesDetailsComponent,

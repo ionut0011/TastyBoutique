@@ -8,7 +8,7 @@
 
       <input type="text" class="title"
         placeholder="Enter recipe name"
-        formControlName="title"
+        formControlName="name"
       >
     </div>
 
@@ -33,14 +33,14 @@
     <label>Filters: </label>
     <span class="filtre">
       <select >
-        <option *ngFor="let filter of  filtersList" [value]="filter">{{filter}}</option>
+        <option *ngFor="let filter of filtersList" [value]="filter">{{filter}}</option>
       </select>
     </span>
     <br>
 
     <label>Select type:</label>
     <span class="filtre">
-    <select [(ngModel)]="type1" (change)="selected()" >
+    <select [formControl]="type1" (change)="selected()" >
 
       <option selected="" *ngFor="let typees of typeesList" [value]="typees" >{{typees}}</option>
     </select>
@@ -59,7 +59,7 @@
     <div class="form-group">
       <label> Is this a private recipe</label>
       <input type="checkbox"
-             formControlName="private">
+             formControlName="access">
     </div>
     <br>
 

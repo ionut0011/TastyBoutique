@@ -35,15 +35,14 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   }
 
 
-  name: string;
-
-
-
   filtersList: string[] = ['Gluten free', 'Vegan', 'Sugar free'];
   ingredientsList:string[] =[];
+  type:number;
+
+
   foodordrink:string[] =[];
-  type1:string;
-  typees:number;
+  type1:FormControl=new FormControl();
+
   typeesList: string[] = ['Food', 'Drink'];
 
 
@@ -60,21 +59,31 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
     this.formGroup = this.formBuilder.group({
       id: new FormControl(),
-      title: new FormControl(),
+      name: new FormControl(),
       description: new FormControl(),
-      private: new FormControl(false)
+      access: new FormControl(false)
     })
+
 
 
     if (this.router.url === '/create-recipe') {
       this.isAddMode = true;
     } else {
+
       //Getting id from url
       this.routeSub = this.activatedRoute.params.subscribe(params => {
         //Getting details for the trip with the id found
+
         this.service.get(params['id']).subscribe((data: RecipesModel) => {
+          data.filtersList.push();
+          data.ingredientsList.push();
+          data.type=this.type;
           this.formGroup.patchValue(data);
+          console.log(data);
+
+
         })
+
         this.formGroup.disable();
       });
       this.isAddMode = false;
@@ -95,7 +104,9 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
   save() {
     if (this.isAddMode) {
+      console.log(this.formGroup.getRawValue());
       this.service.post(this.formGroup.getRawValue()).subscribe();
+
       this.router.navigate(['list']);
     } else {
       this.service.patch(this.formGroup.getRawValue()).subscribe();
@@ -120,14 +131,14 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
   selected(){
 
-    if(this.type1=='Food')
+    if(this.type1.value=='Food')
     {
-      this.typees=1;
-      console.log(this.typees);
+      this.type=1;
+      console.log(this.type);
     }
     else{
-      this.typees=0;
-      console.log(this.typees);
+      this.type=0;
+      console.log(this.type);
 
     }
    }

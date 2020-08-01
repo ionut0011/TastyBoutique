@@ -10,7 +10,7 @@ import { RecipeService } from '../services/recipe.service';
   styleUrls: ['./recipes-list.component.css'],
 })
 export class RecipesListComponent implements OnInit {
-  public recipesList: RecipesModel[];
+  public recipeList: RecipesModel[];
 
   constructor(
     private router: Router,
@@ -19,7 +19,8 @@ export class RecipesListComponent implements OnInit {
   public ngOnInit(): void {
 
     this.service.getAll().subscribe((data: RecipessModel) => {
-      this.recipesList = data.results;
+      this.recipeList = data.results;
+      console.log(data)
     });
 
   }

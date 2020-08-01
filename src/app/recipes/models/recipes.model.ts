@@ -1,6 +1,10 @@
 export type RecipesModel = {
   id?: string;
-  title: string;
+  name: string;
+  access: boolean;
   description: string;
-  private: boolean;
+  type:number;
+  filtersList: string[];
+  ingredientsList:string[];
+
 };

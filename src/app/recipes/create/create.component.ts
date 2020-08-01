@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { ReactiveFormsModule} from '@angular/forms'
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',

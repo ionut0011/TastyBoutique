@@ -22,15 +22,15 @@ export class RecipeService {
   constructor(private readonly http: HttpClient) { }
 
   getAll(): Observable<RecipessModel> {
-    return this.http.get<RecipessModel>(this.endpoint, this.httpOptions);
+    return this.http.get<RecipessModel>(`${this.endpoint}`, this.httpOptions);
   }
 
-  get(id: string): Observable<RecipesModel> {
-    return this.http.get<RecipesModel>(`${this.endpoint}/${id}`, this.httpOptions);
+  get(recipeId: string): Observable<RecipesModel> {
+    return this.http.get<RecipesModel>(`${this.endpoint}/${recipeId}`, this.httpOptions);
   }
 
   post(recipes: RecipesModel): Observable<any> {
-    return this.http.post<any>(this.endpoint, recipes, this.httpOptions);
+    return this.http.post<any>(`${this.endpoint}`, recipes, this.httpOptions);
   }
 
   patch(recipes: RecipesModel): Observable<any> {
