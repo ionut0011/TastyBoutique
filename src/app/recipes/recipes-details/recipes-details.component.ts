@@ -3,8 +3,9 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { RecipesModel } from '../models';
+import { RecipesModel, RecipessModel } from '../models';
 import { RecipeService } from '../services/recipe.service';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-recipes-details',
@@ -75,9 +76,9 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
         //Getting details for the trip with the id found
 
         this.service.get(params['id']).subscribe((data: RecipesModel) => {
-          data.filtersList.push();
-          data.ingredientsList.push();
-          data.type=this.type;
+         // data.filtersList.push();
+         // data.ingredientsList.push();
+         // data.type=this.type;
           this.formGroup.patchValue(data);
           console.log(data);
 
@@ -103,13 +104,19 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   }
 
   save() {
-    if (this.isAddMode) {
       console.log(this.formGroup.getRawValue());
-      this.service.post(this.formGroup.getRawValue()).subscribe();
+      var finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
 
+      finalRecipeModel.ingredientsList=this.ingredientsList;
+      finalRecipeModel.filtersList=this.filtersList;
+      finalRecipeModel.type=this.type;
+    if (this.isAddMode) {
+
+
+      this.service.post(finalRecipeModel).subscribe();
       this.router.navigate(['list']);
     } else {
-      this.service.patch(this.formGroup.getRawValue()).subscribe();
+      this.service.patch(finalRecipeModel).subscribe();
     }
 
 

@@ -7,10 +7,51 @@
     <div class="cards">
       <app-tile  *ngFor="let recipe of recipeList"
                   label="{{recipe.name}}"
-                  background="../../assets/images/logo.png"
+                  background="../../assets/images/profile.png"
                   (click)="goToRecipe(recipe.id)">
       </app-tile>
     </div>
 
   </div>
 
+
+<!--
+
+  <div class="container" >
+    <div class="row recipes-container">
+      <div *ngFor="let recipe of recipeList" class="col-12 col-md-4" >
+        <div class="card">
+          <img src="{{recipe.backgroundImage}}">
+          <div class="text">
+            <h1 class="food">
+              <h1>{{recipe.name}}</h1>
+            </h1>
+
+            <div class="icon">
+              <a href="#"><i class="fa fa-heart-o"></i></a>
+            </div>
+            <div class="details">
+            <i class="fa fa-clock-o"> 15 Mins</i>
+            <i class="fa fa-users"> Serves 2</i>
+          </div>
+
+            <div class="stars">
+              <li>
+                <a href="#"><i class="fa fa-star"></i></a>
+                <a href="#"><i class="fa fa-star"></i></a>
+                <a href="#"><i class="fa fa-star"></i></a>
+                <a href="#"><i class="fa fa-star"></i></a>
+                <a href="#"><i class="fa fa-star-o"></i></a>
+              </li>
+            </div>
+            <p class="info">{{recipe.description}}</p>
+            <a href="#" class="btn lets-cook-btn">Let's Cook!</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+-->
