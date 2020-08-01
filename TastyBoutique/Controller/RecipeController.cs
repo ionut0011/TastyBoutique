@@ -30,6 +30,14 @@ namespace TastyBoutique.API.Controller
             return Ok(result.Results);
         }
 
+        [HttpGet("{recipeId}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid recipeId)
+        {
+            var result = await _recipeService.GetById(recipeId);
+
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] UpsertRecipeModel model)
         { 

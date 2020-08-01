@@ -16,8 +16,6 @@ namespace TastyBoutique.Business.Recipes.Models.Recipe
 
         public byte[] Image { get; set; }
 
-        public string Link { get; set; }
-        public string Notifications { get; set; }
 
         public int Type { get; set;  }
 

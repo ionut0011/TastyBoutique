@@ -133,13 +133,10 @@ namespace TastyBoutique.Persistance.Models
 
                 entity.Property(e => e.Image).HasColumnType("image");
 
-                entity.Property(e => e.Link).HasMaxLength(150);
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Notifications).HasMaxLength(250);
             });
             modelBuilder.Entity<RecipesFilters>(entity =>
             {

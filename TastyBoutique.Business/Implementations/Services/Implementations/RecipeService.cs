@@ -79,9 +79,9 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
 
         public async Task<RecipeModel> GetById(Guid id)
         {
-            var entity = _repository.GetById(id);
+            var entity = await _repository.GetById(id);
             var recipe = _mapper.Map<RecipeModel>(entity);
-            recipe.Type = entity.Result.RecipeType.Type;
+
             return recipe;
         }
 
@@ -89,7 +89,7 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         {
             var recipe = await _repository.GetById(id);
 
-            recipe.Update(model.Name, model.Access, model.Notifications, model.Image, model.Link, model.Notifications);
+            recipe.Update(model.Name, model.Access,recipe.Description, model.Image);
             await _collections.SetAllByIdRecipe(recipe.Id);
             _repository.Update(recipe);
             await _repository.SaveChanges();
