@@ -6,7 +6,8 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserService } from '../user.service';
+
+import { UserService } from '../services';
 
 @Component({
   selector: 'app-header',
@@ -14,22 +15,21 @@ import { UserService } from '../user.service';
   styleUrls: ['./header.component.css']
 })
 
-export class HeaderComponent implements OnInit{
+export class HeaderComponent{
   public username: string;
-  constructor( private readonly router: Router,
-
+  constructor(
+    private readonly router: Router,
+    private readonly cdRef: ChangeDetectorRef,
     public readonly userService: UserService) { }
 
 
-  logout(): void {
+  public logout(): void {
 
     this.router.navigate(['login']);
-    this.userService.email.next(null);
+     localStorage.removeItem('email');
+    this.username = localStorage.getItem('email');
     console.log("clicked logout");
 
-  }
-  ngOnInit(): void{
-      this.username='';
   }
 
 }

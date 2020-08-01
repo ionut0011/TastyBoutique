@@ -6,6 +6,7 @@ import { RecipesListComponent } from './recipes/recipes-list/recipes-list.compon
 import { LoginComponent } from './login/login/login.component';
 import { RegisterComponent } from './login/register/register.component';
 import { RecoverComponent } from './login/recover/recover.component';
+import { SharedModule } from './shared/shared.module';
 
 const routes: Routes = [
 
@@ -41,7 +42,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes),],
+  imports: [RouterModule.forRoot(routes,{useHash:true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

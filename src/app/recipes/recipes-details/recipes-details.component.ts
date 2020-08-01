@@ -1,29 +1,47 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import {FormControl} from '@angular/forms';
-import {  Input } from '@angular/core';
+import { Component, OnInit,OnDestroy} from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
+import { RecipesModel } from '../models';
+import { RecipeService } from '../services/recipe.service';
 
 @Component({
   selector: 'app-recipes-details',
   templateUrl: './recipes-details.component.html',
   styleUrls: ['./recipes-details.component.css']
 })
-export class RecipesDetailsComponent implements OnInit
+export class RecipesDetailsComponent implements OnInit,OnDestroy
 {
-  link:string
-  notifications:string
+
+
   fileToUpload: any;
   imageUrl: any;
-  name: string;
-  description: string;
-  isPrivate: boolean;
+
+  formGroup: FormGroup;
+
   isAdmin: boolean;
-  isEditing: boolean;
-  filtersList: string[] = ['Gluten free', 'Vegan', 'Sugar free'];
-  ingredients:string[] =[];
-  foodordrink:string[] =[];
+  isAddMode: boolean;
   photos: Blob[] = [];
-  selectedLevel;
+
+  private routeSub: Subscription = new Subscription();
+
+  get description(): string {
+    return this.formGroup.get('description').value;
+  }
+
+  get isFormDisabled(): boolean {
+    return this.formGroup.disabled;
+  }
+
+
+  name: string;
+
+
+
+  filtersList: string[] = ['Gluten free', 'Vegan', 'Sugar free'];
+  ingredientsList:string[] =[];
+  foodordrink:string[] =[];
   type1:string;
   typees:number;
   typeesList: string[] = ['Food', 'Drink'];
@@ -31,21 +49,72 @@ export class RecipesDetailsComponent implements OnInit
 
 
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private service: RecipeService
+    ) { }
 
   ngOnInit(): void {
-    if (this.router.url === '/create-recipe') {
-      this.isEditing = true;
 
+    this.formGroup = this.formBuilder.group({
+      id: new FormControl(),
+      title: new FormControl(),
+      description: new FormControl(),
+      private: new FormControl(false)
+    })
+
+
+    if (this.router.url === '/create-recipe') {
+      this.isAddMode = true;
+    } else {
+      //Getting id from url
+      this.routeSub = this.activatedRoute.params.subscribe(params => {
+        //Getting details for the trip with the id found
+        this.service.get(params['id']).subscribe((data: RecipesModel) => {
+          this.formGroup.patchValue(data);
+        })
+        this.formGroup.disable();
+      });
+      this.isAddMode = false;
     }
-    else {
-      this.name = "Add recipes";
-      this.description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
-      this.isEditing = false;
-    }
-    this.isPrivate = true;
     this.isAdmin = true;
 
+
+  }
+
+  ngOnDestroy(): void{
+    this.routeSub.unsubscribe();
+
+  }
+
+  startUpdating() {
+    this.formGroup.enable();
+  }
+
+  save() {
+    if (this.isAddMode) {
+      this.service.post(this.formGroup.getRawValue()).subscribe();
+      this.router.navigate(['list']);
+    } else {
+      this.service.patch(this.formGroup.getRawValue()).subscribe();
+    }
+
+
+    this.photos.push(this.imageUrl);
+    this.imageUrl = null;
+    this.formGroup.disable();
+  }
+
+  handleFileInput(file: FileList) {
+    this.fileToUpload = file.item(0);
+
+    let reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.imageUrl = event.target.result;
+    }
+    reader.readAsDataURL(this.fileToUpload);
   }
 
 
@@ -61,40 +130,15 @@ export class RecipesDetailsComponent implements OnInit
       console.log(this.typees);
 
     }
-
-
    }
-
-
-
-
-  startUpdating() {
-    this.isEditing = true;
-  }
-
-  save() {
-    this.photos.push(this.imageUrl);
-    this.imageUrl = null;
-    this.isEditing = false;
-  }
-
 
 
   addIngredients(newIngredient: string) {
     if (newIngredient!="") {
-      this.ingredients.push(newIngredient);
+      this.ingredientsList.push(newIngredient);
     }
-    console.log(this.ingredients);
+    console.log(this.ingredientsList);
   }
 
-  handleFileInput(file: FileList) {
-    this.fileToUpload = file.item(0);
-
-    let reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.imageUrl = event.target.result;
-    }
-    reader.readAsDataURL(this.fileToUpload);
-  }
 
 }

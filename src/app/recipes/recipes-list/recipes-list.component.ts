@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Recipes } from '../models/recipes';
+import { RecipesModel, RecipessModel } from '../models';
+import { RecipeService } from '../services/recipe.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -9,60 +10,22 @@ import { Recipes } from '../models/recipes';
   styleUrls: ['./recipes-list.component.css'],
 })
 export class RecipesListComponent implements OnInit {
-  public recipesList: Recipes[];
+  public recipesList: RecipesModel[];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private service: RecipeService) {}
 
   public ngOnInit(): void {
-    this.recipesList = [
-      {
-        id: '1',
-        name: 'Mancarica de cartofi',
-        description:
-          'Delicios',
-        backgroundImage: '../../assets/images/food.jpg',
-        isPrivate: false,
-      },
 
-      {
-        id: '2',
-        name: 'Clatite',
-        description: 'Yummy',
-        backgroundImage: '../../assets/images/food.jpg',
-        isPrivate: false,
-      },
+    this.service.getAll().subscribe((data: RecipessModel) => {
+      this.recipesList = data.results;
+    });
 
-      {
-        id: '3',
-        name: 'Smoothie cu banana',
-        description:
-          'Cea mai buna bautura',
-        backgroundImage: '../../assets/images/food.jpg',
-        isPrivate: false,
-      },
-      {
-        id: '4',
-        name: 'Supa de cartofi',
-        description:
-          '',
-        backgroundImage: '../../assets/images/food.jpg',
-        isPrivate: false,
-      },
-
-      {
-        id: '5',
-        name: 'Sarmale',
-        description: 'E foarte frumos aici sa mai venim. Briza e minunata',
-        backgroundImage: '../../assets/images/food.jpg',
-        isPrivate: false,
-      },
-
-
-    ];
   }
 
   goToRecipe(id: string): void {
     console.log(id);
-    this.router.navigate(['/recipes/details']);
+    this.router.navigate([`/recipes/details/${id}`]);
   }
 }

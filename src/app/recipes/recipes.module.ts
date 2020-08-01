@@ -9,6 +9,7 @@ import { RecipesDetailsComponent } from './recipes-details/recipes-details.compo
 import { RecipesListComponent } from './recipes-list/recipes-list.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { CreateComponent } from './create/create.component';
 
 
 @NgModule({

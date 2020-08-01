@@ -1,62 +1,55 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {Router} from '@angular/router';
 import { AuthentificationService } from '../services/authentification.service';
-import { Subscription } from 'rxjs';
 import { LoginModel } from '../models/login.model';
-import { RecoverModel } from '../models/recover.model';
-import { UserService } from '../../shared/user.service';
+import { UserService } from 'src/app/shared/services';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [AuthentificationService],
 })
-export class LoginComponent implements OnInit,OnDestroy {
-  private subscription:Subscription;
-  public email:string=null;
-  public password:string=null;
+export class LoginComponent  {
+
+
   isForgotten=false;
   isLogin=true;
+  public formGroup: FormGroup;
 
   constructor(
     private readonly authentificationService:AuthentificationService,
     private router: Router,
-    private readonly userService:UserService
+    private readonly userService:UserService,
+    private readonly formBuilder: FormBuilder
     ) {
-      this.subscription=new Subscription();
+      this.formGroup = this.formBuilder.group({
+        email: new FormControl(null),
+        password: new FormControl(null),
+      });
+      this.userService.username.next('');
      }
 
 
 
-  forgotPassword(): void{
+  public forgotPassword(): void{
     this.isForgotten=!this.isForgotten;
     this.isLogin=!this.isLogin;
 
 
   }
 
-  ngOnInit(): void {
-  }
 
-  ngOnDestroy():void
-  {
-    console.log("clicked login");
-  }
+  public clickedLogin():void{
 
-  clickedLogin():void{
 
-    const loginModel:LoginModel={
+    const data: LoginModel = this.formGroup.getRawValue();
 
-    email:this.email,
-    password:this.password,
-    };
-
-    this.subscription.add(
-      this.authentificationService.login(loginModel).subscribe( (data)=>{
-        this.router.navigate(['dashboard']);
-        this.userService.email.next(loginModel.email);
-    })
-    );
+    this.authentificationService.login(data).subscribe(() => {
+      this.userService.username.next(data.email);
+      this.router.navigate(['dashboard']);
+    });
 
   }
 
