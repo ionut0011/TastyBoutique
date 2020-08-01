@@ -1,68 +1,59 @@
-
-
-
 <div class="flex-row-space-around">
 
   <section class="form-section">
 
     <div class="form-group">
 
-      <input type="text" class="title"
-             placeholder="Enter recipe name"
-             [(ngModel)]="name"
-             [disabled]="!isEditing">
+      <input type="text" class="title" placeholder="Enter recipe name" [(ngModel)]="name" [disabled]="!isEditing">
     </div>
 
 
 
     <div class="form-group">
-      <p *ngIf="!isEditing; else notEditable"  >{{description}}</p>
+      <p *ngIf="!isEditing; else notEditable">{{description}}</p>
 
       <ng-template #notEditable>
         <label> Add ingredients:</label>
-      <input #newIngredient
-      (keyup.enter)="addIngredients(newIngredient.value)"
-      (blur)="addIngredients(newIngredient.value); newIngredient.value='';">
+        <input #newIngredient (keyup.enter)="addIngredients(newIngredient.value)"
+          (blur)="addIngredients(newIngredient.value); newIngredient.value='';">
 
-      <button type="button" class="btn" (click)="addIngredients(newIngredient.value)">Add</button>
+        <button type="button" class="btn" (click)="addIngredients(newIngredient.value)">Add</button>
 
-      <ul class="ingred" ><li  *ngFor="let ingredient of ingredients">{{ingredient}} </li></ul>
-
-
-
-
-    <label>Filters: </label>
-    <span class="filtre">
-      <select >
-        <option *ngFor="let filter of filtersList" [value]="filter">{{filter}}</option>
-      </select>
-    </span>
-    <br>
-
-    <label>Select type:</label>
-    <span class="filtre">
-    <select [(ngModel)]="type1" (change)="selected()" >
-
-      <option selected="" *ngFor="let typees of typeesList" [value]="typees" >{{typees}}</option>
-    </select>
-
-    </span>
+        <ul class="ingred">
+          <li *ngFor="let ingredient of ingredients">{{ingredient}} </li>
+        </ul>
 
 
 
-    <textarea class="recipe-description"
-      contenteditable="true"
-      placeholder="Enter recipe description">{{description}}</textarea>
-    </ng-template>
+
+        <label>Filters: </label>
+        <span class="filtre">
+          <select>
+            <option *ngFor="let filter of filtersList" [value]="filter">{{filter}}</option>
+          </select>
+        </span>
+        <br>
+
+        <label>Select type:</label>
+        <span class="filtre">
+          <select [(ngModel)]="type1" (change)="selected()">
+
+            <option selected="" *ngFor="let typees of typeesList" [value]="typees">{{typees}}</option>
+          </select>
+
+        </span>
+
+
+
+        <textarea class="recipe-description" contenteditable="true"
+          placeholder="Enter recipe description">{{description}}</textarea>
+      </ng-template>
 
     </div>
 
     <div class="form-group">
       <label> Is this a private recipe</label>
-      <input type="checkbox"
-             [disabled]="!isEditing"
-             placeholder="Trip name"
-             [(ngModel)]="isPrivate">
+      <input type="checkbox" [disabled]="!isEditing" placeholder="Trip name" [(ngModel)]="isPrivate">
     </div>
     <br>
 
@@ -77,39 +68,28 @@
           <label *ngIf="photos.length === 0">No photos available</label>
         </ng-template>
 
-        <div class="add-photos"
-             *ngIf="isEditing">
+        <div class="add-photos" *ngIf="isEditing">
           <div class="photo-file-container">
 
-            <img class="photo-file"
-                 *ngFor="let photo of photos"
-                 [src]="photo">
+            <img class="photo-file" *ngFor="let photo of photos" [src]="photo">
           </div>
           <br>
-          <input #Image
-                 type="file"
-                 (change)="handleFileInput($event.target.files)" />
-          <img class="photo-file"
-               [src]="imageUrl">
+          <input #Image type="file" (change)="handleFileInput($event.target.files)" />
+          <img class="photo-file" [src]="imageUrl">
         </div>
 
-        <div class="added-photos"
-             *ngIf="!isEditing">
-          <img class="photo-file"
-               *ngFor="let photo of photos"
-               [src]="photo">
+        <div class="added-photos" *ngIf="!isEditing">
+          <img class="photo-file" *ngFor="let photo of photos" [src]="photo">
         </div>
       </div>
 
     </div>
     <br>
 
-    <button type="button"
-            *ngIf="!isEditing; else saveButton"
-            (click)="startUpdating()"><span> Update Recipe</span></button>
+    <button type="button" *ngIf="!isEditing; else saveButton" (click)="startUpdating()"><span> Update
+        Recipe</span></button>
     <ng-template #saveButton>
-      <button type="button"
-              (click)="save()"><span>Save Recipe</span></button>
+      <button type="button" (click)="save()"><span>Save Recipe</span></button>
     </ng-template>
 
   </section>
