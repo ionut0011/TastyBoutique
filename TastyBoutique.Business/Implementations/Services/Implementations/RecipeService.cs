@@ -60,13 +60,13 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
             foreach (var x in model.IngredientsList)
             {
-                var ingredient = await _ingredients.GetByName(x.Name);
+                var ingredient = await _ingredients.GetByName(x);
                 recipe.RecipesIngredients.Add((ingredient == null) ? new RecipesIngredients(recipe, _mapper.Map<Ingredients>(x)) : new RecipesIngredients(recipe,ingredient) );
             }
 
             foreach (var y in model.FiltersList)
             {
-                var filter = await _filters.GetByName(y.Name);
+                var filter = await _filters.GetByName(y);
                 recipe.RecipesFilters.Add( (filter == null ) ? new RecipesFilters(recipe, _mapper.Map<Filters>(y)) : new RecipesFilters(recipe, filter));
             }
 

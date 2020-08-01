@@ -19,8 +19,8 @@ namespace TastyBoutique.Business.Recipes.Models.Recipe
 
         public int Type { get; set;  }
 
-        public IList<CreateIngredientModel> IngredientsList { get; set; }
+        public IList<string> IngredientsList { get; set; }
 
-        public IList<CreateFilterModel> FiltersList { get; set; }
+        public IList<string> FiltersList { get; set; }
     }
 }
