@@ -17,10 +17,6 @@ namespace TastyBoutique.Persistance.Models
 
         public virtual DbSet<Ingredients> Ingredients { get; set; }
 
-        public virtual DbSet<Notifications> Notifications { get; set; }
-
-        public virtual DbSet<RecipeComment> RecipeComment { get; set; }
-
         public virtual DbSet<RecipeType> RecipeType { get; set; }
 
         public virtual DbSet<Recipes> Recipes { get; set; }
@@ -31,11 +27,8 @@ namespace TastyBoutique.Persistance.Models
 
         public virtual DbSet<SavedRecipes> SavedRecipes { get; set; }
 
-        public virtual DbSet<Student> Student { get; set; }
-
         public virtual DbSet<User> User { get; set; }
 
-        public virtual DbSet<UserType> UserType { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -138,15 +131,11 @@ namespace TastyBoutique.Persistance.Models
 
                 entity.Property(e => e.Description).HasMaxLength(300);
 
-                entity.Property(e => e.Image).HasColumnType("image");
-
-                entity.Property(e => e.Link).HasMaxLength(150);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Notifications).HasMaxLength(250);
             });
             modelBuilder.Entity<RecipesFilters>(entity =>
             {

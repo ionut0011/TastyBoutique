@@ -26,7 +26,6 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         }
         public async Task<RecipeCommentModel> Add(Guid idRecipe, CreateRecipeCommentModel model)
         {
-            var claim = _accessor.HttpContext.User.Claims;
             model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var comment = _mapper.Map<RecipeComment>(model);
             var recipe = await _repository.GetById(idRecipe);

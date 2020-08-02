@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TastyBoutique.Business.Identity.Models;
 using TastyBoutique.Business.Identity.Services.Interfaces;
@@ -37,16 +38,15 @@ namespace TastyBoutique.Business.Identity.Services.Implementations
         public async Task<UserModel> ForgotPassword(UserNewPasswordModel userNewPasswordModel)
         {
             var user = await _userRepository.GetByEmail(userNewPasswordModel.Email);
-            if (user == null)
+            var regexPassword = Regex.Match(userNewPasswordModel.NewPassword, "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,15}$");
+            if (user == null || !regexPassword.Success)
                 return null;
-            user.Password = _passwordHasher.CreateHash(userNewPasswordModel.NewPassword);
 
+            user.Password = _passwordHasher.CreateHash(userNewPasswordModel.NewPassword);
             _userRepository.Update(user);
-            
             await _userRepository.SaveChanges();
             
             return _mapper.Map<UserModel>(user);
-            //return _mapper.Map<UserModel>(user);
         }
 
         public async Task<AuthenticationResponse> Authenticate(AuthenticationRequest userAuthenticationModel)
@@ -59,13 +59,14 @@ namespace TastyBoutique.Business.Identity.Services.Implementations
         public async Task<UserModel> Register(UserRegisterModel userRegisterModel)
         {
             var user = await _userRepository.GetByEmail(userRegisterModel.Email);
-            if (user != null)
+            var regexPassword = Regex.Match(userRegisterModel.Password, "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,15}$");
+            if (user != null || !regexPassword.Success)
             {
                 return null;
             }
             var newUser = new User(userRegisterModel.Username, userRegisterModel.Email, _passwordHasher.CreateHash(userRegisterModel.Password))
             {
-                IdStudentNavigation = new Student(userRegisterModel.studentModel.Name, userRegisterModel.studentModel.Age, userRegisterModel.Email),
+                IdStudentNavigation = new Student(userRegisterModel.Name, userRegisterModel.Age, userRegisterModel.Email),
                 IdUserTypeNavigation = new UserType("User")
             };
 

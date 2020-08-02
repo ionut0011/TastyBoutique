@@ -6,7 +6,8 @@ namespace TastyBoutique.Business.Identity.Models
 {
     public sealed class UserRegisterModel
     {
-        public CreateStudentModel studentModel { get; set; }
+        public string Name { get; set; }
+        public decimal Age { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
 

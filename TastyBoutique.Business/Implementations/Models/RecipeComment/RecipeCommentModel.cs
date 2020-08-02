@@ -9,7 +9,7 @@ namespace TastyBoutique.Business.Recipes.Models.RecipeComment
         public Guid IdRecipe { get; set; }
         public Guid IdUser { get; set; }
         public string Comment { get; set; }
-        public string Review { get; set; }
+        public int Review { get; set; }
 
     }
 }

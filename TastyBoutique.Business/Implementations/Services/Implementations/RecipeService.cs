@@ -58,16 +58,33 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         public async Task<RecipeModel> Add(UpsertRecipeModel model)
         {
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
+            
             foreach (var x in model.IngredientsList)
             {
-                var ingredient = await _ingredients.GetByName(x.Name);
-                recipe.RecipesIngredients.Add((ingredient == null) ? new RecipesIngredients(recipe, _mapper.Map<Ingredients>(x)) : new RecipesIngredients(recipe,ingredient) );
+                var ingredient = await _ingredients.GetByName(x);
+                if (ingredient == null)
+                {
+                    var newIngredient = new Ingredients(x);
+                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe,newIngredient));
+                    await _ingredients.Add(newIngredient);
+                }
+                else
+                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, ingredient));
+                
             }
 
             foreach (var y in model.FiltersList)
             {
-                var filter = await _filters.GetByName(y.Name);
-                recipe.RecipesFilters.Add( (filter == null ) ? new RecipesFilters(recipe, _mapper.Map<Filters>(y)) : new RecipesFilters(recipe, filter));
+                var filter = await _filters.GetByName(y);
+                if (filter == null)
+                {
+                    var newFilter = new Filters(y);
+                    recipe.RecipesFilters.Add(new RecipesFilters(recipe, newFilter));
+                    await _filters.Add(newFilter);
+                }
+                else
+                    recipe.RecipesFilters.Add(new RecipesFilters(recipe, filter));
+                
             }
 
             recipe.RecipeType = (model.Type == 1) ? new RecipeType(recipe, "Food") : new RecipeType(recipe, "Drink");
@@ -79,9 +96,9 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
 
         public async Task<RecipeModel> GetById(Guid id)
         {
-            var entity = _repository.GetById(id);
+            var entity = await _repository.GetById(id);
             var recipe = _mapper.Map<RecipeModel>(entity);
-            recipe.Type = entity.Result.RecipeType.Type;
+
             return recipe;
         }
 
@@ -89,7 +106,7 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         {
             var recipe = await _repository.GetById(id);
 
-            recipe.Update(model.Name, model.Access, model.Notifications, model.Image, model.Link, model.Notifications);
+            recipe.Update(model.Name, model.Access,recipe.Description);
             await _collections.SetAllByIdRecipe(recipe.Id);
             _repository.Update(recipe);
             await _repository.SaveChanges();

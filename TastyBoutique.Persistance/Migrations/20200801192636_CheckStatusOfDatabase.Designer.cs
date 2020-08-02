@@ -10,8 +10,8 @@ using TastyBoutique.Persistance.Models;
 namespace TastyBoutique.Persistance.Migrations
 {
     [DbContext(typeof(TastyBoutique_v2Context))]
-    [Migration("20200728144938_UpdatingDatabase")]
-    partial class UpdatingDatabase
+    [Migration("20200801192636_CheckStatusOfDatabase")]
+    partial class CheckStatusOfDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -130,30 +130,18 @@ namespace TastyBoutique.Persistance.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Access")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
+                    b.Property<bool>("Access")
+                        .HasColumnType("bit")
                         .HasMaxLength(25);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(300)")
                         .HasMaxLength(300);
 
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("image");
-
-                    b.Property<string>("Link")
-                        .HasColumnType("nvarchar(150)")
-                        .HasMaxLength(150);
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
-
-                    b.Property<string>("Notifications")
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
 
                     b.HasKey("Id");
 

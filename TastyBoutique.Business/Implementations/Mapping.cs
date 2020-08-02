@@ -25,6 +25,10 @@ namespace TastyBoutique.Business.Recipes
             CreateMap<CreateFilterModel, Persistance.Models.Filters>();
             CreateMap<Persistance.Models.Filters, FilterModel>();
 
+            CreateMap<string, CreateIngredientModel>();
+            CreateMap<string, CreateFilterModel>();
+
+            CreateMap<Persistance.Models.Recipes, RecipeModel>();
 
             CreateMap<SavedRecipes, SavedRecipeModel>();
             CreateMap<SavedRecipeModel, SavedRecipes>();

@@ -38,7 +38,7 @@ namespace TastyBoutique.API.Controller
             var result = await _authenticationService.Register(model);
             if (result == null)
             {
-                return BadRequest();
+                return BadRequest("User exists or the password doesn't meet the requirements");
             }
 
             return Created(result.IdUser.ToString(), null);
@@ -49,7 +49,7 @@ namespace TastyBoutique.API.Controller
         {
             var result = await _authenticationService.ForgotPassword(model);
             if (result == null)
-                return BadRequest();
+                return BadRequest("User doesn't exists or the new password doesn't meet the requirements");
 
             return Ok(result);
         }
