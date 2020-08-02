@@ -20,6 +20,7 @@ export class RecipesListComponent implements OnInit {
 
     this.service.getAll().subscribe((data: RecipessModel) => {
       this.recipeList = data;
+      console.log(data);
     });
 
   }
