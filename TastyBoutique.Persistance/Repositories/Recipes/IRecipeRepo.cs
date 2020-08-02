@@ -20,6 +20,6 @@ namespace TastyBoutique.Persistance.Recipes
         Task<Models.RecipeType> GetRecipeTypeById(Guid id);
         Task<Models.Recipes> GetByIdWithComments(Guid id);
 
-        Task<List<Models.Recipes>> GetRecipiesByIngredients(IList<Models.Ingredients> ingredients);
+        Task<List<Models.Recipes>> GetRecipiesByQuery(IList<Models.Ingredients> ingredients, IList<Filters> filters);
     }
 }

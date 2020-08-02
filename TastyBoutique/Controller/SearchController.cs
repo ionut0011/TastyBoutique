@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TastyBoutique.Business.Implementations.Models;
 using TastyBoutique.Business.Implementations.Services.Implementations;
 using TastyBoutique.Business.Implementations.Services.Interfaces;
 using TastyBoutique.Business.Recipes.Models.Recipe;
@@ -22,9 +23,9 @@ namespace TastyBoutique.API.Controller
             _searchService = searchService;
         }
         [HttpGet]
-        public async Task<IActionResult> Search([FromQuery] IList<string> ingredientsList, [FromQuery]SearchModel model)
+        public async Task<IActionResult> Search([FromQuery] RecipeSearchModel query, [FromQuery]SearchModel model)
         {
-            var result = await _searchService.GetRecipiesByIngredients(ingredientsList, model);
+            var result = await _searchService.GetRecipiesByQuery(query, model);
             return Ok(result.Results);
         }
     }
