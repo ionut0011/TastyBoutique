@@ -20,13 +20,11 @@ export class RecipesListComponent implements OnInit {
 
     this.service.getAll().subscribe((data: RecipessModel) => {
       this.recipeList = data;
-      console.log(this.recipeList);
     });
 
   }
 
-  goToRecipe(id: string): void {
-    console.log(id);
+  goToRecipe(id: string): void {;
     this.router.navigate([`/recipes/details/${id}`]);
   }
 }

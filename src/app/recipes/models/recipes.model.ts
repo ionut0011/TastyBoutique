@@ -1,3 +1,5 @@
+import { FilterModel } from './filter.model';
+
 export type RecipesModel = {
   id?: string;
   name: string;

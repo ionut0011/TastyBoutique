@@ -3,9 +3,9 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { RecipesModel, RecipessModel } from '../models';
+import { RecipesModel, RecipessModel,FilterModel,FiltersModel } from '../models';
 import { RecipeService } from '../services/recipe.service';
-import { JsonPipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-recipes-details',
@@ -36,16 +36,16 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   }
 
 
-  filtersList: string[] = ['Gluten free', 'Vegan', 'Sugar free'];
+  filtersList:FiltersModel;
+  filterSend:string[]=[];
   ingredientsList:string[] =[];
   type:number;
 
 
-  foodordrink:string[] =[];
   type1:FormControl=new FormControl();
-
+  filter:FormControl=new FormControl();
   typeesList: string[] = ['Food', 'Drink'];
-
+  foodordrink:string[] =[];
 
 
 
@@ -57,6 +57,14 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     ) { }
 
   ngOnInit(): void {
+
+    this.service.getAllFilters().subscribe((data: FiltersModel) => {
+      this.filtersList = data;
+
+      console.log(this.filtersList);
+      console.log(data);
+
+    });
 
     this.formGroup = this.formBuilder.group({
       id: new FormControl(),
@@ -76,11 +84,12 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
         //Getting details for the trip with the id found
 
         this.service.get(params['id']).subscribe((data: RecipesModel) => {
-         // data.filtersList.push();
-         // data.ingredientsList.push();
-         // data.type=this.type;
+
+          data.filtersList=this.filterSend;
+          data.ingredientsList=this.ingredientsList;
+          data.type=this.type;
+
           this.formGroup.patchValue(data);
-          console.log(data);
 
 
         })
@@ -104,11 +113,10 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   }
 
   save() {
-      console.log(this.formGroup.getRawValue());
-      var finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
 
+      var finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
       finalRecipeModel.ingredientsList=this.ingredientsList;
-      finalRecipeModel.filtersList=this.filtersList;
+      finalRecipeModel.filtersList=this.filterSend;
       finalRecipeModel.type=this.type;
     if (this.isAddMode) {
 
@@ -150,9 +158,16 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     }
    }
 
+   filterSelected(){
+
+
+    this.filterSend.push(this.filter.value);
+    console.log(this.filterSend);
+
+   }
 
   addIngredients(newIngredient: string) {
-    if (newIngredient!="") {
+    if (newIngredient!=" ") {
       this.ingredientsList.push(newIngredient);
     }
     console.log(this.ingredientsList);

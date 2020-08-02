@@ -13,7 +13,7 @@ export class CreateComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({
       recipeName: new FormControl('', [Validators.required]),
-      recipeDetails: new FormControl('', []),
+      recipeDetails: new FormControl('', [])
     });
   }
 

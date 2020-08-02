@@ -31,9 +31,9 @@
 
 
     <label>Filters: </label>
-    <span class="filtre">
-      <select >
-        <option *ngFor="let filter of filtersList" [value]="filter">{{filter}}</option>
+    <span class="filtre" >
+      <select [formControl]="filter"  (change)="filterSelected()"  >
+        <option   *ngFor="let filter of filtersList" [value]="filter.name">{{filter.name}}</option>
       </select>
     </span>
     <br>
