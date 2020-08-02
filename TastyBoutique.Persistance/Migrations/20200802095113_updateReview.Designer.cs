@@ -10,8 +10,8 @@ using TastyBoutique.Persistance.Models;
 namespace TastyBoutique.Persistance.Migrations
 {
     [DbContext(typeof(TastyBoutique_v2Context))]
-    [Migration("20200801094206_UpdateRecipeTabble")]
-    partial class UpdateRecipeTabble
+    [Migration("20200802095113_updateReview")]
+    partial class updateReview
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -92,9 +92,8 @@ namespace TastyBoutique.Persistance.Migrations
                     b.Property<Guid>("IdUser")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Review")
-                        .IsRequired()
-                        .HasColumnType("nchar(10)")
+                    b.Property<int>("Review")
+                        .HasColumnType("int")
                         .IsFixedLength(true)
                         .HasMaxLength(10);
 
@@ -130,17 +129,13 @@ namespace TastyBoutique.Persistance.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Access")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
+                    b.Property<bool>("Access")
+                        .HasColumnType("bit")
                         .HasMaxLength(25);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(300)")
                         .HasMaxLength(300);
-
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("image");
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TastyBoutique.Persistance.Migrations
 {
-    public partial class UpdatingDatabase : Migration
+    public partial class CheckStatusOfDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,11 +37,8 @@ namespace TastyBoutique.Persistance.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
-                    Access = table.Column<string>(maxLength: 25, nullable: false),
-                    Description = table.Column<string>(maxLength: 300, nullable: true),
-                    Image = table.Column<byte[]>(type: "image", nullable: true),
-                    Link = table.Column<string>(maxLength: 150, nullable: true),
-                    Notifications = table.Column<string>(maxLength: 250, nullable: true)
+                    Access = table.Column<bool>(maxLength: 25, nullable: false),
+                    Description = table.Column<string>(maxLength: 300, nullable: true)
                 },
                 constraints: table =>
                 {

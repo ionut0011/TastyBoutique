@@ -131,7 +131,6 @@ namespace TastyBoutique.Persistance.Models
 
                 entity.Property(e => e.Description).HasMaxLength(300);
 
-                entity.Property(e => e.Image).HasColumnType("image");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
