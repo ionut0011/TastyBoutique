@@ -5,7 +5,6 @@
 
         <span class="login-label">{{'Login'}} </span>
 
-
       </div>
       <div class="card-body">
         <form [formGroup]="formGroup">
@@ -14,50 +13,27 @@
               <span class="input-group-text"><i class="fa fa-user"></i></span>
             </div>
             <input type="text"  formControlName="email" name="email"  class="form-control" placeholder="email">
-
           </div>
+
           <div class="input-group form-group" >
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fa fa-key"></i></span>
             </div>
             <input type="password" formControlName="password" name="password" class="form-control" placeholder="password">
-
-
-
           </div>
 
-
-
-
-
           <div class="form-group">
+            <input value="Forgot password?" class="regbtn" (click)="goToPage('recover')">
             <input type="submit" value="Login"  class="btn float-right login_btn" (click)="clickedLogin()" type="button">
           </div>
-
-
-
-          <div class="form-group">
-
-            <div>
-              <input type="submit" value="Forgot password?" class="regbtn" (click)="goToPage('recover')">
-            </div>
-          </div>
-
-
         </form>
-
-
       </div>
 
       <div class="registerdiv">
-        <div>
-        <h3>Not registered? </h3>
-      </div>
+        <div><h3>Not registered? </h3></div>
       <div>
         <input type="submit" value="Register" class="regbtn" (click)="goToPage('register')">
       </div>
-      </div>
-
     </div>
   </div>
 </div>

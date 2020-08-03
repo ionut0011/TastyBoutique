@@ -36,11 +36,33 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     return this.formGroup.disabled;
   }
 
+  get test(): FormControl {
+    return this.formGroup.get('test') as FormControl;
+  }
 
-  filtersList:FiltersModel;
-  filterSend:string[]=[];
-  ingredientsList:string[] =[];
-  type:number;
+  get ingredientsList(): FormControl {
+    return this.formGroup.get('ingredientsList') as FormControl;
+  }
+
+  get test2(): FormControl {
+    return this.formGroup.get('test2') as FormControl;
+  }
+
+  get filtersList(): FormControl {
+    return this.formGroup.get('filterSend') as FormControl;
+  }
+
+  get type(): FormControl {
+    return this.formGroup.get('type') as FormControl;
+  }
+
+
+
+
+  filterssList:FiltersModel;
+  //filterSend:string[]=[];
+  //ingredientsList:string[] =[];
+  //type:number;
 
 
   type1:FormControl=new FormControl();
@@ -60,7 +82,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   ngOnInit(): void {
 
     this.service.getAllFilters().subscribe((data: FiltersModel) => {
-      this.filtersList = data;
+      this.filterssList = data;
 
       console.log(this.filtersList);
       console.log(data);
@@ -71,8 +93,14 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       id: new FormControl(),
       name: new FormControl(),
       description: new FormControl(),
-      access: new FormControl(false)
-    })
+      access: new FormControl(false),
+      test: new FormControl(),
+      ingredientsList: new FormControl([]),
+      test2: new FormControl(),
+      filtersList: new FormControl([]),
+      type:new FormControl()
+
+    });
 
 
 
@@ -87,19 +115,15 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
 
 
-          this.filterSend=[];
-          this.ingredientsList=[];
+         // this.filterSend=[];
+         // this.ingredientsList=[];
 
 
-          data.ingredientsList.forEach(element => {this.ingredientsList.push(JSON.parse(JSON.stringify(element)).name);
-        });
-        data.filtersList.forEach(element => {this.filterSend.push(JSON.parse(JSON.stringify(element)).name);
-        });
+
 
           // data.filtersList= this.checkFilters(this.filterSend);
        //   data.ingredientsList=this.checkIngredients(this.ingredientsList);
           console.log(data);
-          data.type=this.type;
 
           this.formGroup.patchValue(data);
 
@@ -126,12 +150,12 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
   save() {
 
-      var finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
+      let finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
 
-      finalRecipeModel.filtersList= this.filterSend;
-      finalRecipeModel.ingredientsList=this.ingredientsList;
-      finalRecipeModel.type=this.type;
-      finalRecipeModel.image = this.imageUrl;
+      //finalRecipeModel.filtersList= this.filterSend;
+      //finalRecipeModel.ingredientsList=this.ingredientsList;
+      //finalRecipeModel.type=this.type;
+      finalRecipeModel.image = this.imageUrl.split(',')[1];
     if (this.isAddMode) {
 
 
@@ -161,32 +185,38 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   }
 
 
+  additems():void
+  {
+    this.ingredientsList.value.push(this.test.value);
+    this.test.setValue('');
+
+
+  }
+
+
+  filterSelected(){
+
+
+    this.filtersList.value.push(this.test2.value);
+
+    console.log(this.filtersList);
+
+   }
+
+
   selected(){
 
-    if(this.type1.value=='Food')
+    if(this.type.value=='Food')
     {
-      this.type=1;
-      console.log(this.type);
+      this.type.setValue(1);
+
     }
     else{
-      this.type=0;
-      console.log(this.type);
+      this.type.setValue(2);
+
 
     }
    }
 
-   filterSelected(){
 
-
-    this.filterSend.push(this.filter.value);
-    console.log(this.filterSend);
-
-   }
-
-  addIngredients(newIngredient: string) {
-    if (newIngredient!="") {
-      this.ingredientsList.push(newIngredient);
-    }
-    console.log(this.ingredientsList);
-  }
 }

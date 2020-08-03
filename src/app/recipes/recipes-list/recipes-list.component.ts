@@ -21,6 +21,10 @@ export class RecipesListComponent implements OnInit {
 
     this.service.getAll().subscribe((data: RecipesGetModel[]) => {
       this.recipeList = data;
+      this.recipeList.forEach(element => {
+        var link:any = "data:image/jpg;base64,"+element.image;
+        element.image = link;
+      });
       console.log(data);
     });
 
