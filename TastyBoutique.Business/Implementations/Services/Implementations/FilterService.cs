@@ -58,6 +58,11 @@ namespace TastyBoutique.Business.Implementations.Services.Implementations
 
             return null;
         }
-       
+
+        public async Task<FilterModel> GetFilterByName(String name)
+        {
+            return _mapper.Map<FilterModel>(await _repository.GetByName(name));
+        }
+
     }
 }

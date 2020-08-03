@@ -27,7 +27,7 @@ namespace TastyBoutique.API.Controller
         {
             var result = await _recipeService.Get(model);
             
-            return Ok(result.Results);
+            return Ok(result);
         }
 
         [HttpGet("{recipeId}")]

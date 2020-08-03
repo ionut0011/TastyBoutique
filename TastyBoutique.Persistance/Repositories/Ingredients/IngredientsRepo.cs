@@ -20,8 +20,8 @@ namespace TastyBoutique.Persistance.Ingredients
         public async Task<int> CountAsync()
             => await this.context.Ingredients.CountAsync();
 
-        public async Task<Models.Ingredients> GetByName(string Name)
-            => await this.context.Ingredients.Where(i => i.Name.Equals(Name)).FirstOrDefaultAsync();
+        public async Task<Models.Ingredients> GetByName(String name)
+            => await this.context.Ingredients.Where(i => i.Name.Equals(name)).FirstOrDefaultAsync();
 
     }
 }

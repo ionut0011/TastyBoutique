@@ -36,11 +36,16 @@ namespace TastyBoutique.API.Controller
         public async Task<IActionResult> Add([FromBody] CreateIngredientModel model)
         {
             var result = await _ingredientService.Add(model);
-            return Created(result.Id.ToString(), null);
+            return Ok(result);
         }
 
-       
-        
+        [HttpGet("{ingredientName}")]
+        public async Task<IActionResult> Get([FromRoute] String ingredientName)
+        {
+            var result = await _ingredientService.GetByName(ingredientName);
+            return Ok(result);
+        }
+
 
     }
 }

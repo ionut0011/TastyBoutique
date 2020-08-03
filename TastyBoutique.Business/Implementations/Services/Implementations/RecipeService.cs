@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TastyBoutique.Business.Implementations.Models.Filter;
+using TastyBoutique.Business.Implementations.Models.Recipe;
 using TastyBoutique.Business.Recipes.Extensions;
 using TastyBoutique.Business.Recipes.Models.Ingredients;
 using TastyBoutique.Business.Recipes.Models.Recipe;
@@ -36,55 +37,45 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
             _collections = collection;
         }
 
-        public async Task<PaginatedList<RecipeModel>> Get(SearchModel model)
+        public async Task<IList<TotalRecipeModel>> Get(SearchModel model)
         {
             var spec = model.ToSpecification<Persistance.Models.Recipes>();
 
             var entities = await _repository.Get(spec);
             var count = await _repository.CountAsync();
-            var recipes = _mapper.Map<IList<RecipeModel>>(entities);
+            var recipes = _mapper.Map<IList<TotalRecipeModel>>(entities);
 
             foreach (var recipe in recipes)
+            {
                 recipe.Type = _repository.GetRecipeTypeById(recipe.Id).Result.Type;
-            
+                recipe.Ingredients = GetIngredientsByRecipeId(recipe.Id).Result.Results;
+                recipe.Filters = GetFiltersByRecipeId(recipe.Id).Result.Results;
+            }
 
-            return new PaginatedList<RecipeModel>(
-                model.PageIndex,
-                entities.Count,
-                count,
-                recipes);
+            return recipes;
         }
 
         public async Task<RecipeModel> Add(UpsertRecipeModel model)
         {
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
-            
-            foreach (var x in model.IngredientsList)
+            foreach (var ingredient in model.IngredientsList)
             {
-                var ingredient = await _ingredients.GetByName(x);
-                if (ingredient == null)
-                {
-                    var newIngredient = new Ingredients(x);
-                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe,newIngredient));
-                    await _ingredients.Add(newIngredient);
-                }
+                var ing = await _ingredients.GetByName(ingredient);
+                if ( ing== null)
+                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients(ingredient)));
                 else
-                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, ingredient));
+                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe,ing));
                 
             }
 
-            foreach (var y in model.FiltersList)
+            foreach (var filter in model.FiltersList)
             {
-                var filter = await _filters.GetByName(y);
-                if (filter == null)
-                {
-                    var newFilter = new Filters(y);
-                    recipe.RecipesFilters.Add(new RecipesFilters(recipe, newFilter));
-                    await _filters.Add(newFilter);
-                }
+                var fil = await _filters.GetByName(filter);
+                if (fil == null)
+                    recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters(filter)));
                 else
-                    recipe.RecipesFilters.Add(new RecipesFilters(recipe, filter));
-                
+                    recipe.RecipesFilters.Add(new RecipesFilters(recipe, fil));
+
             }
 
             recipe.RecipeType = (model.Type == 1) ? new RecipeType(recipe, "Food") : new RecipeType(recipe, "Drink");
@@ -98,7 +89,8 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         {
             var entity = await _repository.GetById(id);
             var recipe = _mapper.Map<RecipeModel>(entity);
-
+            recipe.IngredientsList = GetIngredientsByRecipeId(recipe.Id).Result.Results;
+            recipe.FiltersList = GetFiltersByRecipeId(recipe.Id).Result.Results;
             return recipe;
         }
 
