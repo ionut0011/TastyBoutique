@@ -42,18 +42,34 @@ namespace TastyBoutique.Persistance.Recipes
             => await this.context.RecipeType
                 .FirstOrDefaultAsync(recipeType => recipeType.RecipeId == id);
 
-        public async Task<List<Models.Recipes>> GetRecipiesByIngredients(IList<Models.Ingredients> ingredients)
+        public async Task<List<Models.Recipes>> GetRecipiesByQuery(IList<Models.Ingredients> ingredients, IList<Filters> filters)
         {
-            var ingredientsIds = ingredients.Select(ingredient => ingredient.Id).ToList();
-
             var getRecipes = await this.context.Recipes
                 .Include(r => r.RecipesIngredients)
+                .Include(r=>r.RecipesFilters)
                 .ToListAsync();
 
-            var getSearchedRecipes = getRecipes.Where(x =>
-                x.RecipesIngredients.Select(y => y.IngredientId).Intersect(ingredientsIds).ToList().Count == ingredientsIds.Count).ToList();
-          
-            return getSearchedRecipes;
+            List<Guid> ingredientsIds = null;
+            List<Guid> filtersIds = null;
+
+            if (ingredients != null)
+            {
+                ingredientsIds = ingredients.Select(ingredient => ingredient.Id).ToList();
+                getRecipes = getRecipes.Where(x =>
+                        x.RecipesIngredients.Select(y => y.IngredientId).Intersect(ingredientsIds).ToList().Count ==
+                        ingredientsIds.Count)
+                    .ToList();
+            }
+
+            if (filters != null)
+            {
+                filtersIds = filters.Select(filter => filter.Id).ToList();
+                getRecipes = getRecipes.Where(x =>
+                        x.RecipesFilters.Select(y => y.FilterId).Intersect(filtersIds).ToList().Count == filtersIds.Count)
+                    .ToList();
+            }
+
+            return getRecipes;
         }
 
     }
