@@ -30,8 +30,6 @@ export class RecipesListComponent implements OnInit {
     this.router.navigate([`/recipes/details/${id}`]);
   }
 
-
-
   public DeleteRecipe(id:string): void{
 
     this.service.deleteRecipe(id).subscribe(data => {
