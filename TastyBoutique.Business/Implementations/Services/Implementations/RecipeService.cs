@@ -98,7 +98,7 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         {
             var recipe = await _repository.GetById(id);
 
-            recipe.Update(model.Name, model.Access,model.Description);
+            recipe.Update(model.Name, model.Access,model.Description, model.Image);
 
             await _collections.SetAllByIdRecipe(recipe.Id);
             _repository.Update(recipe);
