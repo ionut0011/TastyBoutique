@@ -4,6 +4,7 @@ using System.Text;
 using AutoMapper;
 using TastyBoutique.Business.Collections.Models;
 using TastyBoutique.Business.Implementations.Models.Filter;
+using TastyBoutique.Business.Implementations.Models.Recipe;
 using TastyBoutique.Business.Recipes.Models.Ingredients;
 using TastyBoutique.Business.Recipes.Models.Recipe;
 using TastyBoutique.Business.Recipes.Models.RecipeComment;
@@ -25,9 +26,7 @@ namespace TastyBoutique.Business.Recipes
             CreateMap<CreateFilterModel, Persistance.Models.Filters>();
             CreateMap<Persistance.Models.Filters, FilterModel>();
 
-            CreateMap<string, CreateIngredientModel>();
-            CreateMap<string, CreateFilterModel>();
-
+            CreateMap<Persistance.Models.Recipes, TotalRecipeModel>();
             CreateMap<Persistance.Models.Recipes, RecipeModel>();
 
             CreateMap<SavedRecipes, SavedRecipeModel>();

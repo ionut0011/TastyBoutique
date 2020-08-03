@@ -7,11 +7,12 @@ namespace TastyBoutique.Persistance.Models
 {
     public class Recipes : Entity
     {
-        public Recipes(string name, Boolean access, string description)
+        public Recipes(string name, Boolean access, string description, byte[] image)
         {
             Name = name;
             Access = access;
             Description = description;
+            Image = image;
             NotificationsNavigation = new HashSet<Notifications>();
             RecipeComment = new HashSet<RecipeComment>();
             SavedRecipes = new HashSet<SavedRecipes>();
@@ -22,6 +23,7 @@ namespace TastyBoutique.Persistance.Models
         public string Name { get; set; }
         public Boolean Access { get; set; }
         public string Description { get; set; }
+        public byte[] Image { get; set; }
         public virtual RecipeType RecipeType { get; set; }
 
         public ICollection<Notifications> NotificationsNavigation { get; set; }
@@ -32,12 +34,12 @@ namespace TastyBoutique.Persistance.Models
 
         public ICollection<RecipesFilters> RecipesFilters { get; set; }
 
-        public void Update(string name, Boolean access, string description)
+        public void Update(string name, Boolean access, string description, byte[] image)
         {
             Name = name;
             Access = access;
             Description = description;
-
+            Image = image;
         }
 
         public void AddComment(RecipeComment comment)

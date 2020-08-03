@@ -57,6 +57,11 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
 
             return null;
         }
-        
+
+        public async Task<IngredientModel> GetByName(String name)
+        {
+            return _mapper.Map<IngredientModel>(await _repository.GetByName(name));
+        }
+
     }
 }

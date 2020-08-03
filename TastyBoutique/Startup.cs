@@ -9,8 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using TastyBoutique.Business.Collections.Services.Implementation;
 using TastyBoutique.Business.Collections.Services.Interfaces;
 using TastyBoutique.Business.Identity;
@@ -32,6 +31,7 @@ using TastyBoutique.Business.Identity.Services.Validators;
 using TastyBoutique.Business.Implementations.Services.Interfaces;
 using TastyBoutique.Persistance.Ingredients;
 using TastyBoutique.Persistance.Repositories.Filters;
+using Newtonsoft.Json;
 
 namespace TastyBoutique
 {
@@ -83,9 +83,11 @@ namespace TastyBoutique
 
                 .AddHttpContextAccessor()
                 .AddSwagger()
-                .AddControllers();
-
+                .AddControllers()
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            
             services.AddTransient<IValidator<UserRegisterModel>, UserRegisterModelValidator>();
+          
             AddAuthentication(services);
 
 
