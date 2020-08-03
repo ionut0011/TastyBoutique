@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import {  RecipesModel, FiltersModel } from '../models';
+import {  RecipesModel, FiltersModel, IngredientModel, FilterModel } from '../models';
 import { RecipessModel } from '../models/recipess.model';
 
 @Injectable({
@@ -33,7 +33,21 @@ export class RecipeService {
     return this.http.get<FiltersModel>(`http://www.tastyboutique.tk:5341/api/v1/filter`, this.httpOptions);
   }
 
+  getIngredientByName(name: string): Observable<IngredientModel>
+  {
+    return this.http.get<IngredientModel>(`http://www.tastyboutique.tk:5341/api/v1/ingredient/${name}`, this.httpOptions);
+  }
 
+  getFilterByName(name: string): Observable<FilterModel>
+  {
+    return this.http.get<FilterModel>(`http://www.tastyboutique.tk:5341/api/v1/filter/${name}`, this.httpOptions);
+  }
+  addIngredient(name: string):Observable<any>{
+    return this.http.post<any>(`http://www.tastyboutique.tk:5341/api/v1/ingredient`,name, this.httpOptions);
+  }
+  addFilter(name: string):Observable<any>{
+    return this.http.post<any>(`http://www.tastyboutique.tk:5341/api/v1/filter`,name, this.httpOptions);
+  }
 
   post(recipes: RecipesModel): Observable<any> {
     return this.http.post<any>(`${this.endpoint}`, recipes, this.httpOptions);

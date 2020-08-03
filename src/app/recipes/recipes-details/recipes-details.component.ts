@@ -3,8 +3,9 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { RecipesModel, RecipessModel,FilterModel,FiltersModel } from '../models';
+import { RecipesModel, RecipessModel,FilterModel,FiltersModel, IngredientModel } from '../models';
 import { RecipeService } from '../services/recipe.service';
+import { isNgContainer } from '@angular/compiler';
 
 
 @Component({
@@ -85,8 +86,8 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
         this.service.get(params['id']).subscribe((data: RecipesModel) => {
 
-          data.filtersList=this.filterSend;
-          data.ingredientsList=this.ingredientsList;
+         // data.filtersList= this.checkFilters(this.filterSend);
+       //   data.ingredientsList=this.checkIngredients(this.ingredientsList);
           data.type=this.type;
 
           this.formGroup.patchValue(data);
@@ -115,15 +116,16 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   save() {
 
       var finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
+
+      finalRecipeModel.filtersList= this.filterSend;
       finalRecipeModel.ingredientsList=this.ingredientsList;
-      finalRecipeModel.filtersList=this.filterSend;
       finalRecipeModel.type=this.type;
     if (this.isAddMode) {
 
-
-      this.service.post(finalRecipeModel).subscribe();
-      this.router.navigate(['list']);
+     this.service.post(finalRecipeModel).subscribe();
+     this.router.navigate(['list']);
     } else {
+
       this.service.patch(finalRecipeModel).subscribe();
     }
 
@@ -167,11 +169,9 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
    }
 
   addIngredients(newIngredient: string) {
-    if (newIngredient!=" ") {
+    if (newIngredient!="") {
       this.ingredientsList.push(newIngredient);
     }
     console.log(this.ingredientsList);
   }
-
-
 }
