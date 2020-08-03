@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { RecipesModel, RecipessModel } from '../models';
 import { RecipeService } from '../services/recipe.service';
-
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipes-list.component.html',
@@ -11,6 +11,7 @@ import { RecipeService } from '../services/recipe.service';
 })
 export class RecipesListComponent implements OnInit {
   public recipeList: RecipessModel;
+
 
   constructor(
     private router: Router,
@@ -25,7 +26,20 @@ export class RecipesListComponent implements OnInit {
 
   }
 
-  goToRecipe(id: string): void {;
+  goToRecipe(id: string): void {
     this.router.navigate([`/recipes/details/${id}`]);
   }
+
+
+
+  public DeleteRecipe(id:string): void{
+
+    this.service.deleteRecipe(id).subscribe(data => {
+      console.log(data);});
+    window.location.reload();
+
+  }
+
+
+
 }

@@ -86,8 +86,19 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
         this.service.get(params['id']).subscribe((data: RecipesModel) => {
 
-         // data.filtersList= this.checkFilters(this.filterSend);
+
+          this.filterSend=[];
+          this.ingredientsList=[];
+
+
+          data.ingredientsList.forEach(element => {this.ingredientsList.push(JSON.parse(JSON.stringify(element)).name);
+        });
+        data.filtersList.forEach(element => {this.filterSend.push(JSON.parse(JSON.stringify(element)).name);
+        });
+
+          // data.filtersList= this.checkFilters(this.filterSend);
        //   data.ingredientsList=this.checkIngredients(this.ingredientsList);
+          console.log(data);
           data.type=this.type;
 
           this.formGroup.patchValue(data);
@@ -121,12 +132,16 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       finalRecipeModel.ingredientsList=this.ingredientsList;
       finalRecipeModel.type=this.type;
     if (this.isAddMode) {
+      var link:any = (this.imageUrl);
+     link = link.split(',')[1];
+     finalRecipeModel.image = link;
 
      this.service.post(finalRecipeModel).subscribe();
      this.router.navigate(['list']);
     } else {
 
       this.service.patch(finalRecipeModel).subscribe();
+      this.router.navigate(['list']);
     }
 
 

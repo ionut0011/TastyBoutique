@@ -2,6 +2,7 @@
   <div class="row recipes-container">
     <div *ngFor="let recipe of recipeList" class="col-12 col-md-4" >
       <div class="card">
+        <div class="btn lets-cook-btn" (click)="DeleteRecipe(recipe.id)">Delete</div>
         <img src="{{recipe.backgroundImage}}">
         <div class="text">
           <h1 class="food">
@@ -12,8 +13,6 @@
             <a href="#"><i class="fa fa-heart-o"></i></a>
           </div>
           <div class="details">
-          <i class="fa fa-clock-o"> 15 Mins</i>
-          <i class="fa fa-users"> Serves 2</i>
         </div>
 
           <div class="stars">

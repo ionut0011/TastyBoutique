@@ -91,6 +91,9 @@ background-color: white;
   cursor:pointer;
   overflow: hidden;
   color: #262729;
+  font-family: 'Numans', sans-serif;
+  padding-left: 4px;
+  padding-top: 4px;
 
 
 }

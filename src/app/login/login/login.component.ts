@@ -14,8 +14,6 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export class LoginComponent  {
 
 
-  isForgotten=false;
-  isLogin=true;
   public formGroup: FormGroup;
 
   constructor(
@@ -32,13 +30,6 @@ export class LoginComponent  {
      }
 
 
-
-  public forgotPassword(): void{
-    this.isForgotten=!this.isForgotten;
-    this.isLogin=!this.isLogin;
-
-
-  }
 
 
   public clickedLogin():void{
