@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import {  RecipesModel, FiltersModel, IngredientModel, FilterModel } from '../models';
-import { RecipessModel } from '../models/recipess.model';
+import { RecipesGetModel } from '../models/recipesget.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +21,12 @@ export class RecipeService {
 
   constructor(private readonly http: HttpClient) { }
 
-  getAll(): Observable<RecipessModel> {
-    return this.http.get<RecipessModel>(`${this.endpoint}`, this.httpOptions);
+  getAll(): Observable<RecipesGetModel[]> {
+    return this.http.get<RecipesGetModel[]>(`${this.endpoint}`, this.httpOptions);
   }
 
-  get(recipeId: string): Observable<RecipesModel> {
-    return this.http.get<RecipesModel>(`${this.endpoint}/${recipeId}`, this.httpOptions);
+  get(recipeId: string): Observable<RecipesGetModel> {
+    return this.http.get<RecipesGetModel>(`${this.endpoint}/${recipeId}`, this.httpOptions);
   }
 
   getAllFilters(): Observable<FiltersModel> {

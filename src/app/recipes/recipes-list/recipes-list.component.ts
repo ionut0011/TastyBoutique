@@ -1,7 +1,7 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { RecipesModel, RecipessModel } from '../models';
+import { RecipesModel, RecipesGetModel } from '../models';
 import { RecipeService } from '../services/recipe.service';
 import { Subscription } from 'rxjs';
 @Component({
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./recipes-list.component.css'],
 })
 export class RecipesListComponent implements OnInit {
-  public recipeList: RecipessModel;
+  public recipeList: RecipesGetModel[];
 
 
   constructor(
@@ -19,7 +19,7 @@ export class RecipesListComponent implements OnInit {
 
   public ngOnInit(): void {
 
-    this.service.getAll().subscribe((data: RecipessModel) => {
+    this.service.getAll().subscribe((data: RecipesGetModel[]) => {
       this.recipeList = data;
       console.log(data);
     });

@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { RecipesModel, RecipessModel,FilterModel,FiltersModel, IngredientModel } from '../models';
+import { RecipesModel, RecipesGetModel,FilterModel,FiltersModel, IngredientModel } from '../models';
 import { RecipeService } from '../services/recipe.service';
 import { isNgContainer } from '@angular/compiler';
 
@@ -84,7 +84,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       this.routeSub = this.activatedRoute.params.subscribe(params => {
         //Getting details for the trip with the id found
 
-        this.service.get(params['id']).subscribe((data: RecipesModel) => {
+        this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
 
 
           this.filterSend=[];
@@ -131,10 +131,10 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       finalRecipeModel.filtersList= this.filterSend;
       finalRecipeModel.ingredientsList=this.ingredientsList;
       finalRecipeModel.type=this.type;
+      finalRecipeModel.image = this.imageUrl;
     if (this.isAddMode) {
-      var link:any = (this.imageUrl);
-     link = link.split(',')[1];
-     finalRecipeModel.image = link;
+
+
 
      this.service.post(finalRecipeModel).subscribe();
      this.router.navigate(['list']);

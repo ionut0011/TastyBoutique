@@ -9,5 +9,5 @@ export type RecipesGetModel = {
   type:number;
   filtersList: IngredientModel[];
   ingredientsList:FilterModel[];
-
+  image:BinaryType[];
 };
