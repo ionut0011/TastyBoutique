@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance.Migrations
 {
     [DbContext(typeof(TastyBoutiqueContext))]
-    partial class TastyBoutique_v2ContextModelSnapshot : ModelSnapshot
+    [Migration("20200803115402_ImageToByteNew")]
+    partial class ImageToByteNew
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,9 +137,6 @@ namespace TastyBoutique.Persistance.Migrations
                         .HasColumnType("nvarchar(300)")
                         .HasMaxLength(300);
 
-                    b.Property<Guid>("IdUser")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
 
@@ -147,8 +146,6 @@ namespace TastyBoutique.Persistance.Migrations
                         .HasMaxLength(50);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdUser");
 
                     b.ToTable("Recipes");
                 });

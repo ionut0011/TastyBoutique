@@ -19,7 +19,7 @@ namespace TastyBoutique.Persistance.Models
             RecipesIngredients = new HashSet<RecipesIngredients>();
             RecipesFilters = new HashSet<RecipesFilters>();
         }
-
+        public Guid IdUser { get; set; }
         public string Name { get; set; }
         public Boolean Access { get; set; }
         public string Description { get; set; }

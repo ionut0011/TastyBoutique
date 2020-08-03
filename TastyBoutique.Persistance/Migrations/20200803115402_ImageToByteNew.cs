@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TastyBoutique.Persistance.Migrations
 {
-    public partial class CheckStatusOfDatabase : Migration
+    public partial class ImageToByteNew : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -38,7 +38,8 @@ namespace TastyBoutique.Persistance.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     Access = table.Column<bool>(maxLength: 25, nullable: false),
-                    Description = table.Column<string>(maxLength: 300, nullable: true)
+                    Description = table.Column<string>(maxLength: 300, nullable: true),
+                    Image = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -194,7 +195,7 @@ namespace TastyBoutique.Persistance.Migrations
                     IdRecipe = table.Column<Guid>(nullable: false),
                     IdUser = table.Column<Guid>(nullable: false),
                     Comment = table.Column<string>(maxLength: 250, nullable: false),
-                    Review = table.Column<string>(fixedLength: true, maxLength: 10, nullable: false)
+                    Review = table.Column<int>(fixedLength: true, maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {

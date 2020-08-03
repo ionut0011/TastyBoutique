@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
@@ -12,6 +13,7 @@ using TastyBoutique.Business.Recipes.Services.Interfaces;
 namespace TastyBoutique.API.Controller
 {
     [ApiController]
+    [Authorize]
     [Route("api/v1/recipe")]
     public sealed class RecipeController : Microsoft.AspNetCore.Mvc.Controller
     {
@@ -22,7 +24,7 @@ namespace TastyBoutique.API.Controller
             _recipeService = recipeService;
         }
 
-        [HttpGet]
+        [Microsoft.AspNetCore.Mvc.HttpGet]
         public async Task<IActionResult> Search([FromQuery] SearchModel model)
         {
             var result = await _recipeService.Get(model);
@@ -30,7 +32,7 @@ namespace TastyBoutique.API.Controller
             return Ok(result);
         }
 
-        [HttpGet("{recipeId}")]
+        [Microsoft.AspNetCore.Mvc.HttpGet("{recipeId}")]
         public async Task<IActionResult> GetById([FromRoute] Guid recipeId)
         {
             var result = await _recipeService.GetById(recipeId);
@@ -38,8 +40,8 @@ namespace TastyBoutique.API.Controller
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] UpsertRecipeModel model)
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public async Task<IActionResult> Add([Microsoft.AspNetCore.Mvc.FromBody] UpsertRecipeModel model)
         { 
             
             var result = await _recipeService.Add(model);
@@ -47,20 +49,20 @@ namespace TastyBoutique.API.Controller
             return Created(result.Id.ToString(), null);
         }
 
-        [HttpPatch("{recipeId}")]
-        public async Task<IActionResult> Update([FromRoute] Guid recipeId, [FromBody] UpsertRecipeModel model)
+        [Microsoft.AspNetCore.Mvc.HttpPatch("{recipeId}")]
+        public async Task<IActionResult> Update([FromRoute] Guid recipeId, [Microsoft.AspNetCore.Mvc.FromBody] UpsertRecipeModel model)
         {
             await _recipeService.Update(recipeId, model);
             return NoContent();
         }
 
-        [HttpDelete("{recipeId}")]
+        [Microsoft.AspNetCore.Mvc.HttpDelete("{recipeId}")]
         public async Task<IActionResult> Delete([FromRoute] Guid recipeId)
         {
             await _recipeService.Delete(recipeId);
             return NoContent();
         }
-        [HttpGet("{recipeId}/ingredients")]
+        [Microsoft.AspNetCore.Mvc.HttpGet("{recipeId}/ingredients")]
         public async Task<IActionResult> GetIngredients([FromRoute] Guid recipeId)
         {
             var result = await _recipeService.GetIngredientsByRecipeId(recipeId);
@@ -68,7 +70,7 @@ namespace TastyBoutique.API.Controller
             return Ok(result.Results);
         }
 
-        [HttpGet("{recipeId}/filters")]
+        [Microsoft.AspNetCore.Mvc.HttpGet("{recipeId}/filters")]
         public async Task<IActionResult> GetFilters([FromRoute] Guid recipeId)
         {
             var result = await _recipeService.GetFiltersByRecipeId(recipeId);
