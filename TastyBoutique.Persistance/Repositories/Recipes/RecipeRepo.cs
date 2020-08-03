@@ -13,7 +13,7 @@ namespace TastyBoutique.Persistance.Recipes
 {
     public sealed class RecipeRepo : Repository<Models.Recipes>, IRecipeRepo
     {
-        public RecipeRepo(TastyBoutique_v2Context context) : base(context) { }
+        public RecipeRepo(TastyBoutiqueContext context) : base(context) { }
         private int count = 0;
         public async Task<IList<Models.Recipes>> Get(ISpecification<Models.Recipes> spec)
             => await this.context.Recipes.ExeSpec(spec).ToListAsync();

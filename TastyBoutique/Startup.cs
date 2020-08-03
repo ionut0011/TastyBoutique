@@ -69,7 +69,7 @@ namespace TastyBoutique
                 .AddScoped<IFiltersRepo, FiltersRepo>()
                 .AddScoped<IFilterService, FilterService>()
                 .AddScoped<ISearchService, SearchService>()
-                .AddDbContext<TastyBoutique_v2Context>(config =>
+                .AddDbContext<TastyBoutiqueContext>(config =>
                     config.UseSqlServer(Configuration.GetConnectionString("TastyConnection")));
             services
                 .AddAutoMapper(

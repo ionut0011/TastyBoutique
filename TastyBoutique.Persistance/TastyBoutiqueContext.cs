@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 namespace TastyBoutique.Persistance.Models
 {
-    public partial class TastyBoutique_v2Context : DbContext
+    public partial class TastyBoutiqueContext : DbContext
     {
-        public TastyBoutique_v2Context()
+        public TastyBoutiqueContext()
         {
         }
 
-        public TastyBoutique_v2Context(DbContextOptions<TastyBoutique_v2Context> options)
+        public TastyBoutiqueContext(DbContextOptions<TastyBoutiqueContext> options)
             : base(options)
         {
             Database.Migrate();
@@ -96,6 +96,7 @@ namespace TastyBoutique.Persistance.Models
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_RecipeComment_Recipes");
 
+              
                 entity.HasOne(d => d.IdUserNavigation)
                     .WithMany(p => p.RecipeComment)
                     .HasForeignKey(d => d.IdUser)
@@ -123,6 +124,8 @@ namespace TastyBoutique.Persistance.Models
 
             modelBuilder.Entity<Recipes>(entity =>
             {
+                entity.HasIndex(e => e.IdUser);
+
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Access)
@@ -135,6 +138,7 @@ namespace TastyBoutique.Persistance.Models
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
+
 
             });
             modelBuilder.Entity<RecipesFilters>(entity =>

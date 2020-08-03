@@ -9,9 +9,9 @@ using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance.Migrations
 {
-    [DbContext(typeof(TastyBoutique_v2Context))]
-    [Migration("20200802095113_updateReview")]
-    partial class updateReview
+    [DbContext(typeof(TastyBoutiqueContext))]
+    [Migration("20200803141834_UserIdinRecipess")]
+    partial class UserIdinRecipess
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -137,12 +137,20 @@ namespace TastyBoutique.Persistance.Migrations
                         .HasColumnType("nvarchar(300)")
                         .HasMaxLength(300);
 
+                    b.Property<Guid>("IdUser")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdUser");
 
                     b.ToTable("Recipes");
                 });

@@ -10,9 +10,9 @@ namespace TastyBoutique.Persistance
     public abstract class Repository<T> : IRepository<T>
         where T : Entity
     {
-        protected readonly TastyBoutique_v2Context context;
+        protected readonly TastyBoutiqueContext context;
 
-        protected Repository(TastyBoutique_v2Context context)
+        protected Repository(TastyBoutiqueContext context)
         {
             this.context = context;
             

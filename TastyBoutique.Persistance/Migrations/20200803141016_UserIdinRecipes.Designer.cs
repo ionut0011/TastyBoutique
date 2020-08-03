@@ -9,9 +9,9 @@ using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance.Migrations
 {
-    [DbContext(typeof(TastyBoutique_v2Context))]
-    [Migration("20200801192636_CheckStatusOfDatabase")]
-    partial class CheckStatusOfDatabase
+    [DbContext(typeof(TastyBoutiqueContext))]
+    [Migration("20200803141016_UserIdinRecipes")]
+    partial class UserIdinRecipes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -92,9 +92,8 @@ namespace TastyBoutique.Persistance.Migrations
                     b.Property<Guid>("IdUser")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Review")
-                        .IsRequired()
-                        .HasColumnType("nchar(10)")
+                    b.Property<int>("Review")
+                        .HasColumnType("int")
                         .IsFixedLength(true)
                         .HasMaxLength(10);
 
@@ -138,12 +137,25 @@ namespace TastyBoutique.Persistance.Migrations
                         .HasColumnType("nvarchar(300)")
                         .HasMaxLength(300);
 
+                    b.Property<Guid>("IdUser")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("IdUserNavigationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdUser");
+
+                    b.HasIndex("IdUserNavigationId");
 
                     b.ToTable("Recipes");
                 });
@@ -314,6 +326,13 @@ namespace TastyBoutique.Persistance.Migrations
                         .HasConstraintName("FK_RecipeType_Recipes")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TastyBoutique.Persistance.Models.Recipes", b =>
+                {
+                    b.HasOne("TastyBoutique.Persistance.Models.User", "IdUserNavigation")
+                        .WithMany()
+                        .HasForeignKey("IdUserNavigationId");
                 });
 
             modelBuilder.Entity("TastyBoutique.Persistance.Models.RecipesFilters", b =>

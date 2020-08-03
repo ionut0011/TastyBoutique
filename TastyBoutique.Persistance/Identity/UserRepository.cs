@@ -12,9 +12,9 @@ namespace TastyBoutique.Persistance.Identity
     {
 
 
-        private readonly TastyBoutique_v2Context _context;
+        private readonly TastyBoutiqueContext _context;
 
-        public UserRepository(TastyBoutique_v2Context context) : base(context)
+        public UserRepository(TastyBoutiqueContext context) : base(context)
         {
             this._context = context;
         }

@@ -11,7 +11,7 @@ namespace TastyBoutique.Persistance.Repositories.Filters
 {
     public sealed class FiltersRepo : Repository<Models.Filters>, IFiltersRepo 
     {
-        public FiltersRepo(TastyBoutique_v2Context context) : base(context) { }
+        public FiltersRepo(TastyBoutiqueContext context) : base(context) { }
 
         public async Task<IList<Models.Filters>> Get(ISpecification<Models.Filters> spec)
             => await this.context.Filters.ExeSpec(spec).ToListAsync();
