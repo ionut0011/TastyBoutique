@@ -23,10 +23,18 @@ namespace TastyBoutique.API.Controller
             _searchService = searchService;
         }
         [HttpGet]
-        public async Task<IActionResult> Search([FromQuery] RecipeSearchModel query, [FromQuery]SearchModel model)
+        public async Task<IActionResult> Search([FromQuery] Guid idUser, [FromQuery] IList<string> query, [FromQuery] SearchModel model)
         {
-            var result = await _searchService.GetRecipiesByQuery(query, model);
+            var result = await _searchService.GetRecipiesByQuery(idUser, query, model);
             return Ok(result.Results);
         }
+
+        [HttpGet("{filter}")]
+        public async Task<IActionResult> Filter([FromRoute] string filter, [FromQuery] Guid idUser, [FromQuery] SearchModel model)
+        {
+            var result = await _searchService.GetRecipiesByFilter(idUser, filter, model);
+            return Ok(result.Results);
+        }
+
     }
 }

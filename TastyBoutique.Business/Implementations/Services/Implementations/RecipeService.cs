@@ -37,11 +37,11 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
             _collections = collection;
         }
 
-        public async Task<IList<TotalRecipeModel>> Get(SearchModel model)
+        public async Task<IList<TotalRecipeModel>> Get(Guid idUser, SearchModel model)
         {
             var spec = model.ToSpecification<Persistance.Models.Recipes>();
 
-            var entities = await _repository.Get(spec);
+            var entities = await _repository.Get(idUser, spec);
             var count = await _repository.CountAsync();
             var recipes = _mapper.Map<IList<TotalRecipeModel>>(entities);
 

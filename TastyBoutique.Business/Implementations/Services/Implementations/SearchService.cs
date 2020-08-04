@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using TastyBoutique.Business.Implementations.Models;
 using TastyBoutique.Business.Implementations.Services.Interfaces;
-using TastyBoutique.Business.Recipes.Models.Ingredients;
 using TastyBoutique.Business.Recipes.Models.Recipe;
 using TastyBoutique.Persistance.Ingredients;
 using TastyBoutique.Persistance.Models;
 using TastyBoutique.Persistance.Recipes;
 using TastyBoutique.Persistance.Repositories.Filters;
+using TastyBoutique.Business.Recipes.Extensions;
 
 namespace TastyBoutique.Business.Implementations.Services.Implementations
 {
@@ -41,29 +40,30 @@ namespace TastyBoutique.Business.Implementations.Services.Implementations
             return result;
         }
 
-        public async Task<IList<Filters>> MapFilters(IList<string> filtersList)
+        public async Task<PaginatedList<RecipeModel>> GetRecipiesByQuery(Guid idUser, IList<string> ingredientsList, SearchModel model)
         {
-            var result = new List<Filters>();
+            var spec = model.ToSpecification<Persistance.Models.Recipes>();
 
-            foreach (var filter in filtersList)
-            {
-                result.Add(await _filtersRepo.GetByName(filter));
-            }
+            IList<Ingredients> ingredients = null;
 
-            return result;
+            if (ingredientsList.Count != 0)
+                ingredients = await MapIngredients(ingredientsList);
+
+            var result = await _recipeRepo.GetRecipiesByQuery(idUser, ingredients, spec);
+
+            return new PaginatedList<RecipeModel>(
+                model.PageIndex,
+                result.Count,
+                result.Count,
+                _mapper.Map<IList<RecipeModel>>(result));
         }
 
-        public async Task<PaginatedList<RecipeModel>> GetRecipiesByQuery(RecipeSearchModel query, SearchModel model)
+        public  async Task<PaginatedList<RecipeModel>> GetRecipiesByFilter(Guid idUser, string filter, SearchModel model)
         {
-            IList<Ingredients> ingredients = null;
-            IList<Filters> filters = null;
+            var spec = model.ToSpecification<Persistance.Models.Recipes>();
+            var f = await _filtersRepo.GetByName(filter);
 
-            if (query.IngredientsList != null)
-                ingredients = await this.MapIngredients(query.IngredientsList);
-            if (query.FiltersList != null)
-                filters = await this.MapFilters(query.FiltersList);
-
-            var result = await _recipeRepo.GetRecipiesByQuery(ingredients, filters);
+            var result = await _recipeRepo.GetRecipiesByFilter(idUser, f, spec);
 
             return new PaginatedList<RecipeModel>(
                 model.PageIndex,

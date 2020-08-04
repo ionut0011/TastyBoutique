@@ -25,9 +25,9 @@ namespace TastyBoutique.API.Controller
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public async Task<IActionResult> Search([FromQuery] SearchModel model)
+        public async Task<IActionResult> Search([FromQuery] Guid idUser, [FromQuery] SearchModel model)
         {
-            var result = await _recipeService.Get(model);
+            var result = await _recipeService.Get(idUser, model);
             
             return Ok(result);
         }
