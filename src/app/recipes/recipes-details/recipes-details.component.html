@@ -17,11 +17,11 @@
       <p *ngIf="isFormDisabled; else notEditable">{{description}}</p>
 
 
-
+      <div  *ngIf="isFormDisabled;">
+        <div *ngFor="let ingredients of ingredientsList.value">{{ingredients.name}}</div>
+      </div>
 
       <ng-template #notEditable>
-
-
 
         <div class="ingred">
           <input type="text"
@@ -29,12 +29,13 @@
             formControlName="test" >
             <button (click)="additems()">Add</button>
 
+
         </div>
 
         <div>
             <label>Filters: </label>
             <select formControlName="test2" (change)="filterSelected()">
-              <option   *ngFor="let filters of filterssList" [value]="filters.name">{{filters.name}}</option>
+              <option *ngFor="let filter of filterssList" [value]="filter.name">{{filter.name}}</option>
             </select>
         </div>
 

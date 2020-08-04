@@ -49,7 +49,7 @@ export class RecipesListComponent implements OnInit {
 
     this.service.deleteRecipe(id).subscribe(data => {
       console.log(data);});
-    window.location.reload();
+      window.location.reload();
 
   }
 

@@ -52,8 +52,8 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     return this.formGroup.get('test2') as FormControl;
   }
 
-  get filtersList(): FormControl {
-    return this.formGroup.get('filtersList') as FormControl;
+  get filter(): FormControl {
+    return this.formGroup.get('filter') as FormControl;
   }
 
   get type(): FormControl {
@@ -69,7 +69,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
   filterssList:FiltersModel;
 
-  filter:FormControl=new FormControl();
+
   typeesList: string[] = ['Food', 'Drink'];
   foodordrink:string[] =[];
 
@@ -88,10 +88,10 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       this.filterssList = data;
 
 
-      console.log(this.filtersList);
-      console.log("filtersList", data);
+      console.log(this.filter);
+      console.log("filter", data);
 
-     
+
 
 
     });
@@ -113,7 +113,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       test: new FormControl(),
       ingredientsList: new FormControl([]),
       test2: new FormControl(),
-      filtersList: new FormControl(),
+      filter: new FormControl(),
       type:new FormControl(),
       test3:new FormControl(),
 
@@ -122,7 +122,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
     this.formGroupComment = this.formBuilder.group({
       idRecipe: new FormControl(),
-      idUser: new FormControl(),
+
       comment: new FormControl(),
       review: new FormControl()
     });
@@ -135,8 +135,6 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       this.routeSub = this.activatedRoute.params.subscribe(params => {
         //Getting details for the trip with the id found
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
-
-
 
           this.formGroup.patchValue(data);
           console.log(data);
@@ -159,8 +157,6 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   }
 
   save() {
-
-     
 
 
 
@@ -188,7 +184,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     const commentsModel : CommentModel = this.formGroupComment.getRawValue();
     const comment = commentsModel.comment;
     commentsModel.review = 3;
-    commentsModel.idUser = "362dd2a8-316d-49af-8277-373cd009609b";
+    commentsModel.recipeId = "04089499-6e9a-406e-b156-ddf08082686b";
 
     this.routeSub = this.activatedRoute.params.subscribe(params => {
       this.service.addComment(params['id'], commentsModel).subscribe((data: CommentModel) => {
@@ -218,10 +214,10 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
   filterSelected(){
 
-   
-    this.filtersList.setValue(this.test2.value);
 
-    console.log(this.filtersList);
+    this.filter.setValue(this.test2.value);
+
+    console.log(this.filter);
    }
 
   selected(){
