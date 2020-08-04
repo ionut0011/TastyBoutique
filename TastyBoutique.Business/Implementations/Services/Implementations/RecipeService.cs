@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using TastyBoutique.Business.Implementations.Models.Filter;
 using TastyBoutique.Business.Implementations.Models.Recipe;
@@ -27,14 +28,15 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         private readonly IIngredientsRepo _ingredients;
         private readonly IFiltersRepo _filters;
         private readonly ICollectionRepo _collections;
-      
-        public RecipeService(IRecipeRepo repo, IMapper mapper, IFiltersRepo filter, IIngredientsRepo ingredient, ICollectionRepo collection)
+        private readonly IHttpContextAccessor _accessor;
+        public RecipeService(IRecipeRepo repo, IMapper mapper, IFiltersRepo filter, IIngredientsRepo ingredient, ICollectionRepo collection, IHttpContextAccessor accessor)
         {
             _repository = repo;
             _mapper = mapper;
             _ingredients = ingredient;
             _filters = filter;
             _collections = collection;
+            _accessor = accessor;
         }
 
         public async Task<IList<TotalRecipeModel>> Get(SearchModel model)
@@ -58,6 +60,7 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         public async Task<RecipeModel> Add(UpsertRecipeModel model)
         {
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
+            //model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             foreach (var ingredient in model.IngredientsList)
             {
                 var ing = await _ingredients.GetByName(ingredient);
@@ -67,18 +70,16 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
                     recipe.RecipesIngredients.Add(new RecipesIngredients(recipe,ing));
                 
             }
+            
+            var fil = await _filters.GetByName(model.Filter);
+            if (fil == null) 
+                recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters(model.Filter)));
+            else 
+                recipe.RecipesFilters.Add(new RecipesFilters(recipe, fil));
 
-            foreach (var filter in model.FiltersList)
-            {
-                var fil = await _filters.GetByName(filter);
-                if (fil == null)
-                    recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters(filter)));
-                else
-                    recipe.RecipesFilters.Add(new RecipesFilters(recipe, fil));
+            
 
-            }
-
-            recipe.RecipeType = (model.Type == 1) ? new RecipeType(recipe, "Food") : new RecipeType(recipe, "Drink");
+            recipe.RecipeType = new RecipeType(recipe, model.Type);
             await _repository.Add(recipe);
             await _repository.SaveChanges();
 

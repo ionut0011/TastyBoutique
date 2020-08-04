@@ -15,12 +15,12 @@ namespace TastyBoutique.Business.Recipes.Models.Recipe
         public string Description { get; set; }
 
         public byte[] Image { get; set; }
-        public int Type { get; set;  }
+        public string Type { get; set;  }
 
-        public Guid IdUser { get; set; }
+        public Guid IdUser { get; private set; }
 
         public IList<string> IngredientsList { get; set; }
 
-        public IList<string> FiltersList { get; set; }
+        public string Filter { get; set; }
     }
 }

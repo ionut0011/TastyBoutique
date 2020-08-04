@@ -12,8 +12,8 @@ using TastyBoutique.Business.Recipes.Services.Interfaces;
 
 namespace TastyBoutique.API.Controller
 {
-    [ApiController]
     [Authorize]
+    [ApiController]
     [Route("api/v1/recipe")]
     public sealed class RecipeController : Microsoft.AspNetCore.Mvc.Controller
     {
@@ -39,7 +39,7 @@ namespace TastyBoutique.API.Controller
 
             return Ok(result);
         }
-
+        
         [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> Add([Microsoft.AspNetCore.Mvc.FromBody] UpsertRecipeModel model)
         { 
