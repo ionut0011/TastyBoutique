@@ -2,7 +2,7 @@
   <div class="row recipes-container">
     <div *ngFor="let recipe of recipeList" class="col-12 col-md-4" >
       <div class="card">
-        <div class="btn lets-cook-btn" (click)="DeleteRecipe(recipe.id)">Delete</div>
+        <div class="btn delete-btn" (click)="DeleteRecipe(recipe.id)">Delete</div>
         <img src="{{recipe.image}}">
         <div class="text">
           <h1 class="food">
