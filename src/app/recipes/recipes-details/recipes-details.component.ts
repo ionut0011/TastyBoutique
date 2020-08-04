@@ -72,6 +72,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       name: new FormControl(),
       description: new FormControl(),
       access: new FormControl(false)
+
     })
 
 
@@ -131,7 +132,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       finalRecipeModel.filtersList= this.filterSend;
       finalRecipeModel.ingredientsList=this.ingredientsList;
       finalRecipeModel.type=this.type;
-      finalRecipeModel.image = this.imageUrl;
+      finalRecipeModel.image = this.imageUrl.split(',')[1];
     if (this.isAddMode) {
 
 

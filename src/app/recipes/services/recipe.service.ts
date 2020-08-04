@@ -10,8 +10,8 @@ import { RecipesGetModel } from '../models/recipesget.model';
 })
 export class RecipeService {
 
-  private endpoint: string = 'http://www.tastyboutique.tk:5341/api/v1/recipe';
-
+  private endpoint: string = 'http://localhost:5000/api/v1/recipe';
+  private recipes: RecipesGetModel[]=[];
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export class RecipeService {
   constructor(private readonly http: HttpClient) { }
 
   getAll(): Observable<RecipesGetModel[]> {
-    return this.http.get<RecipesGetModel[]>(`${this.endpoint}`, this.httpOptions);
+    return this.http.get<RecipesGetModel[]>(`http://localhost:5000/api/v1/recipe`, this.httpOptions);
   }
 
   get(recipeId: string): Observable<RecipesGetModel> {
@@ -54,10 +54,19 @@ export class RecipeService {
   }
 
   post(recipes: RecipesModel): Observable<any> {
-    return this.http.post<any>(`${this.endpoint}`, recipes, this.httpOptions);
+    return this.http.post<any>(`http://www.tastyboutique.tk:5341/api/v1/recipe`, recipes, this.httpOptions);
   }
 
   patch(recipes: RecipesModel): Observable<any> {
     return this.http.patch<any>(`${this.endpoint}/${recipes.id}`, recipes, this.httpOptions);
+  }
+
+  saveRecipes(recipes :RecipesGetModel[])
+  {
+    this.recipes = recipes;
+  }
+  getRecipes()
+  {
+    return this.recipes;
   }
 }
