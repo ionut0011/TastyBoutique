@@ -121,14 +121,22 @@
   </form>
 
 
-  </section>
-  <section  class="form-section">
-    <form>
-      <textarea *ngIf="isFormDisabled">
-        Test comentariu
-      </textarea>
-    </form>
-  </section>
+  <br>
+
+  <div class="comments-title" *ngIf="isFormDisabled">
+    <h1>Comments</h1>
+    <hr>
+  </div>
+
+<div class="comment-block" *ngIf="isFormDisabled">
+  <div class="create_new_comment">
+    <br>
+     <div class="user_avatar">
+       <img src="../../../assets/images/avatar.png" class="round">
+     </div>
+     <div class="input_comment">
+       <input type="text" placeholder="Leave a comment">
+     </div>
+   </div>
 
 
-</div>

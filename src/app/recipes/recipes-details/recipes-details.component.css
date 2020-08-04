@@ -6,10 +6,6 @@ h1 {
 
 .flex-row-space-around {
   margin: 10px;
-
-
-
-
 }
 
 .ingred{
@@ -165,4 +161,33 @@ button span {
   img {
     max-width: 100%;
   }
+}
+
+
+
+
+img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 30px;
+  float: left;
+  font-weight: bold;
+
+  /* Change the shape according
+      to the image */
+  shape-outside: circle();
+  background-color: Green;
+  color: white;
+}
+
+
+.input_comment{
+  top: 30px;
+  display: flex;
+}
+
+h1{
+  text-align:center;
 }
