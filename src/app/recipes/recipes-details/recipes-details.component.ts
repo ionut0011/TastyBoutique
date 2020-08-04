@@ -100,7 +100,8 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       type:new FormControl(),
       test3:new FormControl(),
 
-    });
+   });
+
 
 
 
@@ -133,7 +134,8 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
   save() {
 
-      let finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
+      
+   let finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
       finalRecipeModel.image = this.imageUrl.split(',')[1];
     if (this.isAddMode) {
      this.service.post(finalRecipeModel).subscribe();
