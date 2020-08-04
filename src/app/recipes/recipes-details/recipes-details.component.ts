@@ -16,7 +16,7 @@ import {LoginComponent} from '../../login/login/login.component'
 })
 export class RecipesDetailsComponent implements OnInit,OnDestroy
 {
-
+  ratingNumber: number = 0;
 
   fileToUpload: any;
   imageUrl: any;
@@ -117,7 +117,6 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
     this.formGroupComment = this.formBuilder.group({
       idRecipe: new FormControl(),
-      idUser: new FormControl(),
       comment: new FormControl(),
       review: new FormControl()
     });
@@ -154,9 +153,6 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
   save() {
       let finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
-      //finalRecipeModel.filtersList= this.filterSend;
-      //finalRecipeModel.ingredientsList=this.ingredientsList;
-      //finalRecipeModel.type=this.type;
       finalRecipeModel.image = this.imageUrl.split(',')[1];
     if (this.isAddMode) {
      this.service.post(finalRecipeModel).subscribe();
@@ -175,8 +171,6 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     const commentsModel : CommentModel = this.formGroupComment.getRawValue();
     const comment = commentsModel.comment;
     commentsModel.review = 3;
-    commentsModel.idUser = "362dd2a8-316d-49af-8277-373cd009609b";
-
     this.routeSub = this.activatedRoute.params.subscribe(params => {
       this.service.addComment(params['id'], commentsModel).subscribe((data: CommentModel) => {
         console.log('post comment:', data);
@@ -217,5 +211,9 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     else{
       this.type.setValue(2);
     }
+   }
+
+   testStar(rating) {
+     this.ratingNumber = rating;
    }
 }

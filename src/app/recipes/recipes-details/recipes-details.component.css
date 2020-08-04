@@ -247,11 +247,10 @@ button{
 }
 
 .comments-section{
-  background-color: #efefef;
+  background-color: white;
 }
 
 .comment-button{
   background-color: black;
-
   margin-top:25px;
 }
