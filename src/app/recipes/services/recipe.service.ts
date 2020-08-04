@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import{CommentModel} from '../models/comment.model';
 import {  RecipesModel, FiltersModel, IngredientModel, FilterModel } from '../models';
 import { RecipesGetModel } from '../models/recipesget.model';
 
@@ -42,6 +42,7 @@ export class RecipeService {
   {
     return this.http.get<FilterModel>(`http://www.tastyboutique.tk:5341/api/v1/filter/${name}`, this.httpOptions);
   }
+
   addIngredient(name: string):Observable<any>{
     return this.http.post<any>(`http://www.tastyboutique.tk:5341/api/v1/ingredient`,name, this.httpOptions);
   }
@@ -51,6 +52,14 @@ export class RecipeService {
 
   deleteRecipe(recipeId: string): Observable<RecipesModel> {
     return this.http.delete<RecipesModel>(`${this.endpoint}/${recipeId}`, this.httpOptions);
+  }
+
+  getComments(recipeId: string):Observable<any>{
+    return this.http.get<any>(`${this.endpoint}/${recipeId}/comments`, this.httpOptions);
+  }
+
+  addComment(recipeId: string, comment: CommentModel) :Observable<any>{
+    return this.http.post<any>(`${this.endpoint}/${recipeId}/comments`,comment,this.httpOptions);
   }
 
   post(recipes: RecipesModel): Observable<any> {

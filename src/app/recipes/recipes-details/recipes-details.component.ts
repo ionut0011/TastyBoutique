@@ -2,11 +2,12 @@ import { Component, OnInit,OnDestroy} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-
 import { RecipesModel, RecipesGetModel,FilterModel,FiltersModel, IngredientModel } from '../models';
 import { RecipeService } from '../services/recipe.service';
 import { isNgContainer } from '@angular/compiler';
-
+import {CommentModel} from '../models/comment.model';
+import { Params } from '@angular/router';
+import {LoginComponent} from '../../login/login/login.component'
 
 @Component({
   selector: 'app-recipes-details',
@@ -22,10 +23,13 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
   formGroup: FormGroup;
 
+  formGroupComment : FormGroup;
+
   isAdmin: boolean;
   isAddMode: boolean;
   photos: Blob[] = [];
 
+  public commentsList: CommentModel;
   private routeSub: Subscription = new Subscription();
 
   get description(): string {
@@ -85,9 +89,18 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       this.filterssList = data;
 
       console.log(this.filtersList);
-      console.log(data);
+      console.log("filtersList", data);
 
     });
+    this.routeSub = this.activatedRoute.params.subscribe(params => {
+    this.service.getComments(params['id']).subscribe((comments: CommentModel) =>{
+      this.commentsList = comments;
+      console.log("Comentariile acestei retete", this.commentsList);
+
+    })
+  });
+
+
 
     this.formGroup = this.formBuilder.group({
       id: new FormControl(),
@@ -102,46 +115,37 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
     });
 
+    this.formGroupComment = this.formBuilder.group({
+      idRecipe: new FormControl(),
+      idUser: new FormControl(),
+      comment: new FormControl(),
+      review: new FormControl()
+    });
 
 
     if (this.router.url === '/create-recipe') {
       this.isAddMode = true;
     } else {
-
       //Getting id from url
       this.routeSub = this.activatedRoute.params.subscribe(params => {
         //Getting details for the trip with the id found
-
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
-
-
          // this.filterSend=[];
-         // this.ingredientsList=[];
-
-
-
-
+         // this.ingredientsList=[]
           // data.filtersList= this.checkFilters(this.filterSend);
        //   data.ingredientsList=this.checkIngredients(this.ingredientsList);
           console.log(data);
-
           this.formGroup.patchValue(data);
-
-
         })
-
         this.formGroup.disable();
       });
       this.isAddMode = false;
     }
     this.isAdmin = true;
-
-
   }
 
   ngOnDestroy(): void{
     this.routeSub.unsubscribe();
-
   }
 
   startUpdating() {
@@ -149,30 +153,38 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   }
 
   save() {
-
       let finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
-
       //finalRecipeModel.filtersList= this.filterSend;
       //finalRecipeModel.ingredientsList=this.ingredientsList;
       //finalRecipeModel.type=this.type;
       finalRecipeModel.image = this.imageUrl.split(',')[1];
     if (this.isAddMode) {
-
-
-
      this.service.post(finalRecipeModel).subscribe();
      this.router.navigate(['list']);
     } else {
-
       this.service.patch(finalRecipeModel).subscribe();
       this.router.navigate(['list']);
     }
-
-
     this.photos.push(this.imageUrl);
     this.imageUrl = null;
     this.formGroup.disable();
   }
+
+  postComment(){
+
+    const commentsModel : CommentModel = this.formGroupComment.getRawValue();
+    const comment = commentsModel.comment;
+    commentsModel.review = 3;
+    commentsModel.idUser = "362dd2a8-316d-49af-8277-373cd009609b";
+
+    this.routeSub = this.activatedRoute.params.subscribe(params => {
+      this.service.addComment(params['id'], commentsModel).subscribe((data: CommentModel) => {
+        console.log('post comment:', data);
+      });
+        console.log("s-a adaugat comentul");
+        console.log(commentsModel);
+      });
+}
 
   handleFileInput(file: FileList) {
     this.fileToUpload = file.item(0);
@@ -184,39 +196,26 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     reader.readAsDataURL(this.fileToUpload);
   }
 
-
   additems():void
   {
     this.ingredientsList.value.push(this.test.value);
     this.test.setValue('');
-
-
   }
 
 
   filterSelected(){
-
-
     this.filtersList.value.push(this.test2.value);
-
     console.log(this.filtersList);
-
    }
 
 
   selected(){
-
     if(this.type.value=='Food')
     {
       this.type.setValue(1);
-
     }
     else{
       this.type.setValue(2);
-
-
     }
    }
-
-
 }
