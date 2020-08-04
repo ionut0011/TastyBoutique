@@ -114,8 +114,10 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
         //Getting details for the trip with the id found
 
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
-          console.log(data);
+
           this.formGroup.patchValue(data);
+          console.log(data);
+
         })
         this.formGroup.disable();
       });
@@ -134,9 +136,13 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
   save() {
 
-      
+
    let finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
+
+    if(this.imageUrl!=undefined)
+    {
       finalRecipeModel.image = this.imageUrl.split(',')[1];
+    }
     if (this.isAddMode) {
      this.service.post(finalRecipeModel).subscribe();
      this.router.navigate(['list']);
@@ -163,6 +169,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   {
     this.ingredientsList.value.push(this.test.value);
     this.test.setValue('');
+
   }
 
 
@@ -176,6 +183,8 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     this.type.setValue(this.test3.value);
     console.log(this.type.value);
    }
+
+
 
 
 }

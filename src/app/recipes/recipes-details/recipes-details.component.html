@@ -15,21 +15,13 @@
     <div class="form-group">
       <p *ngIf="isFormDisabled; else notEditable">{{description}}</p>
 
-      <ng-template #notEditable>
-        <!--
-        <label> Add ingredients:</label>
-          <input #newIngredient (keyup.enter)="addIngredients(newIngredient.value)" (blur)="addIngredients(newIngredient.value); newIngredient.value='';">
-          <button type="button" class="btn" (click)="addIngredients(newIngredient.value)">Add</button>
-          <ul class="ingred" ><li  *ngFor="let ingredient of ingredientsList">{{ingredient}} </li></ul>
 
-          <label>Filters: </label>
-          <span class="filtre" >
-            <select [formControl]="filter"  (change)="filterSelected()"  >
-               <option   *ngFor="let filter of filtersList" [value]="filter.name">{{filter.name}}</option>
-           </select>
-          </span>
-          <br>
-        -->
+
+
+      <ng-template #notEditable>
+
+
+
         <div class="ingred">
           <input type="text"
             placeholder="Add ingredients"
