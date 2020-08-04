@@ -53,23 +53,22 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   }
 
   get filtersList(): FormControl {
-    return this.formGroup.get('filterSend') as FormControl;
+    return this.formGroup.get('filtersList') as FormControl;
   }
 
   get type(): FormControl {
     return this.formGroup.get('type') as FormControl;
   }
 
+  get test3(): FormControl {
+    return this.formGroup.get('test3') as FormControl;
+  }
+
 
 
 
   filterssList:FiltersModel;
-  //filterSend:string[]=[];
-  //ingredientsList:string[] =[];
-  //type:number;
 
-
-  type1:FormControl=new FormControl();
   filter:FormControl=new FormControl();
   typeesList: string[] = ['Food', 'Drink'];
   foodordrink:string[] =[];
@@ -88,8 +87,12 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     this.service.getAllFilters().subscribe((data: FiltersModel) => {
       this.filterssList = data;
 
+
       console.log(this.filtersList);
       console.log("filtersList", data);
+
+
+
 
     });
     this.routeSub = this.activatedRoute.params.subscribe(params => {
@@ -110,10 +113,12 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       test: new FormControl(),
       ingredientsList: new FormControl([]),
       test2: new FormControl(),
-      filtersList: new FormControl([]),
-      type:new FormControl()
+      filtersList: new FormControl(),
+      type:new FormControl(),
+      test3:new FormControl(),
 
-    });
+   });
+
 
     this.formGroupComment = this.formBuilder.group({
       idRecipe: new FormControl(),
@@ -129,12 +134,13 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       this.routeSub = this.activatedRoute.params.subscribe(params => {
         //Getting details for the trip with the id found
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
-         // this.filterSend=[];
-         // this.ingredientsList=[]
-          // data.filtersList= this.checkFilters(this.filterSend);
-       //   data.ingredientsList=this.checkIngredients(this.ingredientsList);
-          console.log(data);
+
+
+
           this.formGroup.patchValue(data);
+          console.log(data);
+
+
         })
         this.formGroup.disable();
       });
@@ -152,8 +158,18 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   }
 
   save() {
-      let finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
+
+
+
+
+
+   let finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
+
+    if(this.imageUrl!=undefined)
+    {
+
       finalRecipeModel.image = this.imageUrl.split(',')[1];
+    }
     if (this.isAddMode) {
      this.service.post(finalRecipeModel).subscribe();
      this.router.navigate(['list']);
@@ -182,7 +198,6 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
   handleFileInput(file: FileList) {
     this.fileToUpload = file.item(0);
-
     let reader = new FileReader();
     reader.onload = (event: any) => {
       this.imageUrl = event.target.result;
@@ -194,23 +209,22 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   {
     this.ingredientsList.value.push(this.test.value);
     this.test.setValue('');
+
   }
 
 
   filterSelected(){
-    this.filtersList.value.push(this.test2.value);
+
+
+    this.filtersList.setValue(this.test2.value);
+
     console.log(this.filtersList);
    }
 
-
   selected(){
-    if(this.type.value=='Food')
-    {
-      this.type.setValue(1);
-    }
-    else{
-      this.type.setValue(2);
-    }
+
+    this.type.setValue(this.test3.value);
+    console.log(this.type.value);
    }
 
    testStar(rating) {

@@ -36,7 +36,6 @@ export class LoginComponent  {
 
 
     const data: LoginModel = this.formGroup.getRawValue();
-
     this.authentificationService.login(data).subscribe((logData:any) => {
       localStorage.setItem('userToken', JSON.stringify(logData.token));
       localStorage.setItem('email', JSON.stringify(logData.email));

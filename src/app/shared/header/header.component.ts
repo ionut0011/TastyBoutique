@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 
 
 import { UserService } from '../services';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -22,13 +23,21 @@ export class HeaderComponent{
     private readonly cdRef: ChangeDetectorRef,
     public readonly userService: UserService) { }
 
+    public ngOnInit(): void {
+
+      let user = localStorage.getItem('email');
+      if(user!=null)
+      {
+        setTimeout(() => this.userService.username.next(user.substring(1,user.length-1).split('@')[0]), 0);
+      }
+  }
 
   public logout(): void {
 
     this.router.navigate(['login']);
-     localStorage.removeItem('email');
+    localStorage.removeItem('userToken');
     this.username = localStorage.getItem('email');
-    console.log("clicked logout");
+    localStorage.removeItem('email');
 
   }
 
