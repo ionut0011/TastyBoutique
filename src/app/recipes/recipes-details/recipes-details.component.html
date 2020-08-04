@@ -1,8 +1,6 @@
 <div class="flex-row-space-around">
   <section class="form-section">
     <form [formGroup]="formGroup">
-
-
       <div class="stars">
         <li>
           <a><i (mouseover)="testStar(1)" class="fa" [ngClass]="ratingNumber > 0 ? 'fa-star': 'fa-star-o'"></i></a>
@@ -12,8 +10,6 @@
           <a><i (mouseover)="testStar(5)" class="fa" [ngClass]="ratingNumber > 4 ? 'fa-star': 'fa-star-o'"></i></a>
         </li>
       </div>
-
-
       <div class="form-group">
         <input type="text" class="title" placeholder="Enter recipe name" formControlName="name">
       </div>
