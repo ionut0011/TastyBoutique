@@ -12,8 +12,6 @@
     </div>
 
 
-
-
     <div class="form-group">
       <p *ngIf="isFormDisabled; else notEditable">{{description}}</p>
 
@@ -37,20 +35,22 @@
             placeholder="Add ingredients"
             formControlName="test" >
             <button (click)="additems()">Add</button>
+
         </div>
 
         <div>
             <label>Filters: </label>
             <select formControlName="test2" (change)="filterSelected()">
-              <option   *ngFor="let filter of filterssList" [value]="filter.name">{{filter.name}}</option>
+              <option   *ngFor="let filters of filterssList" [value]="filters.name">{{filters.name}}</option>
             </select>
         </div>
-          <label>Select type:</label>
-          <span class="filtre">
-             <select formControlName="type" (change)="selected()" >
-                <option selected="" *ngFor="let typees of typeesList" [value]="typees" >{{typees}}</option>
+
+          <div >
+            <label>Select type:</label>
+             <select formControlName="test3" (change)="selected()" >
+                <option  *ngFor="let typees of typeesList" [value]="typees" >{{typees}}</option>
               </select>
-          </span>
+          </div>
 
         <textarea class="recipe-description"
         contenteditable="true"

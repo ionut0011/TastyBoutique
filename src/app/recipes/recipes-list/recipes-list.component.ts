@@ -25,9 +25,8 @@ export class RecipesListComponent implements OnInit {
         var link:any = "data:image/jpg;base64,"+element.image;
         element.image = link;
       });
-      console.log(data);
+      console.log(localStorage.getItem('userToken'));
     });
-
   }
 
   goToRecipe(id: string): void {

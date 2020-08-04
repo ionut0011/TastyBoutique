@@ -36,9 +36,10 @@ export class LoginComponent  {
 
 
     const data: LoginModel = this.formGroup.getRawValue();
-
-    this.authentificationService.login(data).subscribe(() => {
-      this.userService.username.next(data.email);
+    this.authentificationService.login(data).subscribe((logData:any) => {
+      localStorage.setItem('userToken', JSON.stringify(logData.token));
+      localStorage.setItem('email', JSON.stringify(logData.email));
+      this.userService.username.next(data.email.split('@')[0]);
       this.router.navigate(['dashboard']);
     });
 
