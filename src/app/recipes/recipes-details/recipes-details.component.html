@@ -16,6 +16,7 @@
       <p *ngIf="isFormDisabled; else notEditable">{{description}}</p>
 
       <ng-template #notEditable>
+        <!--
         <label> Add ingredients:</label>
           <input #newIngredient (keyup.enter)="addIngredients(newIngredient.value)" (blur)="addIngredients(newIngredient.value); newIngredient.value='';">
           <button type="button" class="btn" (click)="addIngredients(newIngredient.value)">Add</button>
@@ -28,13 +29,28 @@
            </select>
           </span>
           <br>
+        -->
+        <div class="ingred">
+          <input type="text"
+            placeholder="Add ingredients"
+            formControlName="test" >
+            <button (click)="additems()">Add</button>
 
-          <label>Select type:</label>
-          <span class="filtre">
-             <select [formControl]="type1" (change)="selected()" >
-                <option selected="" *ngFor="let typees of typeesList" [value]="typees" >{{typees}}</option>
+        </div>
+
+        <div>
+            <label>Filters: </label>
+            <select formControlName="test2" (change)="filterSelected()">
+              <option   *ngFor="let filters of filterssList" [value]="filters.name">{{filters.name}}</option>
+            </select>
+        </div>
+
+          <div >
+            <label>Select type:</label>
+             <select formControlName="test3" (change)="selected()" >
+                <option  *ngFor="let typees of typeesList" [value]="typees" >{{typees}}</option>
               </select>
-          </span>
+          </div>
 
         <textarea class="recipe-description"
         contenteditable="true"

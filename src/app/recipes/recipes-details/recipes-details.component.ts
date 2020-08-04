@@ -36,14 +36,35 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     return this.formGroup.disabled;
   }
 
+  get test(): FormControl {
+    return this.formGroup.get('test') as FormControl;
+  }
 
-  filtersList:FiltersModel;
-  filterSend:string[]=[];
-  ingredientsList:string[] =[];
-  type:number;
+  get ingredientsList(): FormControl {
+    return this.formGroup.get('ingredientsList') as FormControl;
+  }
+
+  get test2(): FormControl {
+    return this.formGroup.get('test2') as FormControl;
+  }
+
+  get filtersList(): FormControl {
+    return this.formGroup.get('filtersList') as FormControl;
+  }
+
+  get type(): FormControl {
+    return this.formGroup.get('type') as FormControl;
+  }
+
+  get test3(): FormControl {
+    return this.formGroup.get('test3') as FormControl;
+  }
 
 
-  type1:FormControl=new FormControl();
+
+
+  filterssList:FiltersModel;
+
   filter:FormControl=new FormControl();
   typeesList: string[] = ['Food', 'Drink'];
   foodordrink:string[] =[];
@@ -60,9 +81,9 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   ngOnInit(): void {
 
     this.service.getAllFilters().subscribe((data: FiltersModel) => {
-      this.filtersList = data;
+      this.filterssList = data;
 
-      console.log(this.filtersList);
+      console.log(this.filterssList);
       console.log(data);
 
     });
@@ -71,9 +92,16 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       id: new FormControl(),
       name: new FormControl(),
       description: new FormControl(),
-      access: new FormControl(false)
+      access: new FormControl(false),
+      test: new FormControl(),
+      ingredientsList: new FormControl([]),
+      test2: new FormControl(),
+      filtersList: new FormControl(),
+      type:new FormControl(),
+      test3:new FormControl(),
 
-    })
+   });
+
 
 
 
@@ -86,39 +114,18 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
         //Getting details for the trip with the id found
 
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
-
-
-          this.filterSend=[];
-          this.ingredientsList=[];
-
-
-          data.ingredientsList.forEach(element => {this.ingredientsList.push(JSON.parse(JSON.stringify(element)).name);
-        });
-        data.filtersList.forEach(element => {this.filterSend.push(JSON.parse(JSON.stringify(element)).name);
-        });
-
-          // data.filtersList= this.checkFilters(this.filterSend);
-       //   data.ingredientsList=this.checkIngredients(this.ingredientsList);
           console.log(data);
-          data.type=this.type;
-
           this.formGroup.patchValue(data);
-
-
         })
-
         this.formGroup.disable();
       });
       this.isAddMode = false;
     }
     this.isAdmin = true;
-
-
   }
 
   ngOnDestroy(): void{
     this.routeSub.unsubscribe();
-
   }
 
   startUpdating() {
@@ -127,25 +134,16 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
   save() {
 
-      var finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
-
-      finalRecipeModel.filtersList= this.filterSend;
-      finalRecipeModel.ingredientsList=this.ingredientsList;
-      finalRecipeModel.type=this.type;
+      
+   let finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
       finalRecipeModel.image = this.imageUrl.split(',')[1];
     if (this.isAddMode) {
-
-
-
      this.service.post(finalRecipeModel).subscribe();
      this.router.navigate(['list']);
     } else {
-
       this.service.patch(finalRecipeModel).subscribe();
       this.router.navigate(['list']);
     }
-
-
     this.photos.push(this.imageUrl);
     this.imageUrl = null;
     this.formGroup.disable();
@@ -153,7 +151,6 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
   handleFileInput(file: FileList) {
     this.fileToUpload = file.item(0);
-
     let reader = new FileReader();
     reader.onload = (event: any) => {
       this.imageUrl = event.target.result;
@@ -162,32 +159,23 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   }
 
 
-  selected(){
-
-    if(this.type1.value=='Food')
-    {
-      this.type=1;
-      console.log(this.type);
-    }
-    else{
-      this.type=0;
-      console.log(this.type);
-
-    }
-   }
-
-   filterSelected(){
-
-
-    this.filterSend.push(this.filter.value);
-    console.log(this.filterSend);
-
-   }
-
-  addIngredients(newIngredient: string) {
-    if (newIngredient!="") {
-      this.ingredientsList.push(newIngredient);
-    }
-    console.log(this.ingredientsList);
+  additems():void
+  {
+    this.ingredientsList.value.push(this.test.value);
+    this.test.setValue('');
   }
+
+
+  filterSelected(){
+    this.filtersList.setValue(this.test2.value);
+    console.log(this.filtersList);
+
+   }
+
+  selected(){
+    this.type.setValue(this.test3.value);
+    console.log(this.type.value);
+   }
+
+
 }
