@@ -2,35 +2,22 @@
   <div class="row recipes-container">
     <div *ngFor="let recipe of recipeList" class="col-12 col-md-4" >
       <div class="card">
-        <div class="btn lets-cook-btn" (click)="DeleteRecipe(recipe.id)">Delete</div>
+        <div class="btn delete-btn" (click)="DeleteRecipe(recipe.id)">Delete</div>
         <img src="{{recipe.image}}">
         <div class="text">
           <h1 class="food">
             <h1>{{recipe.name}}</h1>
           </h1>
-
           <div class="icon">
             <a href="#"><i class="fa fa-heart-o"></i></a>
           </div>
           <div class="details">
         </div>
-
-          <div class="stars">
-            <li>
-              <a href="#"><i class="fa fa-star"></i></a>
-              <a href="#"><i class="fa fa-star"></i></a>
-              <a href="#"><i class="fa fa-star"></i></a>
-              <a href="#"><i class="fa fa-star"></i></a>
-              <a href="#"><i class="fa fa-star-o"></i></a>
-            </li>
-          </div>
+        <app-stars-review></app-stars-review>
           <p class="info">{{recipe.description}}</p>
-
           <div class="btn lets-cook-btn" (click)="goToRecipe(recipe.id)">Let's Cook!</div>
         </div>
       </div>
-
     </div>
   </div>
-
 </div>

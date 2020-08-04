@@ -42,7 +42,6 @@ export class LoginComponent  {
       this.userService.username.next(data.email.split('@')[0]);
       this.router.navigate(['dashboard']);
     });
-
   }
 
   public goToPage(page: string): void {

@@ -1,3 +1,4 @@
+
 <div class="flex-row-space-around">
 
   <section class="form-section">
@@ -107,20 +108,100 @@
       <button type="button"
               (click)="save()"><span>Save Recipe</span></button>
     </ng-template>
-
-
-
   </form>
 
-
-  </section>
-  <section  class="form-section">
-    <form>
-      <textarea *ngIf="isFormDisabled">
-        Test comentariu
-      </textarea>
-    </form>
-  </section>
-
-
+  <br>
+  <div class="comments-title" *ngIf="isFormDisabled">
 </div>
+<hr b>
+
+<br>
+<div class="comments-section">
+  <form [formGroup]="formGroupComment">
+    <div class="comment-block" *ngIf="isFormDisabled">
+      <div class="create_new_comment">
+        <br>
+        <div class="user_avatar">
+          <img src="../../../assets/images/avatar.png" class="round">
+        </div>
+        <div class="input_comment">
+          <input type="text" placeholder="Leave a comment" formControlName="comment">
+        </div>
+        <button type="button" class="comment-button" *ngIf="isFormDisabled" (click)="postComment()">
+          <span> Add comment</span>
+        </button>
+      </div>
+<hr>
+    </div>
+
+
+
+    <div *ngFor="let comment of commentsList">
+    <div class="new_comment">
+      <ul class="user_comment" style="margin-left: 50px;">
+          <div class="user_avatar">
+            <img src="../../../assets/images/avatar.png">
+          </div>
+          <div class="comment_body">
+            <p>{{comment.comment}}</p>
+          </div>
+
+          Rating:  {{comment.review}}/5
+
+          <div class="stars">
+            <li>
+              <div *ngIf="comment.review == 0">
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+
+              <div *ngIf="comment.review == 1">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="comment.review == 2">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="comment.review == 3">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="comment.review == 4">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="comment.review == 5">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+              </div>
+            </li>
+          </div>
+        </ul>
+      </div>
+      <hr>
+    </div>
+  </form>
+</div>
+
+
+
+

@@ -6,10 +6,6 @@ h1 {
 
 .flex-row-space-around {
   margin: 10px;
-
-
-
-
 }
 
 .ingred{
@@ -165,4 +161,97 @@ button span {
   img {
     max-width: 100%;
   }
+}
+
+
+
+
+img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 30px;
+  float: left;
+  font-weight: bold;
+
+  /* Change the shape according
+      to the image */
+  shape-outside: circle();
+  background-color: Green;
+  color: white;
+}
+
+
+.input_comment{
+  top: 30px;
+  display: flex;
+}
+
+h1{
+  text-align:center;
+}
+
+
+.new_comment {
+  width: 100%;
+  height: auto;
+  padding: 20px 0;
+  border-top: 1px solid lighten(grey, 10%);
+}
+
+
+.user_comment {
+  list-style-type: none;
+}
+
+.comment_body {
+  display: inline-block;
+  vertical-align: middle;
+  width: calc(100% - 75px);
+  min-height: 65px;
+  margin-left: 10px;
+  padding: 5px 10px;
+  font-size: .9rem;
+  color: #555;
+  background-color: white;
+  border-bottom: 2px solid lighten(grey, 15%);
+}
+
+.input_comment {
+  display: inline-block;
+  vertical-align: middle;
+
+  margin-left: 10px;
+  width: calc(100% - 75px);
+}
+
+.create_new_comment{
+
+  margin-top:75px;
+  margin-bottom: 75px;
+}
+
+.star-review{
+  display:flex;
+  flex-direction: row;
+}
+i{
+  color: #ffe500;
+}
+
+button{
+  width: 100px;
+  margin: 0 auto;
+  display: block;
+}
+
+.comments-section{
+  background-color: #efefef;
+}
+
+.comment-button{
+  background-color: black;
+
+  margin-top:25px;
 }
