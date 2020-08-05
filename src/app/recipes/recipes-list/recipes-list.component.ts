@@ -1,9 +1,19 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { RecipesModel, RecipesGetModel } from '../models';
+
+
+import { ViewChild, ElementRef } from '@angular/core'
+import { RecipesModel, RecipesGetModel,CollectionsModel } from '../models';
+
 import { RecipeService } from '../services/recipe.service';
 import { DomSanitizer } from '@angular/platform-browser';
+
 import { Ng2ImgMaxService } from 'ng2-img-max';
+
+import { UserService } from 'src/app/shared/services';
+import {CommentModel} from '../models/comment.model'
+
+
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipes-list.component.html',
@@ -12,7 +22,12 @@ import { Ng2ImgMaxService } from 'ng2-img-max';
 
 export class RecipesListComponent implements OnInit {
   public recipeList: RecipesGetModel[];
+
+  public collection: CollectionsModel={};
   private imageList: any = [];
+
+
+  public commentList: CommentModel;
 
   constructor(
     private router: Router,
@@ -33,9 +48,12 @@ export class RecipesListComponent implements OnInit {
         }
       });
       console.log(data);
-      this.service.saveRecipes(this.recipeList);
-    });
 
+      this.service.saveRecipes(this.recipeList);
+
+      console.log("commentList", this.commentList)
+
+    });
 
   }
 
@@ -45,11 +63,26 @@ export class RecipesListComponent implements OnInit {
   }
 
   public DeleteRecipe(id:string): void{
-
     this.service.deleteRecipe(id).subscribe(data => {
       console.log(data);});
-
+      window.location.reload();
 
   }
 
+
+  postCollections(id: string): void {
+
+    this.collection.idRecipe=id;
+    this.service.postCollections(this.collection).subscribe(data => {
+      console.log(data);});
+
+  }
+
+
+
+  public goToPage(page: string): void {
+    this.router.navigate([page]);
+
+
+  }
 }

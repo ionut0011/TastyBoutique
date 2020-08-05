@@ -38,11 +38,10 @@ body {
   border-bottom-right-radius: 25px;
 }
 
-.icon .fa-heart-o {
+.icon a .fa-heart-o {
   position: absolute;
   right: 10%;
   bottom: 45%;
-  cursor: pointer;
 
   background: linear-gradient(
     to right bottom,

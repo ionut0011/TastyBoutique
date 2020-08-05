@@ -110,6 +110,7 @@ background-color: white;
 .registerdiv
 {
   display: inline-flex;
+  margin-top: -30px;
 
 }
 
@@ -117,3 +118,10 @@ h3{
   font-family: 'Numans', sans-serif;
 
 }
+
+
+input:invalid {
+  border: 1px solid red;
+
+}
+

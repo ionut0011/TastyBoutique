@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
-import { FormBuilder, FormControl, FormGroup, } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import { Ng2ImgMaxModule, Ng2ImgMaxService } from 'ng2-img-max';
 

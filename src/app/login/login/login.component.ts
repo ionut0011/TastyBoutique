@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import { AuthentificationService } from '../services/authentification.service';
 import { LoginModel } from '../models/login.model';
 import { UserService } from 'src/app/shared/services';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export class LoginComponent  {
 
 
-  public formGroup: FormGroup;
+  public form: FormGroup;
 
   constructor(
     private readonly authentificationService:AuthentificationService,
@@ -22,23 +22,26 @@ export class LoginComponent  {
     private readonly userService:UserService,
     private readonly formBuilder: FormBuilder
     ) {
-      this.formGroup = this.formBuilder.group({
-        email: new FormControl(null),
+
+      this.form = new FormGroup({
+        email: new FormControl('', [Validators.required]),
         password: new FormControl(null),
       });
       this.userService.username.next('');
      }
 
+  
      ngOnInit(): void {
         localStorage.clearItem('email');
         localStorage.clearItem('userToken');
      }
 
 
+
   public clickedLogin():void{
 
+    const data: LoginModel = this.form.getRawValue();
 
-    const data: LoginModel = this.formGroup.getRawValue();
     this.authentificationService.login(data).subscribe((logData:any) => {
       localStorage.setItem('userToken', JSON.stringify(logData.token));
       localStorage.setItem('email', JSON.stringify(logData.email));

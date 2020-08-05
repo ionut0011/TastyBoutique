@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { RecipesDetailsComponent } from './recipes-details/recipes-details.component';
 import { RecipesListComponent } from './recipes-list/recipes-list.component';
+import { RecipesSavedComponent } from './recipes-saved/recipes-saved.component';
 
 
 
@@ -17,6 +18,12 @@ const routes: Routes = [
     pathMatch: 'full',
     component: RecipesDetailsComponent,
   },
+  {
+    path: 'collections',
+    pathMatch: 'full',
+    component: RecipesSavedComponent,
+  },
+
 
 
 ];

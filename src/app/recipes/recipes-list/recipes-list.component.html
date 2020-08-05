@@ -1,3 +1,17 @@
+<div class="row recipes-container">
+    <div>
+        <input value="Saved Recipes" class="btn lets-cook-btn" (click)="goToPage('collections')">
+      </div>
+      <div>
+        <input value="Create Recipe" class="btn lets-cook-btn" (click)="goToPage('create-recipe')">
+      </div>
+      <div>
+        <input value="Dashboard" class="btn lets-cook-btn" (click)="goToPage('dashboard')">
+      </div>
+      <div>
+        <input value="Notifications" class="btn lets-cook-btn" (click)="goToPage('notifications')">
+      </div>
+</div>
 <div class="container" >
   <div class="row recipes-container">
     <div *ngFor="let recipe of recipeList" class="col-12 col-md-4" >
@@ -9,7 +23,9 @@
             <h1>{{recipe.name}}</h1>
           </h1>
           <div class="icon">
-            <a href="#"><i class="fa fa-heart-o"></i></a>
+            <!--<a href="#"><i class="fa fa-heart-o"></i></a> -->
+
+            <i  class="fa fa-heart-o" (click)="postCollections(recipe.id)"></i>
           </div>
           <div class="details">
         </div>
