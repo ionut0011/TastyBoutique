@@ -40,28 +40,28 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         }
 
         public async Task<IList<TotalRecipeModel>> Get(SearchModel model)
-        {
+        {   /*
             var spec = model.ToSpecification<Persistance.Models.Recipes>();
 
             var entities = await _repository.Get(spec);
             var recipes = _mapper.Map<IList<TotalRecipeModel>>(entities);
-
+            */
+            var entities = await _repository.GetRecipesUnpaginated();
+            var recipes = _mapper.Map<IList<TotalRecipeModel>>(entities);
             foreach (var recipe in recipes)
             {
                 recipe.Type = _repository.GetRecipeTypeById(recipe.Id).Result.Type;
                 recipe.Ingredients = GetIngredientsByRecipeId(recipe.Id).Result.Results;
                 recipe.Filters = GetFiltersByRecipeId(recipe.Id).Result.Results;
-                var listreview = await _repository.GetCommentsReview(recipe.Id);
-                var totalreview = 0;
-                foreach (var review in listreview)
+                var listReview = await _repository.GetCommentsReview(recipe.Id);
+                var totalReview = 0;
+                foreach (var review in listReview)
                 {
-                    totalreview += review.Review;
+                    totalReview += review.Review;
                 }
 
-                recipe.AverageReview = (totalreview != 0) ? totalreview / listreview.Count : 0;
+                recipe.AverageReview = (totalReview != 0) ? totalReview / listReview.Count : 0;
             }
-            
-
             return recipes;
         }
 

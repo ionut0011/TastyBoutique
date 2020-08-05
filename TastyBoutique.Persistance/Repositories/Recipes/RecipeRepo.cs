@@ -18,6 +18,8 @@ namespace TastyBoutique.Persistance.Recipes
         public async Task<IList<Models.Recipes>> Get(ISpecification<Models.Recipes> spec)
             => await this.context.Recipes.ExeSpec(spec).ToListAsync();
 
+        public async Task<IList<Models.Recipes>> GetRecipesUnpaginated()
+            => await this.context.Recipes.ToListAsync();
         public async Task<int> CountAsync()
             => await this.context.Recipes.CountAsync();
 

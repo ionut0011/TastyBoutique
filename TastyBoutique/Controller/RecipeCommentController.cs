@@ -38,7 +38,7 @@ namespace TastyBoutique.API.Controller
         {
             var result = await _commentsService.Add(recipeId, model);
 
-            return Created(result.IdRecipe.ToString(),null);
+            return Ok(result);
         }
 
         [HttpDelete("{recipeId}/{commentId}")]
