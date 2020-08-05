@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login/login.component';
 import { RegisterComponent } from './login/register/register.component';
 import { RecoverComponent } from './login/recover/recover.component';
 import { SharedModule } from './shared/shared.module';
+import { RecipesSavedComponent } from './recipes/recipes-saved/recipes-saved.component';
 
 const routes: Routes = [
 
@@ -28,17 +29,18 @@ const routes: Routes = [
 },
 {
   path: 'notifications',
-  loadChildren: () =>
-    import('./notifications/notifications.module').then(
-      (m) => m.NotificationsModule
-    ),
+  loadChildren: () =>import('./notifications/notifications.module').then((m) => m.NotificationsModule),
 },
 { path: 'list', component: RecipesListComponent },
 { path: 'create-recipe', component: RecipesDetailsComponent },
+{ path: 'collections', component: RecipesSavedComponent },
 {
   path: 'recipes',
   loadChildren: () => import('./recipes/recipes.module').then((m) => m.RecipesModule),
 },
+
+
+
 ];
 
 @NgModule({

@@ -7,11 +7,12 @@ import { SharedModule } from '../shared/shared.module';
 import { RecipesRoutingModule } from './recipes-routing.module';
 import { RecipesDetailsComponent } from './recipes-details/recipes-details.component';
 import { RecipesListComponent } from './recipes-list/recipes-list.component';
+import { RecipesSavedComponent } from './recipes-saved/recipes-saved.component';
 
 
 
 @NgModule({
-  declarations: [RecipesDetailsComponent, RecipesListComponent],
+  declarations: [RecipesDetailsComponent, RecipesListComponent, RecipesSavedComponent],
   imports: [
     CommonModule,
     RecipesRoutingModule,

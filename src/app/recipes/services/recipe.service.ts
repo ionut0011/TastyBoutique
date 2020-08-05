@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import{CommentModel} from '../models/comment.model';
 import {  RecipesModel, FiltersModel, IngredientModel, FilterModel } from '../models';
 import { RecipesGetModel } from '../models/recipesget.model';
+import { CollectionsModel } from '../models/collections.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,8 @@ import { RecipesGetModel } from '../models/recipesget.model';
 export class RecipeService {
 
   private endpoint: string = 'http://www.tastyboutique.tk:5341/api/v1/recipe';
+  private endpoint2: string = 'http://www.tastyboutique.tk:5341/api/v1/collections';
+
   private recipes: RecipesGetModel[]=[];
   private httpOptions = {
 
@@ -81,4 +84,18 @@ export class RecipeService {
   {
     return this.recipes;
   }
+
+  postCollections(recipes:CollectionsModel): Observable<any> {
+    return this.http.post<any>(`http://www.tastyboutique.tk:5341/api/v1/collections`, recipes, this.httpOptions);
+  }
+
+  getAllCollections(): Observable<RecipesGetModel[]> {
+    return this.http.get<RecipesGetModel[]>(`http://www.tastyboutique.tk:5341/api/v1/collections`, this.httpOptions);
+  }
+
+  deleteRecipeCollection(recipeId: CollectionsModel): Observable<any> {
+    console.log(recipeId);
+    return this.http.delete<any>(`${this.endpoint2}/${recipeId.idRecipe}`, this.httpOptions);
+  }
+
 }

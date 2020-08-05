@@ -1,7 +1,7 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ViewChild, ElementRef } from '@angular/core'
-import { RecipesModel, RecipesGetModel } from '../models';
+import { RecipesModel, RecipesGetModel,CollectionsModel } from '../models';
 import { RecipeService } from '../services/recipe.service';
 import { Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -14,6 +14,7 @@ import { UserService } from 'src/app/shared/services';
 
 export class RecipesListComponent implements OnInit {
   public recipeList: RecipesGetModel[];
+  public collection: CollectionsModel={};
   private imageList: any = [];
 
   constructor(
@@ -23,7 +24,9 @@ export class RecipesListComponent implements OnInit {
 
   public ngOnInit(): void {
 
+
     if(this.service.getRecipes().length == 0){
+
     this.service.getAll().subscribe((data: RecipesGetModel[]) => {
       this.recipeList = data;
       this.recipeList.forEach(element => {
@@ -35,6 +38,7 @@ export class RecipesListComponent implements OnInit {
       console.log(data);
       this.service.saveRecipes(this.recipeList);
     });
+
   }
   else
     this.recipeList = this.service.getRecipes();
@@ -51,6 +55,19 @@ export class RecipesListComponent implements OnInit {
       console.log(data);});
       window.location.reload();
 
+  }
+
+  postCollections(id: string): void {
+
+    this.collection.idRecipe=id;
+    this.service.postCollections(this.collection).subscribe(data => {
+      console.log(data);});
+
+  }
+
+
+  public goToPage(page: string): void {
+    this.router.navigate([page]);
   }
 
 
