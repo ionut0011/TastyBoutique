@@ -23,8 +23,8 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   isAddMode: boolean;
   photos: Blob[] = [];
   ratingNumber: number = 0;
-
   public commentsList: CommentModel[];
+  public recipeList: RecipesModel[];
   private routeSub: Subscription = new Subscription();
 
   get description(): string {
@@ -159,14 +159,10 @@ onImageChange(event) {
       this.routeSub = this.activatedRoute.params.subscribe(params => {
         //Getting details for the trip with the id found
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
-
-
           this.test2.setValue(data.filtersList[0].name);
           this.test3.setValue(data.type);
           this.formGroup.patchValue(data);
           console.log(data);
-
-
         })
         this.formGroup.disable();
       });
@@ -199,7 +195,10 @@ onImageChange(event) {
     }
     finalRecipeModel.ingredientsList = this.validateIngredients(finalRecipeModel.ingredientsList);
     if (this.isAddMode) {
-     this.service.post(finalRecipeModel).subscribe();
+     this.service.post(finalRecipeModel).subscribe((data:RecipesModel) =>{
+      console.log(data);
+      this.recipeList.push(data);
+     });
      this.router.navigate(['list']);
     } else {
       this.service.patch(finalRecipeModel).subscribe();
@@ -224,16 +223,11 @@ onImageChange(event) {
   postComment(){
     const commentsModel : CommentModel = this.formGroupComment.getRawValue();
     const comment = commentsModel.comment;
-
     commentsModel.review = this.ratingNumber;
     console.log(commentsModel.review);
-
     this.routeSub = this.activatedRoute.params.subscribe(params => {
       this.service.addComment(params['id'], commentsModel).subscribe((data: CommentModel) => {
-
         this.commentsList.push(data);
-
-
       });
         console.log("s-a adaugat commentul");
         console.log(commentsModel);

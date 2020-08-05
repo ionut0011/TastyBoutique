@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 
 :root {
-  --header-height: 100px;
+  --header-height: 75px;
   --tasty-Yellow: rgb(252, 195, 81);
   --tasty-Orange: rgb(250, 182, 182);
   --tasty-Gradient:linear-gradient(to right bottom, rgb(252, 195, 81), rgb(250, 182, 182));

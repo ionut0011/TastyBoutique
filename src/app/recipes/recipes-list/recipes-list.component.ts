@@ -75,14 +75,9 @@ export class RecipesListComponent implements OnInit {
     this.collection.idRecipe=id;
     this.service.postCollections(this.collection).subscribe(data => {
       console.log(data);});
-
   }
-
-
 
   public goToPage(page: string): void {
     this.router.navigate([page]);
-
-
   }
 }
