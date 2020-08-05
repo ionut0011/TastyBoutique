@@ -29,7 +29,6 @@ namespace TastyBoutique.Business.Services.Implementations
             model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var comment = _mapper.Map<RecipeComment>(model);
             var recipe = await _repository.GetById(idRecipe);
-
             recipe.AddComment(comment);
             _repository.Update(recipe);
             await _repository.SaveChanges();
@@ -42,9 +41,7 @@ namespace TastyBoutique.Business.Services.Implementations
             var recipe = await _repository.GetByIdWithComments(IdRecipe);
             recipe.RemoveComment(commentId);
             _repository.Update(recipe);
-
             await _repository.SaveChanges();
-
         }
 
 
