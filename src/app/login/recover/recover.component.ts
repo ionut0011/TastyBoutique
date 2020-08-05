@@ -52,17 +52,11 @@ export class RecoverComponent implements OnInit,OnDestroy {
 
       this.router.navigate(['login']);
     });
-
-
-
-
-
   }
 
   public goToPage(page: string): void {
     this.router.navigate([page]);
   }
-
 
 }
 

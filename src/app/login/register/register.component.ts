@@ -22,7 +22,8 @@ export class RegisterComponent  {
   public password: string;
   public fullName: string;
   public age : number;
-  public userName: number;
+  public userName: string;
+
   public form: FormGroup;
 
   constructor(
@@ -35,9 +36,10 @@ export class RegisterComponent  {
     {
 
       this.form = new FormGroup({
-        email : new FormControl('',[]),
-        password :  new FormControl('',[Validators.required]),
+        email : new FormControl('',[Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
+        password :  new FormControl('',[Validators.required, Validators.minLength(8), Validators.pattern("(.*[A-Z].*[0-9].*)|(.*[0-9].*[A-Z].*)")]),
         fullName :  new FormControl('',[]),
+        userName: new FormControl('', [Validators.required]),
         age : new FormControl('',[]),
 
       })
@@ -55,18 +57,19 @@ export class RegisterComponent  {
 
   authenticate() :void
   {
+    console.log("ai dat click pe submit")
 
-    // const data: RegisterModel = {
-    //   name: this.fullNameControl.value,
-    //   age: this.ageControl.value,
-    //   username:this.userNameControl.value,
-    //   email: this.emailControl.value,
-    //   password: this.passwordControl.value,
-    // }
-    // this.authentificationService.register(data).subscribe(() => {
-    //   this.userService.username.next(data.email);
-    //   this.router.navigate(['dashboard']);
-    // });
+    const data: RegisterModel = {
+      name: this.fullNameControl.value,
+      age: this.ageControl.value,
+      username:this.userNameControl.value,
+      email: this.emailControl.value,
+      password: this.passwordControl.value,
+    }
+    this.authentificationService.register(data).subscribe(() => {
+      this.userService.username.next(data.email);
+      this.router.navigate(['dashboard']);
+    });
     console.log(this.form.value);
     console.log(this.form.valid);
   }
@@ -74,6 +77,29 @@ export class RegisterComponent  {
 
   public goToPage(page: string): void {
     this.router.navigate([page]);
+  }
+
+  public get ageControl() :FormControl{
+    return this.form.controls.age as FormControl;
+  }
+
+  public get fullNameControl() :FormControl{
+    return this.form.controls.fullName as FormControl;
+  }
+
+  public get userNameControl() :FormControl{
+    return this.form.controls.userName as FormControl;
+  }
+  public get emailControl() :FormControl{
+    return this.form.controls.email as FormControl;
+  }
+
+  public get passwordControl() :FormControl{
+    return this.form.controls.password as FormControl;
+  }
+
+  public get isFormValid(): boolean{
+    return this.form.valid;
   }
 
 }

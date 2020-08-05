@@ -1,59 +1,71 @@
-<div class="container" [formGroup]= "form">
+<div class="container">
   <div class="d-flex justify-content-center justify-content-md-end h-100">
     <div class="card">
       <div class="card-header">
-
         <span class="login-label">Register </span>
-
-
       </div>
       <div class="card-body">
-        <form [formGroup]="formGroup">
+        <form class="was-validated" [formGroup]="form">
           <div class="input-group form-group">
             <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fa fa-user"></i></span>
+              <span class="input-group-text"><i class="fa fa-envelope"></i></span>
             </div>
-            <input type="text" formControlName="userName" name="username"  class="form-control" placeholder="username">
+            <input type="email" formControlName="email" name="email" class="form-control" placeholder="email"
+              required />
+            <div class="invalid-feedback">Please fill out this field.</div>
+
 
           </div>
-          <div class="input-group form-group" >
+
+          <div class="input-group form-group">
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fa fa-key"></i></span>
             </div>
-            <input type="password" formControlName="password" name="password" class="form-control" placeholder="password">
+            <input type="password" formControlName="password" name="password"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="form-control"
+              placeholder="password" required>
+          </div>
+          <div class="invalid-feedback">Please fill out this field.</div>
+
+          <div *ngIf="!passwordControl.valid" >
+            <div class="invalid-feedback">Please fill out this field.</div>
+
+            <li id="letter" class="invalid">At least <strong>one letter</strong></li>
+            <li id="capital" class="invalid">At least <strong>one capital letter</strong></li>
+            <li id="number" class="invalid">At least <strong>one number</strong></li>
+            <li id="length" class="invalid">Be at least <strong>8 characters</strong></li>
+
+            <br>
           </div>
 
 
-            <div class="input-group form-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-              </div>
-            <input type="text" formControlName="fullName" name="fullname" class="form-control" placeholder="fullname" />
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-address-book"></i></span>
             </div>
+            <input type="text" formControlName="fullName" name="fullname" class="form-control" placeholder="fullname" required/>
 
-            <div class="input-group form-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-              </div>
-              <input type="number" formControlName="age" name="age" class="form-control" min="14" max="50" placeholder="age">
+          <div class="invalid-feedback">Please fill out this field.</div>
+
+          </div>
+
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
             </div>
-            <div class="input-group form-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-              </div>
-            <input type="email" formControlName="email" name="email" class="form-control" placeholder="email" />
-            </div>
+            <input type="number" formControlName="age" name="age" class="form-control" min="14" max="50"
+              placeholder="age" required>
+              <div class="invalid-feedback">Please fill out this field.</div>
 
-            <span class="admin">
-              <input type="checkbox" (click)="setAdmin()">
-              <p>I want to be an admin</p>
-            </span>
+          </div>
 
-
-
+          <span class="admin">
+            <input type="checkbox" (click)="setAdmin()">
+            <p>I want to be an admin</p>
+          </span>
 
           <div class="form-group">
-            <input type="submit" value="Register"  class="btn float-right login_btn" (click)="authenticate()" type="button">
+            <input type="submit" value="Register" class="btn float-right login_btn" (click)="authenticate()"
+              type="button">
           </div>
 
         </form>
@@ -61,14 +73,13 @@
 
       <div class="registerdiv">
         <div>
-        <h3>Go back to page</h3>
+          <h3>Go back to page</h3>
+        </div>
+        <div>
+          <input type="submit" value="login" class="regbtn" (click)="goToPage('login')">
+        </div>
       </div>
-      <div>
-       <input type="submit" value="login" class="regbtn" (click)="goToPage('login')">
-      </div>
-      </div>
-
-
     </div>
   </div>
 </div>
+
