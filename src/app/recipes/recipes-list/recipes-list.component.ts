@@ -1,9 +1,9 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { RecipesModel, RecipesGetModel } from '../models';
+import {CommentModel} from '../models/comment.model'
+import { RecipesGetModel } from '../models';
 import { RecipeService } from '../services/recipe.service';
-import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipes-list.component.html',
@@ -11,8 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class RecipesListComponent implements OnInit {
   public recipeList: RecipesGetModel[];
-
-
+  public commentList: CommentModel;
   constructor(
     private router: Router,
     private service: RecipeService) {}
@@ -26,7 +25,9 @@ export class RecipesListComponent implements OnInit {
         element.image = link;
       });
       console.log(data);
+      console.log("commentList", this.commentList)
     });
+
 
   }
 

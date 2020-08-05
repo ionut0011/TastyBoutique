@@ -57,6 +57,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     return this.formGroup.get('type') as FormControl;
   }
 
+
   filterssList:FiltersModel;
   type1:FormControl=new FormControl();
   filter:FormControl=new FormControl();
