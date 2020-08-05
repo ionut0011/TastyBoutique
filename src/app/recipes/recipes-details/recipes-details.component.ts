@@ -1,13 +1,12 @@
 import { Component, OnInit,OnDestroy} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, Observer } from 'rxjs';
 import { RecipesModel, RecipesGetModel,FilterModel,FiltersModel, IngredientModel } from '../models';
 import { RecipeService } from '../services/recipe.service';
-import { isNgContainer } from '@angular/compiler';
 import {CommentModel} from '../models/comment.model';
-import { Params } from '@angular/router';
-import {LoginComponent} from '../../login/login/login.component'
+import { Ng2ImgMaxService } from 'ng2-img-max';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Component({
   selector: 'app-recipes-details',
   templateUrl: './recipes-details.component.html',
@@ -71,28 +70,51 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
   typeesList: string[] = ['Food', 'Drink'];
   foodordrink:string[] =[];
-
-
+  uploadedImage: FileList;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private service: RecipeService
+    private service: RecipeService,
+    private ng2ImgMax: Ng2ImgMaxService,
+    private readonly http :HttpClient
     ) { }
+
+
+onImageChange(event) {
+  //event='../../assets/images/food.jpg';
+  let image = event.target.files.item(0);
+  console.log(image);
+
+  this.ng2ImgMax.resizeImage(image, 225, 225).subscribe(
+    result => {
+      this.handleFileInput(result);
+    },
+    error => {
+      console.log('😢 Oh no!', error);
+    }
+  );
+}
+
+
+  handleFileInput(file: FileList) {
+    this.fileToUpload = file;
+    let reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.imageUrl = event.target.result;
+      console.log("imgurl=",this.imageUrl);
+    }
+
+
+
+  }
+
 
   ngOnInit(): void {
 
     this.service.getAllFilters().subscribe((data: FiltersModel) => {
       this.filterssList = data;
-
-
-      console.log(this.filter);
-      console.log("filter", data);
-
-
-
-
     });
     this.routeSub = this.activatedRoute.params.subscribe(params => {
     this.service.getComments(params['id']).subscribe((comments: CommentModel) =>{
@@ -101,7 +123,6 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
     })
   });
-
 
 
     this.formGroup = this.formBuilder.group({
@@ -158,9 +179,14 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   save() {
    let finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
 
+   console.log("urlimage=",this.imageUrl);
     if(this.imageUrl!=undefined)
     {
       finalRecipeModel.image = this.imageUrl.split(',')[1];
+    }
+    else
+    {
+      // finalRecipeModel.image = '../../assets/images/food.jpg'
     }
     finalRecipeModel.ingredientsList = this.validateIngredients(finalRecipeModel.ingredientsList);
     if (this.isAddMode) {
@@ -174,6 +200,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     this.imageUrl = null;
     this.formGroup.disable();
   }
+
 
   postComment(){
 
@@ -191,14 +218,6 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       });
 }
 
-  handleFileInput(file: FileList) {
-    this.fileToUpload = file.item(0);
-    let reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.imageUrl = event.target.result;
-    }
-    reader.readAsDataURL(this.fileToUpload);
-  }
 
   validateIngredients(ingr :string[])
   {

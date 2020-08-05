@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { FormBuilder, FormControl, FormGroup, } from '@angular/forms';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
-
+import { Ng2ImgMaxModule, Ng2ImgMaxService } from 'ng2-img-max';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'
     SharedModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Ng2ImgMaxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

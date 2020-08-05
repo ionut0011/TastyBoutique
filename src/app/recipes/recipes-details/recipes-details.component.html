@@ -86,7 +86,7 @@
           <br>
           <input #Image
                  type="file"
-                 (change)="handleFileInput($event.target.files)" />
+                 (change)="onImageChange($event)" />
           <img class="photo-file"
                [src]="imageUrl">
         </div>
