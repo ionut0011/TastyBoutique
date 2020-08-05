@@ -49,13 +49,15 @@ namespace TastyBoutique.Business.Collections.Services.Implementation
         {
             model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var savedRecipe = await _repository.Get(model.IdUser, model.IdRecipe);
+            
             savedRecipe.IdRecipeNavigation = await _recipeRepo.GetById(savedRecipe.IdRecipe);
             savedRecipe.NeedUpdate = false;
             await _repository.SaveChanges();
         }
 
-        public async Task<PaginatedList<RecipeModel>> GetAllByIdUser(Guid idUser, SearchModel model)
+        public async Task<PaginatedList<RecipeModel>> GetAllByIdUser(SearchModel model)
         {
+            Guid idUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var spec = model.ToSpecification<Persistance.Models.Recipes>();
             var result = await _repository.GetAllSavedByIdUser(idUser, spec);
 

@@ -44,7 +44,6 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
             var spec = model.ToSpecification<Persistance.Models.Recipes>();
 
             var entities = await _repository.Get(spec);
-            var count = await _repository.CountAsync();
             var recipes = _mapper.Map<IList<TotalRecipeModel>>(entities);
 
             foreach (var recipe in recipes)
@@ -60,7 +59,7 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         public async Task<RecipeModel> Add(UpsertRecipeModel model)
         {
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
-            //model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
+            model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             foreach (var ingredient in model.IngredientsList)
             {
                 var ing = await _ingredients.GetByName(ingredient);
