@@ -51,6 +51,7 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         public async Task<IEnumerable<RecipeCommentModel>> Get(Guid idRecipe)
         {
             var recipe = await _repository.GetByIdWithComments(idRecipe);
+            
             return _mapper.Map<IEnumerable<RecipeCommentModel>>(recipe.RecipeComment);
         }
  

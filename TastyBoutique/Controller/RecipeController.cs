@@ -50,7 +50,7 @@ namespace TastyBoutique.API.Controller
         }
 
         [Microsoft.AspNetCore.Mvc.HttpPatch("{recipeId}")]
-        public async Task<IActionResult> Update([FromRoute] Guid recipeId, [Microsoft.AspNetCore.Mvc.FromBody] UpsertRecipeModel model)
+        public async Task<IActionResult> Update([FromRoute] Guid recipeId, [FromBody] UpsertRecipeModel model)
         {
             await _recipeService.Update(recipeId, model);
             return NoContent();
