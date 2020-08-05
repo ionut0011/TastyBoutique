@@ -40,7 +40,7 @@ namespace TastyBoutique.Business.Services.Implementations
             return result;
         }
 
-        public async Task<PaginatedList<RecipeModel>> GetRecipiesByQuery(Guid idUser, IList<string> ingredientsList, SearchModel model)
+        public async Task<PaginatedList<TotalRecipeModel>> GetRecipiesByQuery(Guid idUser, IList<string> ingredientsList, SearchModel model)
         {
             var spec = model.ToSpecification<Persistance.Models.Recipes>();
 
@@ -51,25 +51,25 @@ namespace TastyBoutique.Business.Services.Implementations
 
             var result = await _recipeRepo.GetRecipiesByQuery(idUser, ingredients, spec);
 
-            return new PaginatedList<RecipeModel>(
+            return new PaginatedList<TotalRecipeModel>(
                 model.PageIndex,
                 result.Count,
                 result.Count,
-                _mapper.Map<IList<RecipeModel>>(result));
+                _mapper.Map<IList<TotalRecipeModel>>(result));
         }
 
-        public  async Task<PaginatedList<RecipeModel>> GetRecipiesByFilter(Guid idUser, string filter, SearchModel model)
+        public  async Task<PaginatedList<TotalRecipeModel>> GetRecipiesByFilter(Guid idUser, string filter, SearchModel model)
         {
             var spec = model.ToSpecification<Persistance.Models.Recipes>();
             var f = await _filtersRepo.GetByName(filter);
 
             var result = await _recipeRepo.GetRecipiesByFilter(idUser, f, spec);
 
-            return new PaginatedList<RecipeModel>(
+            return new PaginatedList<TotalRecipeModel>(
                 model.PageIndex,
                 result.Count,
                 result.Count,
-                _mapper.Map<IList<RecipeModel>>(result));
+                _mapper.Map<IList<TotalRecipeModel>>(result));
         }
 
     }

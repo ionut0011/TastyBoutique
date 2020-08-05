@@ -7,7 +7,7 @@ namespace TastyBoutique.Business.Implementations.Services.Interfaces
 {
     public interface INotificationService
     {
-        public Task<PaginatedList<RecipeModel>> GetAllByIdUser(Guid idUser);
+        public Task<PaginatedList<TotalRecipeModel>> GetAllByIdUser(Guid idUser);
 
         public Task Update(SavedRecipeModel model);
         public Task SetAllByIdRecipe(Guid idRecipe);

@@ -55,7 +55,7 @@ namespace TastyBoutique.Business.Services.Implementation
             await _repository.SaveChanges();
         }
 
-        public async Task<PaginatedList<RecipeModel>> GetAllByIdUser(SearchModel model)
+        public async Task<PaginatedList<TotalRecipeModel>> GetAllByIdUser(SearchModel model)
         {
             Guid idUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var spec = model.ToSpecification<Persistance.Models.Recipes>();
@@ -63,11 +63,11 @@ namespace TastyBoutique.Business.Services.Implementation
 
             var count = await _repository.CountAsync();
 
-            return new PaginatedList<RecipeModel>(
+            return new PaginatedList<TotalRecipeModel>(
                 model.PageIndex,
                 result.Count,
                 count,
-                _mapper.Map<IList<RecipeModel>>(result));
+                _mapper.Map<IList<TotalRecipeModel>>(result));
         }
     }
 }

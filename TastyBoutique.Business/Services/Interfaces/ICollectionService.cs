@@ -10,6 +10,6 @@ namespace TastyBoutique.Business.Services.Interfaces
         Task Add(SavedRecipeModel model);
         Task Delete(Guid recipeId);
         Task Update(SavedRecipeModel model);
-        public Task<PaginatedList<RecipeModel>> GetAllByIdUser(SearchModel model);
+        public Task<PaginatedList<TotalRecipeModel>> GetAllByIdUser(SearchModel model);
     }
 }

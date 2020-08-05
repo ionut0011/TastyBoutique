@@ -25,14 +25,14 @@ namespace TastyBoutique.Business.Services.Implementations
             _accessor = accessor;
         }
 
-        public async Task<PaginatedList<RecipeModel>> GetAllByIdUser(Guid idUser)
+        public async Task<PaginatedList<TotalRecipeModel>> GetAllByIdUser(Guid idUser)
         {
             var savedRecipes = await _collectionRepo.GetAllNotificationsByIdUser(idUser);
-            return new PaginatedList<RecipeModel>(
+            return new PaginatedList<TotalRecipeModel>(
                 1,
                 savedRecipes.Count,
                 savedRecipes.Count,
-                _mapper.Map<IList<RecipeModel>>(savedRecipes));
+                _mapper.Map<IList<TotalRecipeModel>>(savedRecipes));
         }
 
         public async Task Update(SavedRecipeModel model)

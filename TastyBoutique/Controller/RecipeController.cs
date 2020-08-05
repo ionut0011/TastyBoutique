@@ -11,7 +11,7 @@ namespace TastyBoutique.API.Controller
     [Authorize]
     [ApiController]
     [Route("api/v1/recipe")]
-    public sealed class RecipeController : Microsoft.AspNetCore.Mvc.Controller
+    public sealed class RecipeController : ControllerBase
     {
         private readonly IRecipeService _recipeService;
 
@@ -37,7 +37,7 @@ namespace TastyBoutique.API.Controller
         }
         
         [HttpPost]
-        public async Task<IActionResult> Add([Microsoft.AspNetCore.Mvc.FromBody] UpsertRecipeModel model)
+        public async Task<IActionResult> Add([FromBody] UpsertRecipeModel model)
         { 
             
             var result = await _recipeService.Add(model);
