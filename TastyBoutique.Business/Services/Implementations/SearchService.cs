@@ -9,6 +9,7 @@ using TastyBoutique.Persistance.Recipes;
 using TastyBoutique.Persistance.Repositories.Filters;
 using TastyBoutique.Business.Models.Recipe;
 using TastyBoutique.Business.Models.Shared;
+using TastyBoutique.Business.Extensions;
 
 namespace TastyBoutique.Business.Services.Implementations
 {

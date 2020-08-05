@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TastyBoutique.Business.Implementations.Models;
-using TastyBoutique.Business.Implementations.Services.Implementations;
 using TastyBoutique.Business.Implementations.Services.Interfaces;
-using TastyBoutique.Business.Recipes.Models.Recipe;
-using TastyBoutique.Persistance.Ingredients;
+using TastyBoutique.Business.Models.Shared;
 
 namespace TastyBoutique.API.Controller
 {

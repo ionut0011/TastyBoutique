@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using TastyBoutique.Business.Recipes.Models.RecipeComment;
+using TastyBoutique.Business.Models.RecipeComment;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
-
-
-using Microsoft.AspNetCore.Authorization;
-
-
 using HttpDeleteAttribute = Microsoft.AspNetCore.Mvc.HttpDeleteAttribute;
 
 namespace TastyBoutique.API.Controller
 {
-    
+
     [ApiController]
     [Route("api/v1/recipe")]
     public sealed class RecipeCommentController : ControllerBase

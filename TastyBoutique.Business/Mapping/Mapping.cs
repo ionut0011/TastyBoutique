@@ -11,8 +11,8 @@ namespace TastyBoutique.Business.Mapping
     {
         public Mapping()
         {
-            CreateMap<UpsertRecipeModel, Recipes>();
-            CreateMap<Recipes, RecipeModel>();
+            CreateMap<UpsertRecipeModel, Persistance.Models.Recipes>();
+            CreateMap<Persistance.Models.Recipes, RecipeModel>();
 
             CreateMap<CreateIngredientModel, Ingredients>();
             CreateMap<Ingredients, IngredientModel>();
@@ -20,8 +20,8 @@ namespace TastyBoutique.Business.Mapping
             CreateMap<CreateFilterModel, Filters>();
             CreateMap<Filters, FilterModel>();
 
-            CreateMap<Recipes, TotalRecipeModel>();
-            CreateMap<Recipes, RecipeModel>();
+            CreateMap<Persistance.Models.Recipes, TotalRecipeModel>();
+            CreateMap<Persistance.Models.Recipes, RecipeModel>();
 
             CreateMap<SavedRecipes, SavedRecipeModel>();
             CreateMap<SavedRecipeModel, SavedRecipes>();

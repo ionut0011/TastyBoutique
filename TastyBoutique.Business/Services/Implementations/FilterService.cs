@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using TastyBoutique.Business.Extensions;
-using TastyBoutique.Business.Implementations.Services.Interfaces;
 using TastyBoutique.Business.Models.Filter;
 using TastyBoutique.Business.Models.Shared;
+using TastyBoutique.Business.Services.Interfaces;
 using TastyBoutique.Persistance.Repositories.Filters;
 
 namespace TastyBoutique.Business.Services.Implementations

@@ -9,29 +9,25 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using FluentValidation;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
-using TastyBoutique.Business.Collections.Services.Implementation;
-using TastyBoutique.Business.Collections.Services.Interfaces;
 using TastyBoutique.Business.Identity;
 using TastyBoutique.Business.Identity.Models;
 using TastyBoutique.Business.Identity.Services.Implementations;
 using TastyBoutique.Business.Identity.Services.Interfaces;
-using TastyBoutique.Business.Implementations.Services.Implementations;
-using TastyBoutique.Business.Recipes;
-using TastyBoutique.Business.Recipes.Services.Implementations;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
 using TastyBoutique.Persistance;
 using TastyBoutique.Persistance.Identity;
 using TastyBoutique.Persistance.Models;
 using TastyBoutique.Persistance.Recipes;
 using TripLooking.API.Extensions;
-using AuthenticationService = Microsoft.AspNetCore.Authentication.AuthenticationService;
-using IAuthenticationService = Microsoft.AspNetCore.Authentication.IAuthenticationService;
 using TastyBoutique.Business.Identity.Services.Validators;
 using TastyBoutique.Business.Implementations.Services.Interfaces;
 using TastyBoutique.Persistance.Ingredients;
 using TastyBoutique.Persistance.Repositories.Filters;
 using Newtonsoft.Json;
+using TastyBoutique.Business.Services.Implementations;
+using TastyBoutique.Business.Services.Interfaces;
+using TastyBoutique.Business.Services.Implementation;
+using TastyBoutique.Business.Mapping;
 
 namespace TastyBoutique
 {
@@ -58,7 +54,7 @@ namespace TastyBoutique
                 .AddScoped<IRecipeRepo, RecipeRepo>()
                 .AddScoped<IRecipeCommentService, RecipeCommentService>()
                 .AddScoped<IPasswordHasher, PasswordHasher>()
-                .AddScoped<Business.Identity.Services.Interfaces.IAuthenticationService,Business.Identity.Services.Implementations.AuthenticationService>()
+                .AddScoped<IAuthenticationService, Business.Identity.Services.Implementations.AuthenticationService>()
                 .AddScoped<ICollectionService, CollectionService>()
                 .AddScoped<ICollectionRepo,CollectionRepo>()
                 .AddScoped<INotificationService, NotificationService>()
