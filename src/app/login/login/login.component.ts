@@ -30,6 +30,13 @@ export class LoginComponent  {
       this.userService.username.next('');
      }
 
+  
+     ngOnInit(): void {
+        localStorage.clearItem('email');
+        localStorage.clearItem('userToken');
+     }
+
+
 
   public clickedLogin():void{
 

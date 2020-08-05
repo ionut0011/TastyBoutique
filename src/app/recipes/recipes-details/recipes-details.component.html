@@ -69,6 +69,14 @@
           <div class="added-photos" *ngIf="isFormDisabled">
             <img class="photo-file" *ngFor="let photo of photos" [src]="photo">
           </div>
+
+          <br>
+          <input #Image
+                 type="file"
+                 (change)="onImageChange($event)" />
+          <img class="photo-file"
+               [src]="imageUrl">
+
         </div>
 
       </div>
