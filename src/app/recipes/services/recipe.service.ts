@@ -68,6 +68,10 @@ export class RecipeService {
     return this.http.post<any>(`${this.endpoint}/${recipeId}/comments`,comment,this.httpOptions);
   }
 
+  deleteComment(recipeId: string, commentId: string) :Observable<CommentModel>{
+    return this.http.delete<CommentModel>(`${this.endpoint}/${recipeId}/${commentId}`, this.httpOptions);
+  }
+
   post(recipes: RecipesModel): Observable<any> {
     return this.http.post<any>(`http://www.tastyboutique.tk:5341/api/v1/recipe`, recipes, this.httpOptions);
   }

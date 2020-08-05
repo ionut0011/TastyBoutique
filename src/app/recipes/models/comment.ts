@@ -1,6 +1,8 @@
-export class Comments {
-  public recipeId: string;
-  public idUser: string;
+
+export class Comment {
+  public id: string;
+  public idRecipe: string;
+
   public comment: string;
   public review : number;
 }

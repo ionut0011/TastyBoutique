@@ -1,6 +1,8 @@
 export type CommentModel = {
-  recipeId?: string;
-  idUser?: string;
+
+  id?: string;
+  idRecipe?: string;
+
   comment: string;
   review: number;
 }

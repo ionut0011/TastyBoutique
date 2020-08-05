@@ -5,49 +5,43 @@
     <div class="d-flex justify-content-center justify-content-md-end h-100">
       <div class="card">
         <div class="card-header">
-
           <span class="login-label">{{'Change Password'}} </span>
-
-
         </div>
         <div class="card-body">
-          <form [formGroup]="formGroup">
-
-
-            <ng-container >
-
-              <div class="input-group form-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-user"></i></span>
-                </div>
-              <input type="text" formControlName="email"  name="email" class="form-control" placeholder="email" />
+          <form class="was-validated" [formGroup]="formGroup">
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
               </div>
+              <input type="email" formControlName="email" name="email" class="form-control" placeholder="email"
+                required />
+              <div class="invalid-feedback">Please fill out this field.</div>
 
+
+            </div>
               <div class="input-group form-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fa fa-key"></i></span>
                 </div>
-                <input type="password" formControlName="newPassword" name="newpassword" class="form-control"  placeholder="new password">
+                <input type="password" formControlName="newPassword" name="newpassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="form-control"
+                placeholder="password" required>
+
+              <div class="invalid-feedback">Please fill out this field
+                <li id="letter" class="invalid">At least <strong>one letter</strong></li>
+                <li id="capital" class="invalid">At least <strong>one capital letter</strong></li>
+                <li id="number" class="invalid">At least <strong>one number</strong></li>
+                <li id="length" class="invalid">Be at least <strong>8 characters</strong></li>
               </div>
-
-            </ng-container>
-
+              <br>
+            </div>
 
 
 
             <div class="form-group" >
               <input type="submit" value="ChangePassword"  class="btn float-right login_btn2" (click)="clickedLogin()"  type="button">
-
             </div>
-
-
-
-
           </form>
-
-
         </div>
-
         <div class="registerdiv">
           <div>
           <h3>Go back to page</h3>
@@ -56,9 +50,6 @@
          <input type="submit" value="login" class="regbtn" (click)="goToPage('login')">
         </div>
         </div>
-
-
-
       </div>
     </div>
   </div>
