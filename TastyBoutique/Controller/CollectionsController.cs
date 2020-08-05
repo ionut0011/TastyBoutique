@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TastyBoutique.Business.Collections.Models;
@@ -10,6 +11,7 @@ using TastyBoutique.Business.Recipes.Models.Recipe;
 
 namespace TastyBoutique.API.Controller
 {
+    [Authorize]
     [Route("api/v1/collections")]
     [ApiController]
     public class CollectionsController : ControllerBase
@@ -28,10 +30,11 @@ namespace TastyBoutique.API.Controller
             return NoContent();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] SavedRecipeModel model)
+        [HttpDelete ("{idRecipe}")]
+
+        public async Task<IActionResult> Delete([FromRoute] Guid idRecipe)
         {
-            await _collectionService.Delete(model);
+            await _collectionService.Delete(idRecipe);
             return NoContent();
         }
 
@@ -43,10 +46,10 @@ namespace TastyBoutique.API.Controller
         //}
 
 
-        [HttpGet("{idUser}")]
-        public async Task<IActionResult> GetAllByIdUser([FromRoute] Guid idUser, [FromQuery]SearchModel model)
+        [HttpGet]
+        public async Task<IActionResult> GetAllByIdUser([FromQuery]SearchModel model)
         {
-            var result = await _collectionService.GetAllByIdUser(idUser, model);
+            var result = await _collectionService.GetAllByIdUser(model);
             return Ok(result.Results);
         }
 

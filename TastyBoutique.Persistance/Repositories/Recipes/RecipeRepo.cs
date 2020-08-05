@@ -15,6 +15,8 @@ namespace TastyBoutique.Persistance.Recipes
         public async Task<IList<Models.Recipes>> Get(Guid idUser, ISpecification<Models.Recipes> spec)
             => await this.context.Recipes.ExeSpec(spec).Where(recipe=>recipe.Access || recipe.IdUser == idUser).ToListAsync();
 
+        public async Task<IList<Models.Recipes>> GetRecipesUnpaginated()
+            => await this.context.Recipes.ToListAsync();
         public async Task<int> CountAsync()
             => await this.context.Recipes.CountAsync();
 
@@ -65,5 +67,11 @@ namespace TastyBoutique.Persistance.Recipes
 
             return getRecipes;
         }
+
+        public async Task<List<Models.RecipeComment>> GetCommentsReview(Guid idRecipe)
+            => await this.context.RecipeComments
+                .Where(x => x.IdRecipe == idRecipe)
+                .ToListAsync();
+
     }
 }

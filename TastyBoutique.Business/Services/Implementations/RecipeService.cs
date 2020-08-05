@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using TastyBoutique.Business.Models.Filter;
 using TastyBoutique.Business.Models.Ingredients;
 using TastyBoutique.Business.Models.Recipe;
@@ -22,36 +23,46 @@ namespace TastyBoutique.Business.Services.Implementations
         private readonly IIngredientsRepo _ingredients;
         private readonly IFiltersRepo _filters;
         private readonly ICollectionRepo _collections;
-      
-        public RecipeService(IRecipeRepo repo, IMapper mapper, IFiltersRepo filter, IIngredientsRepo ingredient, ICollectionRepo collection)
+        private readonly IHttpContextAccessor _accessor;
+        public RecipeService(IRecipeRepo repo, IMapper mapper, IFiltersRepo filter, IIngredientsRepo ingredient, ICollectionRepo collection, IHttpContextAccessor accessor)
         {
             _repository = repo;
             _mapper = mapper;
             _ingredients = ingredient;
             _filters = filter;
             _collections = collection;
+            _accessor = accessor;
         }
 
-        public async Task<IList<TotalRecipeModel>> Get(Guid idUser, SearchModel model)
-        {
+        public async Task<IList<TotalRecipeModel>> Get(SearchModel model)
+        {   /*
             var spec = model.ToSpecification<Persistance.Models.Recipes>();
 
-            var entities = await _repository.Get(idUser, spec);
-            var count = await _repository.CountAsync();
+            var entities = await _repository.Get(spec);
             var recipes = _mapper.Map<IList<TotalRecipeModel>>(entities);
-
+            */
+            var entities = await _repository.GetRecipesUnpaginated();
+            var recipes = _mapper.Map<IList<TotalRecipeModel>>(entities);
             foreach (var recipe in recipes)
             {
                 recipe.Type = _repository.GetRecipeTypeById(recipe.Id).Result.Type;
                 recipe.Ingredients = GetIngredientsByRecipeId(recipe.Id).Result.Results;
                 recipe.Filters = GetFiltersByRecipeId(recipe.Id).Result.Results;
-            }
+                var listReview = await _repository.GetCommentsReview(recipe.Id);
+                var totalReview = 0;
+                foreach (var review in listReview)
+                {
+                    totalReview += review.Review;
+                }
 
+                recipe.AverageReview = (totalReview != 0) ? totalReview / listReview.Count : 0;
+            }
             return recipes;
         }
 
         public async Task<RecipeModel> Add(UpsertRecipeModel model)
         {
+            model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
             foreach (var ingredient in model.IngredientsList)
             {
@@ -62,18 +73,16 @@ namespace TastyBoutique.Business.Services.Implementations
                     recipe.RecipesIngredients.Add(new RecipesIngredients(recipe,ing));
                 
             }
+            
+            var fil = await _filters.GetByName(model.Filter);
+            if (fil == null) 
+                recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters(model.Filter)));
+            else 
+                recipe.RecipesFilters.Add(new RecipesFilters(recipe, fil));
 
-            foreach (var filter in model.FiltersList)
-            {
-                var fil = await _filters.GetByName(filter);
-                if (fil == null)
-                    recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters(filter)));
-                else
-                    recipe.RecipesFilters.Add(new RecipesFilters(recipe, fil));
+            
 
-            }
-
-            recipe.RecipeType = (model.Type == 1) ? new RecipeType(recipe, "Food") : new RecipeType(recipe, "Drink");
+            recipe.RecipeType = new RecipeType(recipe, model.Type);
             await _repository.Add(recipe);
             await _repository.SaveChanges();
 

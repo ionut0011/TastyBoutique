@@ -14,6 +14,7 @@ namespace TastyBoutique.Business.Models.Recipe
         public byte[] Image { get; set; }
         public string Type { get; set; }
 
+        public double AverageReview { get; set; }
         public IList<IngredientModel> Ingredients { get; set; }
 
         public IList<FilterModel> Filters { get; set; }

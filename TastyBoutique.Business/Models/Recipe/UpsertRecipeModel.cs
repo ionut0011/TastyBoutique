@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace TastyBoutique.Business.Models.Recipe
 {
@@ -10,12 +11,13 @@ namespace TastyBoutique.Business.Models.Recipe
         public string Description { get; set; }
 
         public byte[] Image { get; set; }
-        public int Type { get; set;  }
+        public string Type { get; set;  }
 
+        [JsonIgnore]
         public Guid IdUser { get; set; }
 
         public IList<string> IngredientsList { get; set; }
 
-        public IList<string> FiltersList { get; set; }
+        public string Filter { get; set; }
     }
 }
