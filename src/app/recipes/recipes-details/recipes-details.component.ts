@@ -64,7 +64,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   filterssList:FiltersModel;
 
   type1:FormControl=new FormControl();
-  filter:FormControl=new FormControl();
+
 
   typeesList: string[] = ['Food', 'Drink'];
   foodordrink:string[] =[];
@@ -81,7 +81,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     this.service.getAllFilters().subscribe((data: FiltersModel) => {
       this.filterssList = data;
 
-      console.log(this.filtersList);
+      console.log(this.filterssList);
       console.log("filtersList", data);
 
     });

@@ -67,7 +67,7 @@ export class RegisterComponent  {
       email: this.emailControl.value,
       password: this.passwordControl.value,
     }
-    this.authentificationService.register(data).subscribe(() => {
+    this.authentificationService.register(data).subscribe((logData:any) => {
 
       this.userService.username.next(data.email);
       localStorage.setItem('userToken', JSON.stringify(logData.token));
