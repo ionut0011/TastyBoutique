@@ -96,6 +96,7 @@ namespace TastyBoutique.Business.Services.Implementations
             var recipe = _mapper.Map<TotalRecipeModel>(entity);
             recipe.Ingredients = GetIngredientsByRecipeId(recipe.Id).Result.Results;
             recipe.Filters = GetFiltersByRecipeId(recipe.Id).Result.Results;
+            recipe.Type = _repository.GetRecipeTypeById(recipe.Id).Result.Type;
             return recipe;
         }
 
@@ -104,7 +105,7 @@ namespace TastyBoutique.Business.Services.Implementations
             var recipe = await _repository.GetById(id);
 
             recipe.Update(model.Name, model.Access,model.Description, model.Image);
-
+            
             await _collections.SetAllByIdRecipe(recipe.Id);
             _repository.Update(recipe);
             await _repository.SaveChanges();

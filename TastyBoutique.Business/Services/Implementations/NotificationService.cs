@@ -26,6 +26,7 @@ namespace TastyBoutique.Business.Services.Implementations
         }
 
         public async Task<PaginatedList<TotalRecipeModel>> GetAllByIdUser(Guid idUser)
+        // returneaza retetele care au fost schimbate
         {
             var savedRecipes = await _collectionRepo.GetAllNotificationsByIdUser(idUser);
             return new PaginatedList<TotalRecipeModel>(
@@ -35,14 +36,16 @@ namespace TastyBoutique.Business.Services.Implementations
                 _mapper.Map<IList<TotalRecipeModel>>(savedRecipes));
         }
 
-        public async Task Update(SavedRecipeModel model)
+        // apelata cand userul apasa click pe notificare
+        public async Task Update(Guid IdRecipe)
         {
-            model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
-            var savedRecipe = await _collectionRepo.Get(model.IdUser, model.IdRecipe);
+            Guid IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
+            var savedRecipe = await _collectionRepo.Get(IdUser, IdRecipe);
             savedRecipe.NeedUpdate = false;
             await _collectionRepo.SaveChanges();
         }
 
+        // cand fac update, trebuie apelata functia asta pt a pune "needupdate" in savedrecipes pe true
         public async Task SetAllByIdRecipe(Guid idRecipe)
         {
             await _collectionRepo.SetAllByIdRecipe(idRecipe);
