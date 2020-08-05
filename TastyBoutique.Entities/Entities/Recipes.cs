@@ -13,11 +13,11 @@ namespace TastyBoutique.Persistance.Models
             Access = access;
             Description = description;
             Image = image;
-            NotificationsNavigation = new HashSet<Notifications>();
-            RecipeComment = new HashSet<RecipeComment>();
-            SavedRecipes = new HashSet<SavedRecipes>();
-            RecipesIngredients = new HashSet<RecipesIngredients>();
-            RecipesFilters = new HashSet<RecipesFilters>();
+            NotificationsNavigation = new List<Notifications>();
+            RecipeComment = new List<RecipeComment>();
+            SavedRecipes = new List<SavedRecipes>();
+            RecipesIngredients = new List<RecipesIngredients>();
+            RecipesFilters = new List<RecipesFilters>();
         }
         public Guid IdUser { get; set; }
         public string Name { get; set; }

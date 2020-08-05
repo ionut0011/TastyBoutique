@@ -1,0 +1,15 @@
+﻿using System;
+using System.Threading.Tasks;
+using TastyBoutique.Business.Models.Recipe;
+using TastyBoutique.Business.Models.Shared;
+
+namespace TastyBoutique.Business.Implementations.Services.Interfaces
+{
+    public interface INotificationService
+    {
+        public Task<PaginatedList<RecipeModel>> GetAllByIdUser(Guid idUser);
+
+        public Task Update(SavedRecipeModel model);
+        public Task SetAllByIdRecipe(Guid idRecipe);
+    }
+}

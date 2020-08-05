@@ -38,6 +38,7 @@ namespace TastyBoutique.API.Controller
             var result = await _filterService.Add(model);
             return Ok(result);
         }
+
         [HttpGet("{filterName}")]
         public async Task<IActionResult> Get([FromRoute] string filterName)
         {

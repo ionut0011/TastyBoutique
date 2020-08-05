@@ -41,19 +41,19 @@ namespace TastyBoutique.Persistance.Recipes
 
         public async Task<List<Models.Recipes>> GetRecipiesByQuery(Guid idUser, IList<Models.Ingredients> ingredients, ISpecification<Models.Recipes> spec)
         {
-            var getRecipes = await this.context.Recipes.ExeSpec(spec)
-                .Include(r => r.RecipesIngredients)
-                .Where(recipe => recipe.Access || recipe.IdUser == idUser).ToListAsync();
+            var getRecipes = this.context.Recipes.ExeSpec(spec)
+                .Where(recipe => recipe.Access || recipe.IdUser == idUser);
 
             if (ingredients != null)
             {
-                List<Guid> ingredientsIds = ingredients.Select(ingredient => ingredient.Id).ToList();
-                getRecipes = getRecipes.Where(x =>
-                        x.RecipesIngredients.Select(y => y.IngredientId).Intersect(ingredientsIds).ToList().Count ==
-                        ingredientsIds.Count).ToList();
+                var ingredientsIds = ingredients.Select(ingredient => ingredient.Id);
+                getRecipes = getRecipes
+                    .Where(x => x.RecipesIngredients
+                        .Select(y => y.IngredientId)
+                        .All(id=> ingredientsIds.Contains(id)));
             }
 
-            return getRecipes;
+            return await getRecipes.Include(r => r.RecipesIngredients).ToListAsync();
         }
 
 
