@@ -37,10 +37,10 @@ namespace TastyBoutique.Business.Collections.Services.Implementation
             await _repository.SaveChanges();
         }
 
-        public async Task Delete(SavedRecipeModel model)
+        public async Task Delete(Guid recipeId)
         {
-            model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
-            var savedRecipe = await _repository.Get(model.IdUser, model.IdRecipe);
+            var IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
+            var savedRecipe = await _repository.Get(IdUser, recipeId);
             _repository.Delete(savedRecipe);
             await _repository.SaveChanges();
         }

@@ -72,5 +72,10 @@ namespace TastyBoutique.Persistance.Recipes
             return getRecipes;
         }
 
+        public async Task<List<Models.RecipeComment>> GetCommentsReview(Guid idRecipe)
+            => await this.context.RecipeComments
+                .Where(x => x.IdRecipe == idRecipe)
+                .ToListAsync();
+
     }
 }

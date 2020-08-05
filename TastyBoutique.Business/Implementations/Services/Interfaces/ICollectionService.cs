@@ -11,7 +11,7 @@ namespace TastyBoutique.Business.Collections.Services.Interfaces
     public interface ICollectionService
     {
         Task Add(SavedRecipeModel model);
-        Task Delete(SavedRecipeModel model);
+        Task Delete(Guid recipeId);
         Task Update(SavedRecipeModel model);
         public Task<PaginatedList<RecipeModel>> GetAllByIdUser(SearchModel model);
     }

@@ -21,6 +21,7 @@ namespace TastyBoutique.Persistance.Models
 
         public virtual DbSet<Recipes> Recipes { get; set; }
 
+        public virtual DbSet<RecipeComment> RecipeComments { get; set; }
         public virtual DbSet<RecipesFilters> RecipesFilters { get; set; }
 
         public virtual DbSet<RecipesIngredients> RecipesIngredients { get; set; }

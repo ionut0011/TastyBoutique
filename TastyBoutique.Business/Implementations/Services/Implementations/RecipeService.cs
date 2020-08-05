@@ -51,15 +51,24 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
                 recipe.Type = _repository.GetRecipeTypeById(recipe.Id).Result.Type;
                 recipe.Ingredients = GetIngredientsByRecipeId(recipe.Id).Result.Results;
                 recipe.Filters = GetFiltersByRecipeId(recipe.Id).Result.Results;
+                var listreview = await _repository.GetCommentsReview(recipe.Id);
+                var totalreview = 0;
+                foreach (var review in listreview)
+                {
+                    totalreview += review.Review;
+                }
+
+                recipe.AverageReview = (totalreview != 0) ? totalreview / listreview.Count : 0;
             }
+            
 
             return recipes;
         }
 
         public async Task<RecipeModel> Add(UpsertRecipeModel model)
         {
-            var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
             model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
+            var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
             foreach (var ingredient in model.IngredientsList)
             {
                 var ing = await _ingredients.GetByName(ingredient);

@@ -30,10 +30,11 @@ namespace TastyBoutique.API.Controller
             return NoContent();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] SavedRecipeModel model)
+        [HttpDelete ("{idRecipe}")]
+
+        public async Task<IActionResult> Delete([FromRoute] Guid idRecipe)
         {
-            await _collectionService.Delete(model);
+            await _collectionService.Delete(idRecipe);
             return NoContent();
         }
 
