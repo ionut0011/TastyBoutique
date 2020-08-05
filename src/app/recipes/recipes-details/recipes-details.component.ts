@@ -1,19 +1,70 @@
-import { Component, OnInit,OnDestroy} from '@angular/core';
+import { Component, OnInit,OnDestroy, ViewChild} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RecipesModel, RecipesGetModel,FilterModel,FiltersModel, IngredientModel } from '../models';
 import { RecipeService } from '../services/recipe.service';
-import { isNgContainer } from '@angular/compiler';
 import {CommentModel} from '../models/comment.model';
-import { Params } from '@angular/router';
-import {LoginComponent} from '../../login/login/login.component'
-
+import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
 @Component({
   selector: 'app-recipes-details',
   templateUrl: './recipes-details.component.html',
   styleUrls: ['./recipes-details.component.css']
 })
+
+
+export class App {
+  name:string;
+  data1:any;
+  cropperSettings1:CropperSettings;
+  croppedWidth:number;
+  croppedHeight:number;
+
+  @ViewChild('cropper', undefined) cropper:ImageCropperComponent;
+
+  constructor() {
+    this.name = 'Angular2'
+    this.cropperSettings1 = new CropperSettings();
+    this.cropperSettings1.width = 200;
+    this.cropperSettings1.height = 200;
+
+    this.cropperSettings1.croppedWidth = 200;
+    this.cropperSettings1.croppedHeight = 200;
+
+    this.cropperSettings1.canvasWidth = 500;
+    this.cropperSettings1.canvasHeight = 300;
+
+    this.cropperSettings1.minWidth = 10;
+    this.cropperSettings1.minHeight = 10;
+
+    this.cropperSettings1.rounded = false;
+    this.cropperSettings1.keepAspect = false;
+
+    this.cropperSettings1.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+    this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
+
+    this.data1 = {};
+}
+
+cropped(bounds:Bounds) {
+  this.croppedHeight =bounds.bottom-bounds.top;
+  this.croppedWidth = bounds.right-bounds.left;
+}
+
+fileChangeListener($event) {
+  var image:any = new Image();
+  var file:File = $event.target.files[0];
+  var myReader:FileReader = new FileReader();
+  var that = this;
+  myReader.onloadend = function (loadEvent:any) {
+      image.src = loadEvent.target.result;
+      that.cropper.setImage(image);
+
+  };
+
+  myReader.readAsDataURL(file);
+  }
+}
 export class RecipesDetailsComponent implements OnInit,OnDestroy
 {
 
@@ -157,16 +208,13 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   }
 
   save() {
-
-
-
    let finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
 
     if(this.imageUrl!=undefined)
     {
-
       finalRecipeModel.image = this.imageUrl.split(',')[1];
     }
+    finalRecipeModel.ingredientsList = this.validateIngredients(finalRecipeModel.ingredientsList);
     if (this.isAddMode) {
      this.service.post(finalRecipeModel).subscribe();
      this.router.navigate(['list']);
@@ -202,6 +250,21 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       this.imageUrl = event.target.result;
     }
     reader.readAsDataURL(this.fileToUpload);
+  }
+
+  validateIngredients(ingr :string[])
+  {
+    let ingredients :string[] = [];
+    ingr.forEach(element => {
+      if(element['name']!=undefined || element['name']!=null)
+      {
+          ingredients.push(element['name']);
+      }
+      else
+        ingredients.push(element);
+
+    });
+    return ingredients;
   }
 
   additems():void
