@@ -6,6 +6,7 @@ import {Router} from '@angular/router'
 import { Subscription } from 'rxjs';
 import { UserService } from '../../shared/services';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {Validators} from '@angular/forms'
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -14,11 +15,15 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 export class RegisterComponent  {
 
-
+  public isSetRegistered: boolean = false;
   public isAdmin:boolean=true;
   public formGroup: FormGroup;
-
-
+  public email: string = null;
+  public password: string;
+  public fullName: string;
+  public age : number;
+  public userName: number;
+  public form: FormGroup;
 
   constructor(
     private readonly authentificationService:AuthentificationService,
@@ -26,16 +31,23 @@ export class RegisterComponent  {
     private readonly userService:UserService,
     private readonly formBuilder: FormBuilder
     )
-    { this.formGroup = this.formBuilder.group({
-      username: new FormControl(null),
-      email: new FormControl(null),
-      password: new FormControl(null),
-      name: new FormControl(null),
-      age: new FormControl(null),
-    });
-    this.userService.username.next('');}
 
+    {
 
+      this.form = new FormGroup({
+        email : new FormControl('',[]),
+        password :  new FormControl('',[Validators.required]),
+        fullName :  new FormControl('',[]),
+        age : new FormControl('',[]),
+
+      })
+
+    this.userService.username.next('');
+  }
+
+  public setRegister(): void {
+    this.isSetRegistered = !this.isSetRegistered;
+  }
 
   setAdmin(): void {
     this.isAdmin = !this.isAdmin;
@@ -44,16 +56,20 @@ export class RegisterComponent  {
   authenticate() :void
   {
 
-    const data: RegisterModel = this.formGroup.getRawValue();
-
-    this.authentificationService.register(data).subscribe(() => {
-      this.userService.username.next(data.email);
-      this.router.navigate(['dashboard']);
-    });
-
-
+    // const data: RegisterModel = {
+    //   name: this.fullNameControl.value,
+    //   age: this.ageControl.value,
+    //   username:this.userNameControl.value,
+    //   email: this.emailControl.value,
+    //   password: this.passwordControl.value,
+    // }
+    // this.authentificationService.register(data).subscribe(() => {
+    //   this.userService.username.next(data.email);
+    //   this.router.navigate(['dashboard']);
+    // });
+    console.log(this.form.value);
+    console.log(this.form.valid);
   }
-
 
 
   public goToPage(page: string): void {

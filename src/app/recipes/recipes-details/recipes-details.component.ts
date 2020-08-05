@@ -26,7 +26,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   photos: Blob[] = [];
   ratingNumber: number = 0;
 
-  public commentsList: CommentModel;
+  public commentsList: CommentModel[];
   private routeSub: Subscription = new Subscription();
 
   get description(): string {
@@ -79,7 +79,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       console.log("filtersList", data);
     });
     this.routeSub = this.activatedRoute.params.subscribe(params => {
-    this.service.getComments(params['id']).subscribe((comments: CommentModel) =>{
+    this.service.getComments(params['id']).subscribe((comments: CommentModel[]) =>{
       this.commentsList = comments;
       console.log("Comentariile acestei retete", this.commentsList);
     })
@@ -153,6 +153,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   refresh(): void {
     window.location.reload();
 }
+
   postComment(){
     const commentsModel : CommentModel = this.formGroupComment.getRawValue();
     const comment = commentsModel.comment;
@@ -160,8 +161,9 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     console.log(commentsModel.review);
     this.routeSub = this.activatedRoute.params.subscribe(params => {
       this.service.addComment(params['id'], commentsModel).subscribe((data: CommentModel) => {
-        console.log('post comment:', data);
-        this.refresh();
+        console.log(data);
+        this.commentsList.push(data);
+        console.log("CommentsList:", this.commentsList);
       });
         console.log("s-a adaugat commentul");
         console.log(commentsModel);
@@ -170,10 +172,17 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
 public deleteComment(recipeId: string, commentId :string) :void{
   console.log("ID COMMENT:", commentId, "Id recipe:", recipeId);
-  this.service.deleteComment(recipeId, commentId).subscribe(data => {
-    console.log(data);
-    this.refresh();
-  })
+  for (let i=0;i<this.commentsList.length;i++)
+  {
+      console.log(this.commentsList[i].id);
+      if(commentId == this.commentsList[i].id){
+        this.service.deleteComment(recipeId, commentId).subscribe(data => {
+          this.commentsList.pop();
+          console.log(data);
+        })
+    }
+
+  }
 }
 
   handleFileInput(file: FileList) {
