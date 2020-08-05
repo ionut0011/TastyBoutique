@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Ng2ImgMaxService } from 'ng2-img-max';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

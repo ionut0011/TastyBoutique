@@ -1,13 +1,18 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
+
 import { ViewChild, ElementRef } from '@angular/core'
 import { RecipesModel, RecipesGetModel,CollectionsModel } from '../models';
+
 import { RecipeService } from '../services/recipe.service';
-import { Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+
+import { Ng2ImgMaxService } from 'ng2-img-max';
+
 import { UserService } from 'src/app/shared/services';
 import {CommentModel} from '../models/comment.model'
+
 
 @Component({
   selector: 'app-recipe-list',
@@ -27,15 +32,15 @@ export class RecipesListComponent implements OnInit {
   constructor(
     private router: Router,
     private service: RecipeService,
-    private domSanitizer: DomSanitizer) {}
+    private domSanitizer: DomSanitizer,
+    private ng2ImgMax: Ng2ImgMaxService) {}
+
 
   public ngOnInit(): void {
 
-
-    if(this.service.getRecipes().length == 0){
-
     this.service.getAll().subscribe((data: RecipesGetModel[]) => {
       this.recipeList = data;
+
       this.recipeList.forEach(element => {
         if(element.image.length>5){
         let link:any = 'data:image/png;base64,'+element.image;
@@ -50,12 +55,8 @@ export class RecipesListComponent implements OnInit {
 
     });
 
-
   }
-  else
-    this.recipeList = this.service.getRecipes();
 
-  }
 
   goToRecipe(id: string): void {
     this.router.navigate([`/recipes/details/${id}`]);
@@ -64,10 +65,10 @@ export class RecipesListComponent implements OnInit {
   public DeleteRecipe(id:string): void{
     this.service.deleteRecipe(id).subscribe(data => {
       console.log(data);});
-
       window.location.reload();
 
   }
+
 
   postCollections(id: string): void {
 
@@ -78,8 +79,10 @@ export class RecipesListComponent implements OnInit {
   }
 
 
+
   public goToPage(page: string): void {
     this.router.navigate([page]);
+
 
   }
 }
