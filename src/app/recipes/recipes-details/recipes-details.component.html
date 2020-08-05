@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center justify-content-md-center h-100">
+<div class="d-flex justify-content-center justify-content-md-center">
   <section class="form-section">
     <form [formGroup]="formGroup">
       <div class="form-group">
@@ -7,22 +7,24 @@
           placeholder="Enter recipe name"
           formControlName="name">
       </div>
-<!--
+
       <div  *ngIf="isFormDisabled;">
 
-        <div>
-          <p>Ingrediente:</p>
-        <div *ngFor="let ingredients of ingredientsList.value">
-          {{ingredients.name}}
-        </div>
-      </div>
+
       <div>
         <p><span>Selected filter: </span><b>{{test2.value}}</b></p>
         <p><span>Selected type: </span><b>{{test3.value}}</b></p>
       </div>
+      <div>
+        <p>Ingredients:</p>
+      <div *ngFor="let ingredients of ingredientsList.value">
+        <ul><li>{{ingredients.name}}</li></ul>
 
       </div>
-    -->
+      </div>
+
+      </div>
+
 
       <div class="form-group">
         <p *ngIf="isFormDisabled; else notEditable">{{description}}</p>
@@ -34,21 +36,15 @@
               placeholder="Add ingredients"
               formControlName="test" >
               <button (click)="additems()">Add</button>
-
-
           </div>
 
           <div>
               <label>Filters: </label>
               <select formControlName="test2" (change)="filterSelected()">
                 <option *ngFor="let filter of filterssList" [value]="filter.name">{{filter.name}}</option>
-
               </select>
-
-
           </div>
-
-            <div >
+          <div >
               <label>Select type:</label>
                <select formControlName="test3" (change)="selected()" >
                   <option  *ngFor="let typees of typeesList" [value]="typees" >{{typees}}</option>
@@ -58,6 +54,7 @@
             formControlName="description">{{description}}</textarea>
         </ng-template>
       </div>
+
       <div class="form-group">
         <label> Is this a private recipe</label>
         <input type="checkbox" formControlName="access">
@@ -81,8 +78,9 @@
               <img class="photo-file" *ngFor="let photo of photos" [src]="photo">
             </div>
             <br>
-            <input #Image type="file" (change)="handleFileInput($event.target.files)" />
-            <img class="photo-file" [src]="imageUrl">
+            <input #Image
+            type="file"
+            (change)="onImageChange($event)" /> <img class="photo-file" [src]="imageUrl">
           </div>
 
           <div class="added-photos" *ngIf="isFormDisabled">
@@ -90,11 +88,8 @@
           </div>
 
           <br>
-          <input #Image
-                 type="file"
-                 (change)="onImageChange($event)" />
-          <img class="photo-file"
-               [src]="imageUrl">
+
+
 
         </div>
 
@@ -213,3 +208,4 @@
       </form>
     </div>
 </section>
+</div>

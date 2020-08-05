@@ -116,13 +116,11 @@ onImageChange(event) {
 
     this.service.getAllFilters().subscribe((data: FiltersModel) => {
       this.filterssList = data;
-<<<<<<< HEAD
+
 
       console.log(this.filterssList);
       console.log("filtersList", data);
 
-=======
->>>>>>> 314f0c7bb48a73014423fe0da19149c9895c2cf2
     });
     this.routeSub = this.activatedRoute.params.subscribe(params => {
     this.service.getComments(params['id']).subscribe((comments: CommentModel[]) =>{
@@ -149,7 +147,6 @@ onImageChange(event) {
 
     this.formGroupComment = this.formBuilder.group({
       idRecipe: new FormControl(),
-
       comment: new FormControl(),
       review: new FormControl()
     });
@@ -163,8 +160,9 @@ onImageChange(event) {
         //Getting details for the trip with the id found
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
 
-          console.log(data);
 
+          this.test2.setValue(data.filtersList[0].name);
+          this.test3.setValue(data.type);
           this.formGroup.patchValue(data);
           console.log(data);
 
@@ -232,9 +230,10 @@ onImageChange(event) {
 
     this.routeSub = this.activatedRoute.params.subscribe(params => {
       this.service.addComment(params['id'], commentsModel).subscribe((data: CommentModel) => {
-        console.log(data);
+
         this.commentsList.push(data);
-        console.log("CommentsList:", this.commentsList);
+
+
       });
         console.log("s-a adaugat commentul");
         console.log(commentsModel);
