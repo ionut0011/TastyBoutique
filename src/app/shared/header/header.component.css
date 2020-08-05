@@ -12,6 +12,7 @@ header {
     font-family: "Open Sans";
     height: var(--header-height);
   }
+
   img {
     height: 60px;
     margin-left: 10px;
@@ -38,4 +39,76 @@ header {
     color: black;
     background-color: #FFC312;
     width: 100px;
+    margin-right:25px;
     }
+
+
+.lets-cook-btn {
+  display: block;
+  background: #ef3e36;
+  color: black;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  padding: 10px;
+  transition: 250ms;
+}
+
+.lets-cook-btn:hover {
+  background: linear-gradient(
+    to right bottom,
+    rgb(252, 195, 81),
+    rgb(250, 182, 182)
+  );
+  transition: 250ms;
+}
+
+.navigation-menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.topnav {
+  overflow: hidden;
+  display: flex;
+  flex-direction: center;
+  align-items: center;
+  background: #ef3e36;
+}
+
+.topnav a {
+  color: #f2f2f2;
+  display: flex;
+
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+
+a{
+
+  cursor: pointer;
+}
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+
+.headerLogo{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+

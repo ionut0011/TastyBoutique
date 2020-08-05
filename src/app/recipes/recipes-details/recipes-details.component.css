@@ -16,7 +16,6 @@ h1 {
 }
 
 
-
 li {
   justify-content: space-between;
   display: flex;
@@ -254,4 +253,31 @@ cursor: pointer;
 
 .stars{
   cursor: pointer;
+}
+
+
+.lets-cook-btn {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  display: block;
+  background: #ef3e36;
+  color: black;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  padding: 10px;
+  transition: 250ms;
+}
+
+
+.lets-cook-btn:hover {
+  background: linear-gradient(
+    to right bottom,
+    rgb(252, 195, 81),
+    rgb(250, 182, 182)
+  );
+  transition: 250ms;
 }

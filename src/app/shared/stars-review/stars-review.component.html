@@ -1,9 +1,49 @@
-<div class="stars">
-  <li>
-    <a href="#"><i class="fa fa-star"></i></a>
-    <a href="#"><i class="fa fa-star"></i></a>
-    <a href="#"><i class="fa fa-star"></i></a>
-    <a href="#"><i class="fa fa-star"></i></a>
-    <a href="#"><i class="fa fa-star-o"></i></a>
-  </li>
+<div *ngFor="let recipe of recipeList">
+  <div class="stars">
+    <li>
+      <div *ngIf="recipe.averageReview == 0">
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+      </div>
+
+      <div *ngIf="recipe.averageReview == 1">
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+      </div>
+      <div *ngIf="recipe.averageReview == 2">
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+      </div>
+      <div *ngIf="recipe.averageReview == 3">
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+      </div>
+      <div *ngIf="recipe.averageReview == 4">
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star-o"></i>
+      </div>
+      <div *ngIf="recipe.averageReview == 5">
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+      </div>
+    </li>
+  </div>
 </div>

@@ -1,5 +1,4 @@
 p {
-  height: 100px;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 5;
@@ -41,7 +40,7 @@ body {
 .icon .fa-heart-o {
   position: absolute;
   right: 10%;
-  bottom: 45%;
+  bottom: 48%;
   cursor: pointer;
 
   background: linear-gradient(
@@ -143,4 +142,13 @@ a:hover {
     rgb(250, 182, 182)
   );
   transition: 250ms;
+}
+
+
+i{
+  color: #ffe500;
+}
+
+li{
+  margin-left: 30px;
 }

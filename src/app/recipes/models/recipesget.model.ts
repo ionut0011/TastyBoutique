@@ -7,6 +7,7 @@ export type RecipesGetModel = {
   access: boolean;
   description: string;
   type:number;
+  averageReview : number;
   filtersList: FilterModel[];
   ingredientsList:IngredientModel[];
   image:BinaryType[];
