@@ -62,6 +62,10 @@ export class RecipeService {
     return this.http.post<any>(`${this.endpoint}/${recipeId}/comments`,comment,this.httpOptions);
   }
 
+  deleteComment(recipeId: string, commentId: string) :Observable<CommentModel>{
+    return this.http.delete<CommentModel>(`${this.endpoint}/${recipeId}/${commentId}`, this.httpOptions);
+  }
+
   post(recipes: RecipesModel): Observable<any> {
     return this.http.post<any>(`${this.endpoint}`, recipes, this.httpOptions);
   }

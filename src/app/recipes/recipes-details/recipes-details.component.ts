@@ -74,16 +74,13 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
     this.service.getAllFilters().subscribe((data: FiltersModel) => {
       this.filterssList = data;
-
       console.log(this.filtersList);
       console.log("filtersList", data);
-
     });
     this.routeSub = this.activatedRoute.params.subscribe(params => {
     this.service.getComments(params['id']).subscribe((comments: CommentModel) =>{
       this.commentsList = comments;
       console.log("Comentariile acestei retete", this.commentsList);
-
     })
   });
 
@@ -168,6 +165,14 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
         console.log("s-a adaugat commentul");
         console.log(commentsModel);
     });
+}
+
+public deleteComment(recipeId: string, commentId :string) :void{
+  console.log("ID COMMENT:", commentId, "Id recipe:", recipeId);
+  this.service.deleteComment(recipeId, commentId).subscribe(data => {
+    console.log(data);
+    this.refresh();
+  })
 }
 
   handleFileInput(file: FileList) {

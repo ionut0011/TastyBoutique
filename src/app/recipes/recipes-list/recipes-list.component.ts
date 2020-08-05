@@ -35,13 +35,8 @@ export class RecipesListComponent implements OnInit {
   }
 
   public DeleteRecipe(id:string): void{
-
     this.service.deleteRecipe(id).subscribe(data => {
       console.log(data);});
     window.location.reload();
-
   }
-
-
-
 }

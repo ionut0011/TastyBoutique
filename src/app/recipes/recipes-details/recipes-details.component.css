@@ -246,3 +246,12 @@ button{
   margin-top : 10px;
   margin-bottom: 10px;
 }
+
+.delete-comment i{
+color: red;
+cursor: pointer;
+}
+
+.stars{
+  cursor: pointer;
+}
