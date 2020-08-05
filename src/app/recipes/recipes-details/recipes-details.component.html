@@ -1,15 +1,7 @@
-<div class="flex-row-space-around">
+
+<div class="d-flex justify-content-center justify-content-md-center h-100">
   <section class="form-section">
     <form [formGroup]="formGroup">
-      <div class="stars">
-        <li>
-          <a><i (mouseover)="testStar(1)" class="fa" [ngClass]="ratingNumber > 0 ? 'fa-star': 'fa-star-o'"></i></a>
-          <a><i (mouseover)="testStar(2)" class="fa" [ngClass]="ratingNumber > 1 ? 'fa-star': 'fa-star-o'"></i></a>
-          <a><i (mouseover)="testStar(3)" class="fa" [ngClass]="ratingNumber > 2 ? 'fa-star': 'fa-star-o'"></i></a>
-          <a><i (mouseover)="testStar(4)" class="fa" [ngClass]="ratingNumber > 3 ? 'fa-star': 'fa-star-o'"></i></a>
-          <a><i (mouseover)="testStar(5)" class="fa" [ngClass]="ratingNumber > 4 ? 'fa-star': 'fa-star-o'"></i></a>
-        </li>
-      </div>
       <div class="form-group">
         <input type="text" class="title" placeholder="Enter recipe name" formControlName="name">
       </div>
@@ -85,7 +77,8 @@
     </div>
 
 
-    <br>
+    <hr>
+
     <div class="comments-section">
       <form [formGroup]="formGroupComment">
         <div class="comment-block" *ngIf="isFormDisabled">
@@ -94,14 +87,23 @@
             <div class="user_avatar">
               <img src="../../../assets/images/avatar.png" class="round">
             </div>
+            <div class="stars">
+              <li>
+                <a><i (mouseover)="testStar(1)" class="fa" [ngClass]="ratingNumber > 0 ? 'fa-star': 'fa-star-o'"></i></a>
+                <a><i (mouseover)="testStar(2)" class="fa" [ngClass]="ratingNumber > 1 ? 'fa-star': 'fa-star-o'"></i></a>
+                <a><i (mouseover)="testStar(3)" class="fa" [ngClass]="ratingNumber > 2 ? 'fa-star': 'fa-star-o'"></i></a>
+                <a><i (mouseover)="testStar(4)" class="fa" [ngClass]="ratingNumber > 3 ? 'fa-star': 'fa-star-o'"></i></a>
+                <a><i (mouseover)="testStar(5)" class="fa" [ngClass]="ratingNumber > 4 ? 'fa-star': 'fa-star-o'"></i></a>
+              </li>
+            </div>
             <div class="input_comment">
               <input type="text" placeholder="Leave a comment" formControlName="comment">
             </div>
 
-            <span> Add comment</span>
-            <hr>
-            <input type="text" placeholder="Leave a comment" formControlName="comment">
-            <button type="button" class="button" *ngIf="isFormDisabled" (click)="postComment()"></button>
+            <br>
+              <button type="button" class="button" *ngIf="isFormDisabled" (click)="postComment()">
+                <span>Add comment</span>
+              </button>
           </div>
           <hr>
         </div>
@@ -170,3 +172,5 @@
         </div>
       </form>
     </div>
+</section>
+

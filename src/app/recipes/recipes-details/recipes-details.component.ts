@@ -16,18 +16,15 @@ import {LoginComponent} from '../../login/login/login.component'
 })
 export class RecipesDetailsComponent implements OnInit,OnDestroy
 {
-  ratingNumber: number = 0;
 
   fileToUpload: any;
   imageUrl: any;
-
   formGroup: FormGroup;
-
   formGroupComment : FormGroup;
-
   isAdmin: boolean;
   isAddMode: boolean;
   photos: Blob[] = [];
+  ratingNumber: number = 0;
 
   public commentsList: CommentModel;
   private routeSub: Subscription = new Subscription();
@@ -60,21 +57,11 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     return this.formGroup.get('type') as FormControl;
   }
 
-
-
-
   filterssList:FiltersModel;
-  //filterSend:string[]=[];
-  //ingredientsList:string[] =[];
-  //type:number;
-
-
   type1:FormControl=new FormControl();
   filter:FormControl=new FormControl();
   typeesList: string[] = ['Food', 'Drink'];
   foodordrink:string[] =[];
-
-
 
   constructor(
     private router: Router,
@@ -99,8 +86,6 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
     })
   });
-
-
 
     this.formGroup = this.formBuilder.group({
       id: new FormControl(),
@@ -129,10 +114,6 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
       this.routeSub = this.activatedRoute.params.subscribe(params => {
         //Getting details for the trip with the id found
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
-         // this.filterSend=[];
-         // this.ingredientsList=[]
-          // data.filtersList= this.checkFilters(this.filterSend);
-       //   data.ingredientsList=this.checkIngredients(this.ingredientsList);
           console.log(data);
           this.formGroup.patchValue(data);
         })
@@ -166,18 +147,27 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     this.formGroup.disable();
   }
 
-  postComment(){
+  testStar(rating) {
+    this.ratingNumber = rating;
+    console.log(this.ratingNumber);
+  }
 
+  refresh(): void {
+    window.location.reload();
+}
+  postComment(){
     const commentsModel : CommentModel = this.formGroupComment.getRawValue();
     const comment = commentsModel.comment;
-    commentsModel.review = 3;
+    commentsModel.review = this.ratingNumber;
+    console.log(commentsModel.review);
     this.routeSub = this.activatedRoute.params.subscribe(params => {
       this.service.addComment(params['id'], commentsModel).subscribe((data: CommentModel) => {
         console.log('post comment:', data);
+        this.refresh();
       });
-        console.log("s-a adaugat comentul");
+        console.log("s-a adaugat commentul");
         console.log(commentsModel);
-      });
+    });
 }
 
   handleFileInput(file: FileList) {
@@ -213,7 +203,4 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     }
    }
 
-   testStar(rating) {
-     this.ratingNumber = rating;
-   }
 }
