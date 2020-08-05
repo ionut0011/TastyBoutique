@@ -15,23 +15,26 @@ namespace TastyBoutique.API.Controller
     public class NotificationsController : ControllerBase
     {
         private readonly INotificationService _notificationService;
+        private readonly IHttpContextAccessor _accessor;
 
-        public NotificationsController(INotificationService notificationService)
+        public NotificationsController(INotificationService notificationService, IHttpContextAccessor accessor)
         {
             _notificationService = notificationService;
+            _accessor = accessor;
         }
 
-        [HttpGet("{idUser}")]
-        public async Task<IActionResult> GetAllByIdUser([FromRoute] Guid idUser)
+        [HttpGet]
+        public async Task<IActionResult> GetAllByIdUser()
         {
+            Guid idUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var result = await _notificationService.GetAllByIdUser(idUser);
             return Ok(result.Results);
         }
 
-        [HttpPatch]
-        public async Task<IActionResult> Update([FromBody] SavedRecipeModel model)
+        [HttpPatch("{idRecipe}")]
+        public async Task<IActionResult> Update([FromRoute] Guid idRecipe)
         {
-            await _notificationService.Update(model);
+            await _notificationService.Update(idRecipe);
             return NoContent();
         }
 
