@@ -2,39 +2,48 @@
 <div class="d-flex justify-content-center justify-content-md-center h-100">
   <section class="form-section">
     <form [formGroup]="formGroup">
-      <div class="form-group">
-        <input type="text" class="title" placeholder="Enter recipe name" formControlName="name">
+
+    <div class="form-group">
+
+      <input type="text" class="title"
+        placeholder="Enter recipe name"
+        formControlName="name">
+    </div>
+
+
+    <div class="form-group">
+      <p *ngIf="isFormDisabled; else notEditable">{{description}}</p>
+
+
+      <div  *ngIf="isFormDisabled;">
+        <div *ngFor="let ingredients of ingredientsList.value">{{ingredients.name}}</div>
       </div>
-      <div class="form-group">
-        <p *ngIf="isFormDisabled; else notEditable">{{description}}</p>
-        <ng-template #notEditable>
-          <div class="ingred">
-            <input type="text" placeholder="Add ingredients" formControlName="test">
+
+      <ng-template #notEditable>
+
+        <div class="ingred">
+          <input type="text"
+            placeholder="Add ingredients"
+            formControlName="test" >
             <button (click)="additems()">Add</button>
-          </div>
-          <div>
-            <div *ngIf="isFormDisabled">
-              <label>Filters: </label>
-              <select formControlName="test2" (change)="filterSelected()">
-                <option *ngFor="let filter of filterssList" [value]="filter.name">{{filter.name}}</option>
-              </select>
-            </div>
-          </div>
-          <label>Select type:</label>
-          <span class="filtre">
-            <select formControlName="type" (change)="selected()">
-              <option selected="" *ngFor="let typees of typeesList" [value]="typees">{{typees}}</option>
+
+
+        </div>
+
+        <div>
+            <label>Filters: </label>
+            <select formControlName="test2" (change)="filterSelected()">
+              <option *ngFor="let filter of filterssList" [value]="filter.name">{{filter.name}}</option>
             </select>
-          </span>
-          <textarea class="recipe-description" contenteditable="true" placeholder="Enter recipe description"
-            formControlName="description">{{description}}</textarea>
-        </ng-template>
-      </div>
-      <div class="form-group">
-        <label> Is this a private recipe</label>
-        <input type="checkbox" formControlName="access">
-      </div>
-      <br>
+        </div>
+
+          <div >
+            <label>Select type:</label>
+             <select formControlName="test3" (change)="selected()" >
+                <option  *ngFor="let typees of typeesList" [value]="typees" >{{typees}}</option>
+              </select>
+          </div>
+
 
       <div class="photos">
         <label class="photos-title">Photos</label>

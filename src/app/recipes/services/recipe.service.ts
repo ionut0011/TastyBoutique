@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import{CommentModel} from '../models/comment.model';
 import {  RecipesModel, FiltersModel, IngredientModel, FilterModel } from '../models';
 import { RecipesGetModel } from '../models/recipesget.model';
+import { CollectionsModel } from '../models/collections.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +12,23 @@ import { RecipesGetModel } from '../models/recipesget.model';
 export class RecipeService {
 
   private endpoint: string = 'http://www.tastyboutique.tk:5341/api/v1/recipe';
+  private endpoint2: string = 'http://www.tastyboutique.tk:5341/api/v1/collections';
 
+  private recipes: RecipesGetModel[]=[];
   private httpOptions = {
+
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
+
       'Authorization': `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`
     })
+
   };
 
   constructor(private readonly http: HttpClient) { }
 
   getAll(): Observable<RecipesGetModel[]> {
-    return this.http.get<RecipesGetModel[]>(`${this.endpoint}`, this.httpOptions);
+    return this.http.get<RecipesGetModel[]>(`http://www.tastyboutique.tk:5341/api/v1/recipe`, this.httpOptions);
   }
 
   get(recipeId: string): Observable<RecipesGetModel> {
@@ -67,10 +73,33 @@ export class RecipeService {
   }
 
   post(recipes: RecipesModel): Observable<any> {
-    return this.http.post<any>(`${this.endpoint}`, recipes, this.httpOptions);
+    return this.http.post<any>(`http://www.tastyboutique.tk:5341/api/v1/recipe`, recipes, this.httpOptions);
   }
 
   patch(recipes: RecipesModel): Observable<any> {
     return this.http.patch<any>(`${this.endpoint}/${recipes.id}`, recipes, this.httpOptions);
   }
+
+  saveRecipes(recipes :RecipesGetModel[])
+  {
+    this.recipes = recipes;
+  }
+  getRecipes()
+  {
+    return this.recipes;
+  }
+
+  postCollections(recipes:CollectionsModel): Observable<any> {
+    return this.http.post<any>(`http://www.tastyboutique.tk:5341/api/v1/collections`, recipes, this.httpOptions);
+  }
+
+  getAllCollections(): Observable<RecipesGetModel[]> {
+    return this.http.get<RecipesGetModel[]>(`http://www.tastyboutique.tk:5341/api/v1/collections`, this.httpOptions);
+  }
+
+  deleteRecipeCollection(recipeId: CollectionsModel): Observable<any> {
+    console.log(recipeId);
+    return this.http.delete<any>(`${this.endpoint2}/${recipeId.idRecipe}`, this.httpOptions);
+  }
+
 }

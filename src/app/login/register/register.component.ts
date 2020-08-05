@@ -57,6 +57,7 @@ export class RegisterComponent  {
 
   authenticate() :void
   {
+
     console.log("ai dat click pe submit")
 
     const data: RegisterModel = {
@@ -67,7 +68,10 @@ export class RegisterComponent  {
       password: this.passwordControl.value,
     }
     this.authentificationService.register(data).subscribe(() => {
+
       this.userService.username.next(data.email);
+      localStorage.setItem('userToken', JSON.stringify(logData.token));
+      localStorage.setItem('email', JSON.stringify(logData.email));
       this.router.navigate(['dashboard']);
     });
     console.log(this.form.value);

@@ -32,7 +32,9 @@ export class LoginComponent  {
 
 
   public clickedLogin():void{
+
     const data: LoginModel = this.form.getRawValue();
+
     this.authentificationService.login(data).subscribe((logData:any) => {
       localStorage.setItem('userToken', JSON.stringify(logData.token));
       localStorage.setItem('email', JSON.stringify(logData.email));
