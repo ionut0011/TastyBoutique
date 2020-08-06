@@ -18,6 +18,6 @@ namespace TastyBoutique.Persistance.Models
         }
         public string Name { get; set; }
 
-        public ICollection<RecipesFilters> RecipesFilters { get; set; }
+        public virtual ICollection<RecipesFilters> RecipesFilters { get; set; }
     }
 }
