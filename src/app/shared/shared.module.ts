@@ -4,7 +4,7 @@ import { TileComponent } from './tile/tile.component';
 import { HeaderComponent } from './header/header.component';
 import { MatIconModule } from '@angular/material/icon';
 import { StarsReviewComponent } from './stars-review/stars-review.component';
-import {SubmitButtonComponent} from './submit-button/submit-button.component'
+import {SubmitButtonComponent} from './submit-button/submit-button.component';
 
 @NgModule({
   declarations: [TileComponent, HeaderComponent, StarsReviewComponent, SubmitButtonComponent],
