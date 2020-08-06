@@ -19,45 +19,42 @@ namespace TastyBoutique.Business.Services.Implementation
         private readonly ICollectionRepo _repository; 
         private readonly IMapper _mapper;
         private readonly IRecipeRepo _recipeRepo;
-        private readonly IHttpContextAccessor _accessor;
+        
 
         public CollectionService(ICollectionRepo repository, IRecipeRepo recipeRepo, IMapper mapper, IHttpContextAccessor accessor)
         {
             _repository = repository;
             _recipeRepo = recipeRepo;
             _mapper = mapper;
-            _accessor = accessor;
         }
 
         public async Task Add(SavedRecipeModel model)
         {
-            model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var recipe = _mapper.Map<SavedRecipes>(model);
             await _repository.Add(recipe);
             await _repository.SaveChanges();
         }
 
-        public async Task Delete(Guid recipeId)
+        public async Task Delete(SavedRecipeModel model)
         {
-            var IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
-            var savedRecipe = await _repository.Get(IdUser, recipeId);
+            var savedRecipe = await _repository.Get(model.IdUser, model.IdRecipe);
             _repository.Delete(savedRecipe);
             await _repository.SaveChanges();
         }
 
-        public async Task Update(SavedRecipeModel model)
-        {
-            model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
-            var savedRecipe = await _repository.Get(model.IdUser, model.IdRecipe);
+        //public async Task Update(SavedRecipeModel model)
+        //{
+        //    var savedRecipe = await _repository.Get(model.IdUser, model.IdRecipe);
             
-            savedRecipe.IdRecipeNavigation = await _recipeRepo.GetById(savedRecipe.IdRecipe);
-            savedRecipe.NeedUpdate = false;
-            await _repository.SaveChanges();
-        }
+        //    savedRecipe.IdRecipeNavigation = await _recipeRepo.GetById(savedRecipe.IdRecipe);
+        //    savedRecipe.NeedUpdate = false;
 
-        public async Task<PaginatedList<TotalRecipeModel>> GetAllByIdUser(SearchModel model)
+        //    await _repository.SaveChanges();
+        //}
+
+        public async Task<PaginatedList<TotalRecipeModel>> GetAllByIdUser(Guid idUser, SearchModel model)
         {
-            Guid idUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
+           
             var spec = model.ToSpecification<Persistance.Models.Recipes>();
             var result = await _repository.GetAllSavedByIdUser(idUser, spec);
 

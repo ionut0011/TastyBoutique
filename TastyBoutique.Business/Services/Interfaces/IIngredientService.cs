@@ -9,9 +9,9 @@ namespace TastyBoutique.Business.Services.Interfaces
     {
         Task<IngredientModel> Add(CreateIngredientModel model);
         Task<PaginatedList<IngredientModel>> Get(SearchModel model);
-        Task<IngredientModel> GetId(PaginatedList<IngredientModel> model, string name);
+        //Task<IngredientModel> GetId(PaginatedList<IngredientModel> model, string name);
 
-        Task<IngredientModel> GetByName(String name);
+        //Task<IngredientModel> GetByName(String name);
 
     }
 }

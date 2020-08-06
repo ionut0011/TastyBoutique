@@ -43,21 +43,21 @@ namespace TastyBoutique.Business.Services.Implementations
             return _mapper.Map<IngredientModel>(ingredient);
         }
 
-        public async Task<IngredientModel> GetId(PaginatedList<IngredientModel> model, string name)
-        {
-            foreach (var res in model.Results)
-            {
-                if (res.Name.ToUpper().Equals(name.ToUpper()))
-                    return _mapper.Map<IngredientModel>(res);
-            }
+        //public async Task<IngredientModel> GetId(PaginatedList<IngredientModel> model, string name)
+        //{
+        //    foreach (var res in model.Results)
+        //    {
+        //        if (res.Name.ToUpper().Equals(name.ToUpper()))
+        //            return _mapper.Map<IngredientModel>(res);
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
-        public async Task<IngredientModel> GetByName(String name)
-        {
-            return _mapper.Map<IngredientModel>(await _repository.GetByName(name));
-        }
+        //public async Task<IngredientModel> GetByName(String name)
+        //{
+        //    return _mapper.Map<IngredientModel>(await _repository.GetByName(name));
+        //}
 
     }
 }

@@ -34,12 +34,12 @@ namespace TastyBoutique.API.Controller
             return Ok(result);
         }
 
-        [HttpGet("{ingredientName}")]
-        public async Task<IActionResult> Get([FromRoute] String ingredientName)
-        {
-            var result = await _ingredientService.GetByName(ingredientName);
-            return Ok(result);
-        }
+        //[HttpGet("{ingredientName}")]
+        //public async Task<IActionResult> Get([FromRoute] String ingredientName)
+        //{
+        //    var result = await _ingredientService.GetByName(ingredientName);
+        //    return Ok(result);
+        //}
 
 
     }

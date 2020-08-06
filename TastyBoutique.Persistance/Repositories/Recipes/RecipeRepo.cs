@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using LinqBuilder.Core;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance.Recipes

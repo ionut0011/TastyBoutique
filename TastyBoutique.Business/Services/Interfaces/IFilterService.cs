@@ -9,8 +9,8 @@ namespace TastyBoutique.Business.Services.Interfaces
     {
         Task<FilterModel> Add(CreateFilterModel model);
         Task<PaginatedList<FilterModel>> Get(SearchModel model);
-        Task<FilterModel> GetId(PaginatedList<FilterModel> model, string name);
+        //Task<FilterModel> GetId(PaginatedList<FilterModel> model, string name);
 
-       Task<FilterModel> GetFilterByName(String name);
+       //Task<FilterModel> GetFilterByName(String name);
     }
 }

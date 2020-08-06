@@ -33,12 +33,12 @@ namespace TastyBoutique.API.Controller
             return Ok(result);
         }
 
-        [HttpGet("{filterName}")]
-        public async Task<IActionResult> Get([FromRoute] string filterName)
-        {
-            var result = await _filterService.GetFilterByName(filterName);
-            return Ok(result);
-        }
+        //[HttpGet("{filterName}")]
+        //public async Task<IActionResult> Get([FromRoute] string filterName)
+        //{
+        //    var result = await _filterService.GetFilterByName(filterName);
+        //    return Ok(result);
+        //}
 
     }
 }
