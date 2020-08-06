@@ -11,7 +11,7 @@ namespace TastyBoutique.Business.Recipes.Services.Interfaces
 
         Task<RecipeCommentModel> Add(Guid idUser, Guid idRecipe, CreateRecipeCommentModel model);
 
-        Task Delete(Guid idRecipe, Guid idComment);
+        Task Delete(Guid idComment);
 
     }
 }

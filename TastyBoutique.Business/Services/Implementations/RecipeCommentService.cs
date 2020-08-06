@@ -25,19 +25,21 @@ namespace TastyBoutique.Business.Services.Implementations
         public async Task<RecipeCommentModel> Add(Guid idUser, Guid idRecipe, CreateRecipeCommentModel model)
         {
             var comment = _mapper.Map<RecipeComment>(model);
+            comment.IdUser = idUser;
+            comment.IdRecipe = idRecipe;
+            
             var recipe = await _repository.GetById(idRecipe);
             recipe.AddComment(comment);
             _repository.Update(recipe);
+            
             await _repository.SaveChanges();
             return _mapper.Map<RecipeCommentModel>(comment);
         }
 
        
-        public async Task Delete(Guid IdRecipe, Guid commentId)
+        public async Task Delete(Guid commentId)
         {
-            var recipe = await _repository.GetByIdWithComments(IdRecipe);
-            recipe.RemoveComment(commentId);
-            _repository.Update(recipe);
+            _repository.DeleteComment(commentId);
             await _repository.SaveChanges();
         }
 
