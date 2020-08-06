@@ -17,8 +17,6 @@ namespace TastyBoutique.Persistance.Models
 
         public virtual DbSet<Ingredients> Ingredients { get; set; }
 
-        public virtual DbSet<RecipeType> RecipeType { get; set; }
-
         public virtual DbSet<Recipes> Recipes { get; set; }
 
         public virtual DbSet<RecipeComment> RecipeComments { get; set; }
@@ -82,24 +80,6 @@ namespace TastyBoutique.Persistance.Models
                     .HasForeignKey(d => d.IdUser)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_RecipeComment_User");
-            });
-
-            modelBuilder.Entity<RecipeType>(entity =>
-            {
-                entity.HasKey(d => new {d.RecipeId});
-
-                entity.HasIndex(e => e.RecipeId);
-
-                entity.Property(e => e.RecipeId).HasColumnName("RecipeID");
-
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasMaxLength(20);
-
-                entity.HasOne<Recipes>(d => d.Recipe)
-                    .WithOne(d => d.RecipeType)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_RecipeType_Recipes");
             });
 
             modelBuilder.Entity<Recipes>(entity =>
@@ -201,8 +181,6 @@ namespace TastyBoutique.Persistance.Models
             {
                 entity.HasIndex(e => e.IdStudent);
 
-                entity.HasIndex(e => e.IdUserType);
-
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Email)
@@ -225,25 +203,7 @@ namespace TastyBoutique.Persistance.Models
                     .HasForeignKey(d => d.IdStudent)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_User_Student");
-
-                entity.HasOne(d => d.IdUserTypeNavigation)
-                    .WithMany(p => p.User)
-                    .HasForeignKey(d => d.IdUserType)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_User_UserType");
             });
-
-            modelBuilder.Entity<UserType>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-             
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
-           
         }
 
     }

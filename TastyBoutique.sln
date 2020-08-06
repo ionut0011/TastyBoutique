@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique.Persistance",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique.Entities", "TastyBoutique.Entities\TastyBoutique.Entities.csproj", "{3F78CADD-3698-4463-B434-173EA26321BD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99.UnitTests", "99.UnitTests", "{D2637113-6583-40A4-9384-A8777431AC55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

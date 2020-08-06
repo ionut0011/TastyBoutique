@@ -7,26 +7,32 @@ namespace TastyBoutique.Persistance.Models
 {
     public class Recipes : Entity
     {
-        public Recipes(string name, Boolean access, string description, byte[] image)
+        public Recipes(string name, string type, bool access, string description, byte[] image)
         {
+            //IdUser = id;
             Name = name;
+            Type = type;
             Access = access;
             Description = description;
             Image = image;
-         
-            RecipeComment = new HashSet<RecipeComment>();
-            SavedRecipes = new HashSet<SavedRecipes>();
-            RecipesIngredients = new HashSet<RecipesIngredients>();
-            RecipesFilters = new HashSet<RecipesFilters>();
+            AverageReview = 0;
+            ReviewCount = 0;
+            RecipeComment = new List<RecipeComment>();
+            SavedRecipes = new List<SavedRecipes>();
+            RecipesIngredients = new List<RecipesIngredients>();
+            RecipesFilters = new List<RecipesFilters>();
         }
         public Guid IdUser { get; set; }
         public string Name { get; set; }
-        public Boolean Access { get; set; }
+        public bool Access { get; set; }
         public string Description { get; set; }
         public byte[] Image { get; set; }
-        public virtual RecipeType RecipeType { get; set; }
 
-        
+        public float AverageReview { get; set; }
+
+        public int ReviewCount { get; set; }
+        public string Type { get; set; }
+
         public ICollection<RecipeComment> RecipeComment { get; set; }
         public ICollection<SavedRecipes> SavedRecipes { get; set; }
 
@@ -45,6 +51,8 @@ namespace TastyBoutique.Persistance.Models
         public void AddComment(RecipeComment comment)
         {
             this.RecipeComment.Add(comment);
+            ReviewCount++;
+            AverageReview = (AverageReview * (ReviewCount - 1) + comment.Review) / ReviewCount;
         }
 
         public void RemoveComment(Guid commentId)
@@ -53,6 +61,8 @@ namespace TastyBoutique.Persistance.Models
 
             if (comment != null)
             {
+                ReviewCount--;
+                AverageReview = (AverageReview * (ReviewCount + 1) - comment.Review) / ReviewCount;
                 this.RecipeComment.Remove(comment);
             }
         }

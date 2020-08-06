@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance.Migrations
 {
     [DbContext(typeof(TastyBoutiqueContext))]
-    partial class TastyBoutique_v2ContextModelSnapshot : ModelSnapshot
+    [Migration("20200806074704_Delete_UserType_Table")]
+    partial class Delete_UserType_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,31 +234,6 @@ namespace TastyBoutique.Persistance.Migrations
                     b.HasIndex("IdStudent");
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("TastyBoutique.Persistance.Models.UserType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserType");
-                });
-
-            modelBuilder.Entity("TastyBoutique.Persistance.Models.Notifications", b =>
-                {
-                    b.HasOne("TastyBoutique.Persistance.Models.Recipes", "IdRecipeNavigation")
-                        .WithMany("NotificationsNavigation")
-                        .HasForeignKey("IdRecipe")
-                        .HasConstraintName("FK_Notifications_Recipes")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("TastyBoutique.Persistance.Models.RecipeComment", b =>

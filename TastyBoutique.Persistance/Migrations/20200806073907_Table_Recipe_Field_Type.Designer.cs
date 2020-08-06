@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance.Migrations
 {
     [DbContext(typeof(TastyBoutiqueContext))]
-    partial class TastyBoutique_v2ContextModelSnapshot : ModelSnapshot
+    [Migration("20200806073907_Table_Recipe_Field_Type")]
+    partial class Table_Recipe_Field_Type
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,6 +224,9 @@ namespace TastyBoutique.Persistance.Migrations
                     b.Property<string>("UserType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("UserTypeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -230,6 +235,8 @@ namespace TastyBoutique.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdStudent");
+
+                    b.HasIndex("UserTypeId");
 
                     b.ToTable("User");
                 });
@@ -247,16 +254,6 @@ namespace TastyBoutique.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserType");
-                });
-
-            modelBuilder.Entity("TastyBoutique.Persistance.Models.Notifications", b =>
-                {
-                    b.HasOne("TastyBoutique.Persistance.Models.Recipes", "IdRecipeNavigation")
-                        .WithMany("NotificationsNavigation")
-                        .HasForeignKey("IdRecipe")
-                        .HasConstraintName("FK_Notifications_Recipes")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("TastyBoutique.Persistance.Models.RecipeComment", b =>
@@ -330,6 +327,10 @@ namespace TastyBoutique.Persistance.Migrations
                         .HasForeignKey("IdStudent")
                         .HasConstraintName("FK_User_Student")
                         .IsRequired();
+
+                    b.HasOne("TastyBoutique.Persistance.Models.UserType", null)
+                        .WithMany("User")
+                        .HasForeignKey("UserTypeId");
                 });
 #pragma warning restore 612, 618
         }

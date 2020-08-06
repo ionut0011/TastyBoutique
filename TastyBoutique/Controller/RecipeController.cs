@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using TastyBoutique.Business.Recipes.Models.Recipe;
+using TastyBoutique.Business.Models.Recipe;
+using TastyBoutique.Business.Models.Shared;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
 
 namespace TastyBoutique.API.Controller
@@ -15,7 +11,7 @@ namespace TastyBoutique.API.Controller
     [Authorize]
     [ApiController]
     [Route("api/v1/recipe")]
-    public sealed class RecipeController : Microsoft.AspNetCore.Mvc.Controller
+    public sealed class RecipeController : ControllerBase
     {
         private readonly IRecipeService _recipeService;
 
@@ -41,7 +37,7 @@ namespace TastyBoutique.API.Controller
         }
         
         [HttpPost]
-        public async Task<IActionResult> Add([Microsoft.AspNetCore.Mvc.FromBody] UpsertRecipeModel model)
+        public async Task<IActionResult> Add([FromBody] UpsertRecipeModel model)
         { 
             
             var result = await _recipeService.Add(model);

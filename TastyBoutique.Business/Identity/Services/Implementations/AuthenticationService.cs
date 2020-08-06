@@ -64,10 +64,9 @@ namespace TastyBoutique.Business.Identity.Services.Implementations
             {
                 return null;
             }
-            var newUser = new User(userRegisterModel.Username, userRegisterModel.Email, _passwordHasher.CreateHash(userRegisterModel.Password))
+            var newUser = new User(userRegisterModel.Username, userRegisterModel.Email, _passwordHasher.CreateHash(userRegisterModel.Password), "user")
             {
                 IdStudentNavigation = new Student(userRegisterModel.Name, userRegisterModel.Age, userRegisterModel.Email),
-                IdUserTypeNavigation = new UserType("User")
             };
 
             await _userRepository.Add(newUser);

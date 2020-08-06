@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
-using TastyBoutique.Business.Implementations.Models.Filter;
-using TastyBoutique.Business.Implementations.Services.Interfaces;
-using TastyBoutique.Business.Recipes.Models.Ingredients;
-using TastyBoutique.Business.Recipes.Models.Recipe;
-using TastyBoutique.Business.Recipes.Services.Interfaces;
+using TastyBoutique.Business.Models.Filter;
+using TastyBoutique.Business.Models.Shared;
+using TastyBoutique.Business.Services.Interfaces;
 
 namespace TastyBoutique.API.Controller
 {
@@ -38,6 +32,7 @@ namespace TastyBoutique.API.Controller
             var result = await _filterService.Add(model);
             return Ok(result);
         }
+
         [HttpGet("{filterName}")]
         public async Task<IActionResult> Get([FromRoute] string filterName)
         {

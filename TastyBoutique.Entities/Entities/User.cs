@@ -5,17 +5,19 @@ namespace TastyBoutique.Persistance.Models
 {
     public partial class User : Entity
     {
-        public User(string Username,string Email,string Password)
+        public User(string username,string email,string password, string userType)
         {
-            RecipeComment = new HashSet<RecipeComment>();
-            SavedRecipes = new HashSet<SavedRecipes>();
-            this.Username = Username;
-            this.Email = Email;
-            this.Password = Password;
+            RecipeComment = new List<RecipeComment>();
+            SavedRecipes = new List<SavedRecipes>();
+            Username = username;
+            Email = email;
+            Password = password;
+            UserType = userType;
+            Status = "Active";
         }
 
         public Guid IdStudent { get; set; }
-        public Guid IdUserType { get; set; }
+        public string UserType { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
         public string Status { get; set; }
@@ -24,7 +26,6 @@ namespace TastyBoutique.Persistance.Models
 
 
         public virtual Student IdStudentNavigation { get; set; }
-        public virtual UserType IdUserTypeNavigation { get; set; }
         public virtual ICollection<RecipeComment> RecipeComment { get; set; }
         public virtual ICollection<SavedRecipes> SavedRecipes { get; set; }
     }
