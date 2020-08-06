@@ -53,9 +53,6 @@ namespace TastyBoutique.Business.Services.Implementations
             else
                 entities = await _repository.GetAllPublic();
 
-            foreach (var entity in entities)
-                _repository.PopulateRecipe(entity);
-
             var recipes = _mapper.Map<IList<TotalRecipeModel>>(entities);
             return recipes;
         }
@@ -89,7 +86,6 @@ namespace TastyBoutique.Business.Services.Implementations
         public async Task<TotalRecipeModel> GetById(Guid id)
         {
             var entity = await _repository.GetById(id);
-            _repository.PopulateRecipe(entity);
             var recipe = _mapper.Map<TotalRecipeModel>(entity);
             return recipe;
         }

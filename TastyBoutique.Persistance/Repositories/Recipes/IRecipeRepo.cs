@@ -17,10 +17,7 @@ namespace TastyBoutique.Persistance.Recipes
         Task<IList<RecipesFilters>> GetFiltersByRecipeId(Guid id);
 
         Task<IList<Models.Recipes>> GetAllPublic();
-        //Task<List<RecipeComment>> GetCommentsReview(Guid id);
-        Task<RecipeType> GetRecipeTypeById(Guid id);
 
-        void PopulateRecipe(Models.Recipes recipe);
         Task<Models.Recipes> GetByIdWithComments(Guid id);
 
         Task<List<Models.Recipes>> GetRecipiesByQuery(Guid idUser, IList<Models.Ingredients> ingredients, ISpecification<Models.Recipes> spec);

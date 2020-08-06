@@ -7,19 +7,19 @@ namespace TastyBoutique.Persistance.Models
 {
     public class Recipes : Entity
     {
-        public Recipes(Guid id, string name, Boolean access, string description, byte[] image)
+        public Recipes(string name, Boolean access, string description, byte[] image)
         {
-            IdUser = id;
+            //IdUser = id;
             Name = name;
             Access = access;
             Description = description;
             Image = image;
             AverageReview = 0;
             ReviewCount = 0;
-            //RecipeComment = new List<RecipeComment>();
-            //SavedRecipes = new List<SavedRecipes>();
-            //RecipesIngredients = new List<RecipesIngredients>();
-            //RecipesFilters = new List<RecipesFilters>();
+            RecipeComment = new List<RecipeComment>();
+            SavedRecipes = new List<SavedRecipes>();
+            RecipesIngredients = new List<RecipesIngredients>();
+            RecipesFilters = new List<RecipesFilters>();
         }
         public Guid IdUser { get; set; }
         public string Name { get; set; }

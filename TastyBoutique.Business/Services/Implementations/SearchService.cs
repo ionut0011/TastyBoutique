@@ -51,8 +51,8 @@ namespace TastyBoutique.Business.Services.Implementations
 
             var result = await _recipeRepo.GetRecipiesByQuery(idUser, ingredients, spec);
 
-            foreach (var entity in result)
-                _recipeRepo.PopulateRecipe(entity);
+            //foreach (var entity in result)
+            //    _recipeRepo.PopulateRecipe(entity);
 
             return new PaginatedList<TotalRecipeModel>(
                 model.PageIndex,
@@ -67,9 +67,6 @@ namespace TastyBoutique.Business.Services.Implementations
             var f = await _filtersRepo.GetByName(filter);
 
             var result = await _recipeRepo.GetRecipiesByFilter(idUser, f, spec);
-
-            foreach(var entity in result)
-                _recipeRepo.PopulateRecipe(entity);
 
             return new PaginatedList<TotalRecipeModel>(
                 model.PageIndex,

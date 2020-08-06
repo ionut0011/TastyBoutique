@@ -13,10 +13,22 @@ namespace TastyBoutique.Persistance.Recipes
     {
         public RecipeRepo(TastyBoutiqueContext context) : base(context) { }
         public async Task<IList<Models.Recipes>> Get(Guid idUser)
-            => await this.context.Recipes.Where(recipe => recipe.Access || recipe.IdUser == idUser).ToListAsync();
+            => await this.context.Recipes
+            .Where(recipe => recipe.Access || recipe.IdUser == idUser)
+            .Include(r => r.RecipesFilters)
+            .ThenInclude(r => r.Filter)
+            .Include(r => r.RecipesIngredients)
+            .ThenInclude(r => r.Ingredient)
+            .ToListAsync();
 
         public async Task<IList<Models.Recipes>> GetAllPublic()
-            => await this.context.Recipes.Where(recipe => recipe.Access).ToListAsync();
+            => await this.context.Recipes.
+            Where(recipe => recipe.Access)
+            .Include(r => r.RecipesFilters)
+            .ThenInclude(r => r.Filter)
+            .Include(r => r.RecipesIngredients)
+            .ThenInclude(r => r.Ingredient).ToListAsync();
+
         public async Task<int> CountAsync()
             => await this.context.Recipes.CountAsync();
 
@@ -34,27 +46,21 @@ namespace TastyBoutique.Persistance.Recipes
    
         public async Task<Models.Recipes> GetByIdWithComments(Guid id)
           => await this.context.Recipes
-              .Include(recipe => recipe.RecipeComment)
-              .FirstOrDefaultAsync(recipe => recipe.Id == id);
-
-        public async Task<RecipeType> GetRecipeTypeById(Guid id)
-            => await this.context.RecipeType
-                .FirstOrDefaultAsync(recipeType => recipeType.RecipeId == id);
-
-        public void PopulateRecipe(Models.Recipes recipe)
-        {
-            recipe.RecipesFilters = GetFiltersByRecipeId(recipe.Id).Result;
-            recipe.RecipesIngredients = GetIngredientsByRecipeId(recipe.Id).Result;
-            recipe.RecipeType = GetRecipeTypeById(recipe.Id).Result;
-        }
+                .Include(recipe => recipe.RecipeComment)
+                .Include(r => r.RecipesFilters)
+                .ThenInclude(r => r.Filter)
+                .Include(r => r.RecipesIngredients)
+                .ThenInclude(r => r.Ingredient)
+                .FirstOrDefaultAsync(recipe => recipe.Id == id);
 
         public async Task<List<Models.Recipes>> GetRecipiesByQuery(Guid idUser, IList<Models.Ingredients> ingredients, ISpecification<Models.Recipes> spec)
         {
             var getRecipes = await this.context.Recipes.ExeSpec(spec)
-                 
                  .Where(recipe => recipe.Access || recipe.IdUser == idUser)
                  .Include(r=>r.RecipesFilters)
+                 .ThenInclude(r=>r.Filter)
                  .Include(r=>r.RecipesIngredients)
+                 .ThenInclude(r=>r.Ingredient)
                  .ToListAsync();
 
             if (ingredients != null)
@@ -72,8 +78,12 @@ namespace TastyBoutique.Persistance.Recipes
         public async Task<List<Models.Recipes>> GetRecipiesByFilter(Guid idUser, Filters filter, ISpecification<Models.Recipes> spec)
         {
             var getRecipes = await this.context.Recipes.ExeSpec(spec)
+                .Where(recipe => (recipe.Access || recipe.IdUser == idUser) && recipe.RecipesFilters.Select(f=>f.Filter).Contains(filter))
                 .Include(r => r.RecipesFilters)
-                .Where(recipe => (recipe.Access || recipe.IdUser == idUser) && recipe.RecipesFilters.Select(f=>f.Filter).Contains(filter)).ToListAsync();
+                .ThenInclude(r => r.Filter)
+                .Include(r => r.RecipesIngredients)
+                .ThenInclude(r => r.Ingredient)
+                .ToListAsync();
 
             return getRecipes;
         }
