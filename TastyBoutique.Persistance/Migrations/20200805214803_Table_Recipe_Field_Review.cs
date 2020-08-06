@@ -7,9 +7,6 @@ namespace TastyBoutique.Persistance.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Notifications");
-
             migrationBuilder.AddColumn<float>(
                 name: "AverageReview",
                 table: "Recipes",

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
-using TastyBoutique.Business.Collections.Models;
-using TastyBoutique.Business.Implementations.Models.Filter;
-using TastyBoutique.Business.Implementations.Models.Recipe;
-using TastyBoutique.Business.Recipes.Models.Ingredients;
-using TastyBoutique.Business.Recipes.Models.Recipe;
-using TastyBoutique.Business.Recipes.Models.RecipeComment;
-using TastyBoutique.Persistance;
+﻿using AutoMapper;
 using TastyBoutique.Persistance.Models;
-
+using TastyBoutique.Business.Models.Recipe;
+using TastyBoutique.Business.Models.Ingredients;
+using TastyBoutique.Business.Models.Filter;
+using TastyBoutique.Business.Models.RecipeComment;
 namespace TastyBoutique.Business.Recipes
 {
     public class Mapping : Profile
@@ -18,7 +11,7 @@ namespace TastyBoutique.Business.Recipes
         public Mapping()
         {
             CreateMap<UpsertRecipeModel, Persistance.Models.Recipes>();
-            CreateMap<Persistance.Models.Recipes, RecipeModel>();
+            CreateMap<Persistance.Models.Recipes, TotalRecipeModel>();
 
             CreateMap<CreateIngredientModel, Persistance.Models.Ingredients>();
             CreateMap<Persistance.Models.Ingredients, IngredientModel>();
@@ -29,7 +22,6 @@ namespace TastyBoutique.Business.Recipes
             CreateMap<FilterModel, Filters>();
 
             CreateMap<Persistance.Models.Recipes, TotalRecipeModel>();
-            CreateMap<Persistance.Models.Recipes, RecipeModel>();
 
             CreateMap<SavedRecipes, SavedRecipeModel>();
             CreateMap<SavedRecipeModel, SavedRecipes>();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using LinqBuilder;
 using Microsoft.AspNetCore.Http;
 using TastyBoutique.Business.Models.Filter;
 using TastyBoutique.Business.Models.Ingredients;
@@ -49,6 +50,8 @@ namespace TastyBoutique.Business.Services.Implementations
             {
                 Guid idUser = Guid.Parse(tmp.Value);
                 entities = await _repository.Get(idUser);
+                entities.ToList().ForEach(c => c.Ingredients = c.RecipesIngredients.Select(x => x.Ingredient).ToList());
+                entities.ToList().ForEach(c => c.Filters = c.RecipesFilters.Select(x => x.Filter).ToList());
             }
             else
                 entities = await _repository.GetAllPublic();
@@ -91,6 +94,7 @@ namespace TastyBoutique.Business.Services.Implementations
 
         public async Task Update(Guid id, UpsertRecipeModel model)
         {
+            // to be determined
             var recipe = await _repository.GetById(id);
             var ingredients = _mapper.Map<IList<Ingredients>>(GetIngredientsByRecipeId(recipe.Id).Result.Results);
             var filters = _mapper.Map<IList<Filters>>(GetFiltersByRecipeId(recipe.Id).Result.Results);
