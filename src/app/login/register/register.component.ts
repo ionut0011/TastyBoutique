@@ -69,15 +69,12 @@ export class RegisterComponent  {
       password: this.passwordControl.value,
     }
     this.authentificationService.register(data).subscribe((logData:any) => {
-
-      this.userService.username.next(data.email);
-      localStorage.setItem('userToken', JSON.stringify(logData.token));
-      localStorage.setItem('email', JSON.stringify(logData.email));
-      this.router.navigate(['dashboard']);
       this.toastr.success("Successfully registered");
+      this.router.navigate(['login']);
     },
     (error)=>{
       this.toastr.error("Something went wrong");
+
     });
     console.log(this.form.value);
     console.log(this.form.valid);

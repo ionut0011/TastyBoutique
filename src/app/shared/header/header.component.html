@@ -7,26 +7,14 @@
         </div>
       </div>
     <section class="flex-row-end">
-      <img src="../../assets/images/profile.png">
-      <section *ngIf="userService.username | async as username">
-        <h3 class="flex-row-end">
-          Welcome, {{username}}
-        </h3>
-        <div class="form-group">
-          <input type="submit" value="logout" class="btn float-right logout_btn" (click)="logout()" type="button">
-        </div>
+      <section *ngIf="userService.username | async as username" class="logout">
+        <p>Welcome, {{username}}</p>
+        <input type="submit" value="logout" class="btn logout_btn" (click)="logout()" type="button">
       </section>
     </section>
   </header>
 
 
-    <div class="topnav">
-        <a class="active" (click)="goToPage('dashboard')">Home</a>
-        <a (click)="goToPage('list')">All recipes</a>
-        <a (click)="goToPage('collections')">Collections</a>
-        <a (click)="goToPage('create-recipe')">Create Recipe</a>
-        <a (click)="goToPage('notifications')">Notifications</a>
-        <a href="#about">About</a>
-    </div>
+
 
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RecipeService } from '../services/recipe.service';
+import { CollectionsService } from '../services/collections.service';
 import { RecipesGetModel, CollectionsModel } from '../models';
 import {ToastrService} from 'ngx-toastr'
 
@@ -16,11 +17,13 @@ export class RecipesSavedComponent implements OnInit {
 
   constructor( private router: Router,
     private service: RecipeService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private serviceCollections: CollectionsService,
+    ) { }
 
   ngOnInit(): void {
 
-      this.service.getAllCollections().subscribe((data: RecipesGetModel[]) => {
+      this.serviceCollections.getAllCollections().subscribe((data: RecipesGetModel[]) => {
         this.recipeList = data;
         console.log(this.recipeList);
         this.recipeList.forEach(element => {
@@ -42,7 +45,7 @@ export class RecipesSavedComponent implements OnInit {
   public deleteRecipeCollection(id:string): void{
 
     this.collection.idRecipe=id;
-    this.service.deleteRecipeCollection(this.collection).subscribe(data => {
+    this.serviceCollections.deleteRecipeCollection(this.collection).subscribe(data => {
       console.log(data);
         this.deleted = true;
         this.toastr.success('Deleted');

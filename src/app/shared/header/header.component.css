@@ -38,9 +38,19 @@ header {
   .logout_btn{
     color: black;
     background-color: #FFC312;
-    width: 100px;
-    margin-right:25px;
+    width: 90px;
+    height: 30px;
+    margin-left: 25px;
+    border-radius: 10px;
     }
+
+  .logout{
+    display: flex;
+    flex-direction: column;
+
+
+
+  }
 
 
 .lets-cook-btn {
@@ -71,38 +81,6 @@ header {
     align-items: center;
 }
 
-.topnav {
-  overflow: hidden;
-  display: flex;
-  flex-direction: center;
-  align-items: center;
-  background: #ef3e36;
-}
-
-.topnav a {
-  color: #f2f2f2;
-  display: flex;
-
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-
-a{
-
-  cursor: pointer;
-}
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.topnav a.active {
-  background-color: #4CAF50;
-  color: white;
-}
 
 
 .headerLogo{

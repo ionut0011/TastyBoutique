@@ -36,10 +36,6 @@ export class LoginComponent  {
      }
 
 
-     ngOnInit(): void {
-        localStorage.clearItem('email');
-        localStorage.clearItem('userToken');
-     }
 
 
 

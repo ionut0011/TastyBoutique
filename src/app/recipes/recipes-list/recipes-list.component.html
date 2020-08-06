@@ -1,7 +1,19 @@
-
-
+<app-navbar></app-navbar>
 <div class="container">
+  <div>
+    <label>Ingredients: </label>
+    <input type="text"
+            placeholder="Add ingredients">
+    <button (click)="SearchIngredients()">Search</button>
+    <label>Filters: </label>
+    <select [formControl]='filter'>
+      <option *ngFor="let filter of filterssList" [value]="filter.name">{{filter.name}}</option>
+    </select>
+    <button (click)="SearchFilter()">Search</button>
+
+  </div>
   <div class="row recipes-container">
+
     <div *ngFor="let recipe of recipeList" class="col-12 col-md-4">
       <div class="card">
         <div class="btn delete-btn" (click)="DeleteRecipe(recipe.id)">Delete</div>
