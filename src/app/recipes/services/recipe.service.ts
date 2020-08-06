@@ -40,18 +40,6 @@ export class RecipeService {
     return this.http.delete<RecipesModel>(`${this.endpoint}/${recipeId}`, this.httpOptions);
   }
 
-  post(recipes: RecipesModel): Observable<any> {
-    return this.http.post<any>(`http://www.tastyboutique.tk:5341/api/v1/recipe`, recipes, this.httpOptions);
-  }
-
-  patch(recipes: RecipesModel): Observable<any> {
-    return this.http.patch<any>(`${this.endpoint}/${recipes.id}`, recipes, this.httpOptions);
-  }
-
-  deleteRecipe(recipeId: string): Observable<RecipesModel> {
-    return this.http.delete<RecipesModel>(`${this.endpoint}/${recipeId}`, this.httpOptions);
-  }
-
 
   getAllFilters(): Observable<FiltersModel> {
     return this.http.get<FiltersModel>(`http://www.tastyboutique.tk:5341/api/v1/filter`, this.httpOptions);
@@ -74,16 +62,6 @@ export class RecipeService {
 
   addIngredient(name: string):Observable<any>{
     return this.http.post<any>(`http://www.tastyboutique.tk:5341/api/v1/ingredient`,name, this.httpOptions);
-  }
-
-
-  saveRecipes(recipes :RecipesGetModel[])
-  {
-    this.recipes = recipes;
-  }
-  getRecipes()
-  {
-    return this.recipes;
   }
 
 
