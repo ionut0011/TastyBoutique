@@ -12,6 +12,7 @@ header {
     font-family: "Open Sans";
     height: var(--header-height);
   }
+
   img {
     height: 60px;
     margin-left: 10px;
@@ -37,5 +38,55 @@ header {
   .logout_btn{
     color: black;
     background-color: #FFC312;
-    width: 100px;
+    width: 90px;
+    height: 30px;
+    margin-left: 25px;
+    border-radius: 10px;
     }
+
+  .logout{
+    display: flex;
+    flex-direction: column;
+
+
+
+  }
+
+
+.lets-cook-btn {
+  display: block;
+  background: #ef3e36;
+  color: black;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  padding: 10px;
+  transition: 250ms;
+}
+
+.lets-cook-btn:hover {
+  background: linear-gradient(
+    to right bottom,
+    rgb(252, 195, 81),
+    rgb(250, 182, 182)
+  );
+  transition: 250ms;
+}
+
+.navigation-menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.headerLogo{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Observable, Observer } from 'rxjs';
 import { RecipesModel, RecipesGetModel,FilterModel,FiltersModel, IngredientModel } from '../models';
 import { RecipeService } from '../services/recipe.service';
+import { CommentsService } from '../services/comments.service';
 import {CommentModel} from '../models/comment.model';
 import { Ng2ImgMaxService } from 'ng2-img-max';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -23,8 +24,8 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   isAddMode: boolean;
   photos: Blob[] = [];
   ratingNumber: number = 0;
-
   public commentsList: CommentModel[];
+  public recipeList: RecipesModel[]=[];
   private routeSub: Subscription = new Subscription();
 
   get description(): string {
@@ -66,7 +67,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
 
   typeesList: string[] = ['Food', 'Drink'];
-  foodordrink:string[] =[];
+
 
   uploadedImage: FileList;
 
@@ -76,6 +77,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private service: RecipeService,
+    private serviceComments: CommentsService,
     private ng2ImgMax: Ng2ImgMaxService,
     private readonly http :HttpClient
     ) { }
@@ -104,8 +106,10 @@ onImageChange(event) {
     reader.onload = (event: any) => {
       this.imageUrl = event.target.result;
       console.log("imgurl=",this.imageUrl);
+
     }
 
+    reader.readAsDataURL(this.fileToUpload);
 
 
 
@@ -123,7 +127,7 @@ onImageChange(event) {
 
     });
     this.routeSub = this.activatedRoute.params.subscribe(params => {
-    this.service.getComments(params['id']).subscribe((comments: CommentModel[]) =>{
+    this.serviceComments.getComments(params['id']).subscribe((comments: CommentModel[]) =>{
       this.commentsList = comments;
       console.log("Comentariile acestei retete", this.commentsList);
     })
@@ -160,13 +164,12 @@ onImageChange(event) {
         //Getting details for the trip with the id found
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
 
+          console.log(data.filters);
+          this.test2.setValue(data.filters[0].name);
 
-          this.test2.setValue(data.filtersList[0].name);
           this.test3.setValue(data.type);
           this.formGroup.patchValue(data);
           console.log(data);
-
-
         })
         this.formGroup.disable();
       });
@@ -199,7 +202,10 @@ onImageChange(event) {
     }
     finalRecipeModel.ingredientsList = this.validateIngredients(finalRecipeModel.ingredientsList);
     if (this.isAddMode) {
-     this.service.post(finalRecipeModel).subscribe();
+     this.service.post(finalRecipeModel).subscribe((data:RecipesModel) =>{
+      console.log(data);
+      this.recipeList.push(data);
+     });
      this.router.navigate(['list']);
     } else {
       this.service.patch(finalRecipeModel).subscribe();
@@ -224,15 +230,11 @@ onImageChange(event) {
   postComment(){
     const commentsModel : CommentModel = this.formGroupComment.getRawValue();
     const comment = commentsModel.comment;
-
     commentsModel.review = this.ratingNumber;
     console.log(commentsModel.review);
-
     this.routeSub = this.activatedRoute.params.subscribe(params => {
-      this.service.addComment(params['id'], commentsModel).subscribe((data: CommentModel) => {
-
+      this.serviceComments.addComment(params['id'], commentsModel).subscribe((data: CommentModel) => {
         this.commentsList.push(data);
-
 
       });
         console.log("s-a adaugat commentul");
@@ -246,8 +248,8 @@ public deleteComment(recipeId: string, commentId :string) :void{
   {
       console.log(this.commentsList[i].id);
       if(commentId == this.commentsList[i].id){
-        this.service.deleteComment(recipeId, commentId).subscribe(data => {
-          this.commentsList.pop();
+        this.serviceComments.deleteComment(recipeId, commentId).subscribe(data => {
+          this.commentsList.splice(i,1);
           console.log(data);
         })
     }
@@ -278,7 +280,6 @@ public deleteComment(recipeId: string, commentId :string) :void{
 
   }
 
-
   filterSelected(){
 
 
@@ -293,5 +294,7 @@ public deleteComment(recipeId: string, commentId :string) :void{
     console.log(this.type.value);
    }
 
-
+   public goToPage(page: string): void {
+    this.router.navigate([page]);
+  }
 }

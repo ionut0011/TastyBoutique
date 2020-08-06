@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RecipeService } from '../services/recipe.service';
+import { CollectionsService } from '../services/collections.service';
 import { RecipesGetModel, CollectionsModel } from '../models';
 @Component({
   selector: 'app-recipes-saved',
@@ -12,11 +13,13 @@ export class RecipesSavedComponent implements OnInit {
   public collection: CollectionsModel={};
 
   constructor( private router: Router,
-    private service: RecipeService,) { }
+    private service: RecipeService,
+    private serviceCollections: CollectionsService,
+    ) { }
 
   ngOnInit(): void {
 
-      this.service.getAllCollections().subscribe((data: RecipesGetModel[]) => {
+      this.serviceCollections.getAllCollections().subscribe((data: RecipesGetModel[]) => {
         this.recipeList = data;
         this.recipeList.forEach(element => {
           if(element.image.length>5){
@@ -37,7 +40,7 @@ export class RecipesSavedComponent implements OnInit {
   public deleteRecipeCollection(id:string): void{
 
     this.collection.idRecipe=id;
-    this.service.deleteRecipeCollection(this.collection).subscribe(data => {
+    this.serviceCollections.deleteRecipeCollection(this.collection).subscribe(data => {
       console.log(data);});
     window.location.reload();
 

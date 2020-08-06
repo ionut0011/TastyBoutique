@@ -1,30 +1,20 @@
-<header>
-  <section>
-    <a routerLink="dashboard">
-      <img src="../../assets/images/logo.svg" />
-    </a>
-  </section>
 
-  <nav id="nav-bar">
-    <div class="container">
-      <div class="headerLogo">
-        <img src="../../assets/images/headerLogo.png" style="height: 150px;">
+<div>
+  <header>
+      <div class="container col-2 offset-5">
+        <div class="headerLogo">
+          <img src="../../assets/images/headerLogo.png" style="height: 100px;">
+        </div>
       </div>
+    <section class="flex-row-end">
+      <section *ngIf="userService.username | async as username" class="logout">
+        <p>Welcome, {{username}}</p>
+        <input type="submit" value="logout" class="btn logout_btn" (click)="logout()" type="button">
+      </section>
+    </section>
+  </header>
 
-    </div>
-  </nav>
 
-  <section class="flex-row-end">
-    <img src="../../assets/images/profile.png">
-    <section  *ngIf="userService.username | async as username">
-    <h3 class="flex-row-end">
-      Welcome, {{username}}
-    </h3>
-    <div class="form-group">
-      <input type="submit" value="logout" class="btn float-right logout_btn"  (click)="logout()" type="button">
-    </div>
-  </section>
-</section>
 
-</header>
 
+</div>

@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { FiltersModel } from '../models';
 import { RecipesGetModel,CollectionsModel } from '../models';
-import { RecipeService } from '../services/recipe.service';
+
+import { RecipeService} from '../services/recipe.service';
+import { CollectionsService } from '../services/collections.service';
+import { SearchService } from '../services/search.service';
+
 import { DomSanitizer } from '@angular/platform-browser';
 import { Ng2ImgMaxService } from 'ng2-img-max';
 import {CommentModel} from '../models/comment.model'
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -16,17 +23,27 @@ import {CommentModel} from '../models/comment.model'
 export class RecipesListComponent implements OnInit {
 
   public recipeList: RecipesGetModel[];
+  filterssList:FiltersModel;
   public collection: CollectionsModel={};
+  private imageList: any = [];
+  filter:FormControl=new FormControl();
+
+
   public commentList: CommentModel;
 
   constructor(
     private router: Router,
     private service: RecipeService,
+    private serviceCollections: CollectionsService,
+    private serviceSearch: SearchService,
     private domSanitizer: DomSanitizer,
     private ng2ImgMax: Ng2ImgMaxService) {}
 
 
   public ngOnInit(): void {
+
+    this.service.getAllFilters().subscribe((data: FiltersModel) => {
+      this.filterssList = data;});
 
     this.service.getAll().subscribe((data: RecipesGetModel[]) => {
 
@@ -55,7 +72,7 @@ export class RecipesListComponent implements OnInit {
 
   postCollections(id: string): void {
     this.collection.idRecipe=id;
-    this.service.postCollections(this.collection).subscribe(data => {
+    this.serviceCollections.postCollections(this.collection).subscribe(data => {
       console.log(data);});
   }
 
@@ -63,4 +80,21 @@ export class RecipesListComponent implements OnInit {
   public goToPage(page: string): void {
     this.router.navigate([page]);
   }
+
+  SearchFilter():void
+  {
+    this.serviceSearch.searchFilters(this.filter.value).subscribe(data => {
+      this.recipeList = data;
+      console.log(data);});
+
+  }
+
+  SearchIngredients():void
+  {
+    this.serviceSearch.searchIngredients(this.filter.value).subscribe(data => {
+      this.recipeList = data;
+      console.log(data);});
+
+  }
+
 }

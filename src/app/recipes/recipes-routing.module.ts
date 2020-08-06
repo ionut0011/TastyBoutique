@@ -7,6 +7,7 @@ import { RecipesSavedComponent } from './recipes-saved/recipes-saved.component';
 
 
 
+
 const routes: Routes = [
   {
     path: 'list',
@@ -23,6 +24,7 @@ const routes: Routes = [
     pathMatch: 'full',
     component: RecipesSavedComponent,
   },
+
 
 
 

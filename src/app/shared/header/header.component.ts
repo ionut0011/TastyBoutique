@@ -41,6 +41,9 @@ export class HeaderComponent{
 
   }
 
+  public goToPage(page: string): void {
+    this.router.navigate([page]);
+  }
 }
 
 
