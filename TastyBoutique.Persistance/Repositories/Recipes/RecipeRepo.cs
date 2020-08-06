@@ -22,6 +22,14 @@ namespace TastyBoutique.Persistance.Recipes
             .ThenInclude(r => r.Ingredient)
             .ToListAsync();
 
+        public async Task<Models.Recipes> GetRecipeById(Guid recipeId)
+            => await this.context.Recipes
+                .Where(x => x.Id == recipeId)
+                .Include(r => r.RecipesFilters)
+                .ThenInclude(r => r.Filter)
+                .Include(r => r.RecipesIngredients)
+                .ThenInclude(r => r.Ingredient)
+                .FirstOrDefaultAsync();
         public async Task<IList<Models.Recipes>> GetAllPublic()
             => await this.context.Recipes.
             Where(recipe => recipe.Access)
