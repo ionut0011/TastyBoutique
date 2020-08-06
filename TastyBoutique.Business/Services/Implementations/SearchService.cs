@@ -48,8 +48,11 @@ namespace TastyBoutique.Business.Services.Implementations
             List<Ingredients> ingredients = null;
 
             if (ingredientsList.Count != 0)
+            {
+                ingredients = new List<Ingredients>();
                 foreach (var ingredient in ingredientsList)
                     ingredients.Add(await _ingredientsRepo.GetByName(ingredient));
+            }
 
             var result = await _recipeRepo.GetRecipiesByQuery(idUser, ingredients, spec);
             result.ToList().ForEach(c => c.Ingredients = c.RecipesIngredients.Select(x => x.Ingredient).ToList());
