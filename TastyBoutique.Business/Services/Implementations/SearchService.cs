@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using TastyBoutique.Business.Implementations.Services.Interfaces;
@@ -50,9 +51,8 @@ namespace TastyBoutique.Business.Services.Implementations
                 ingredients = await MapIngredients(ingredientsList);
 
             var result = await _recipeRepo.GetRecipiesByQuery(idUser, ingredients, spec);
-
-            //foreach (var entity in result)
-            //    _recipeRepo.PopulateRecipe(entity);
+            result.ToList().ForEach(c => c.Ingredients = c.RecipesIngredients.Select(x => x.Ingredient).ToList());
+            result.ToList().ForEach(c => c.Filters = c.RecipesFilters.Select(x => x.Filter).ToList());
 
             return new PaginatedList<TotalRecipeModel>(
                 model.PageIndex,

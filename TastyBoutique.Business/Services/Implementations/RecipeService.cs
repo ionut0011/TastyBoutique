@@ -78,6 +78,9 @@ namespace TastyBoutique.Business.Services.Implementations
                 recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters(model.Filter)));
             else 
                 recipe.RecipesFilters.Add(new RecipesFilters(recipe, fil));
+            
+            recipe.Ingredients = recipe.RecipesIngredients.Select(x => x.Ingredient).ToList();
+            recipe.Filters = recipe.RecipesFilters.Select(x => x.Filter).ToList();
 
             await _repository.Add(recipe);
             await _repository.SaveChanges();
