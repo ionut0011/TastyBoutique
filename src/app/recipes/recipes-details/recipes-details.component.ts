@@ -7,6 +7,7 @@ import { RecipeService } from '../services/recipe.service';
 import {CommentModel} from '../models/comment.model';
 import { Ng2ImgMaxService } from 'ng2-img-max';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {ToastrService} from 'ngx-toastr'
 @Component({
   selector: 'app-recipes-details',
   templateUrl: './recipes-details.component.html',
@@ -23,6 +24,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   isAddMode: boolean;
   photos: Blob[] = [];
   ratingNumber: number = 0;
+  createdRecipe : boolean = false;
   public commentsList: CommentModel[];
   public recipeList: RecipesModel[];
   private routeSub: Subscription = new Subscription();
@@ -72,6 +74,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
 
   constructor(
+    private toastr: ToastrService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -105,19 +108,13 @@ onImageChange(event) {
       this.imageUrl = event.target.result;
       console.log("imgurl=",this.imageUrl);
     }
-
-
-
-
+    reader.readAsDataURL(this.fileToUpload);
   }
 
 
   ngOnInit(): void {
-
     this.service.getAllFilters().subscribe((data: FiltersModel) => {
       this.filterssList = data;
-
-
       console.log(this.filterssList);
       console.log("filtersList", data);
 
@@ -194,11 +191,24 @@ onImageChange(event) {
       // finalRecipeModel.image = '../../assets/images/food.jpg'
     }
     finalRecipeModel.ingredientsList = this.validateIngredients(finalRecipeModel.ingredientsList);
-    if (this.isAddMode) {
-     this.service.post(finalRecipeModel).subscribe((data:RecipesModel) =>{
+    if (this.isAddMode)
+    {
+     this.service.post(finalRecipeModel).subscribe((data : RecipesModel) =>
+     {
       console.log(data);
+      this.createdRecipe = true;
+      if(this.createdRecipe)
+      {
+        this.toastr.success("Recipe added");
+      }
       this.recipeList.push(data);
-     });
+      console.log("RecipeList:", this.recipeList);
+     },
+     (error) => {
+      this.createdRecipe = false;
+      this.toastr.error("Couldn't create recipe");
+    }
+     );
      this.router.navigate(['list']);
     } else {
       this.service.patch(finalRecipeModel).subscribe();
@@ -207,7 +217,9 @@ onImageChange(event) {
     this.photos.push(this.imageUrl);
     this.imageUrl = null;
     this.formGroup.disable();
+    console.log(this.recipeList);
   }
+
 
 
   testStar(rating) {
@@ -228,7 +240,13 @@ onImageChange(event) {
     this.routeSub = this.activatedRoute.params.subscribe(params => {
       this.service.addComment(params['id'], commentsModel).subscribe((data: CommentModel) => {
         this.commentsList.push(data);
-      });
+        this.toastr.success('Comment added')
+      },
+      (error) =>
+      {
+        this.toastr.error('Something went wrong');
+      }
+      );
         console.log("s-a adaugat commentul");
         console.log(commentsModel);
     });
@@ -241,8 +259,15 @@ public deleteComment(recipeId: string, commentId :string) :void{
       console.log(this.commentsList[i].id);
       if(commentId == this.commentsList[i].id){
         this.service.deleteComment(recipeId, commentId).subscribe(data => {
-          this.commentsList.pop();
+          this.commentsList.splice(i,1);
           console.log(data);
+          this.toastr.success('Comment deleted');
+
+        }
+        ,
+        (error) =>{
+          this.toastr.error('Could not delete your comment.');
+
         })
     }
 

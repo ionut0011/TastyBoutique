@@ -3,7 +3,6 @@
   <section class="form-section">
     <form [formGroup]="formGroup">
       <div class="form-group">
-
         <input type="text" class="title"
           placeholder="Enter recipe name"
           formControlName="name">
@@ -87,13 +86,8 @@
           <div class="added-photos" *ngIf="isFormDisabled">
             <img class="photo-file" *ngFor="let photo of photos" [src]="photo">
           </div>
-
           <br>
-
-
-
         </div>
-
       </div>
       <br>
 
@@ -164,6 +158,7 @@
                     <i class="fa fa-star-o"></i>
                     <i class="fa fa-star-o"></i>
                   </div>
+
 
                   <div *ngIf="comment.review == 1">
                     <i class="fa fa-star"></i>

@@ -8,7 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import { Ng2ImgMaxModule, Ng2ImgMaxService } from 'ng2-img-max';
-
+import {ToastrModule} from 'ngx-toastr'
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +21,8 @@ import { Ng2ImgMaxModule, Ng2ImgMaxService } from 'ng2-img-max';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    Ng2ImgMaxModule
+    Ng2ImgMaxModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

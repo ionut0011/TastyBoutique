@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,7 +12,6 @@ export class AuthentificationService {
     'http://www.tastyboutique.tk:5341/api/v1/auth';
   constructor(private readonly httpClient: HttpClient) {}
 
-
   public register(data: unknown): Observable<unknown> {
     return this.httpClient.post(`${this.endpoint}/register`, data);
   }
@@ -25,5 +23,4 @@ export class AuthentificationService {
   public recover(data: unknown): Observable<unknown> {
     return this.httpClient.post(`${this.endpoint}/recover`, data);
   }
-
 }

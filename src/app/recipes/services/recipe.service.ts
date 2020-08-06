@@ -14,6 +14,8 @@ export class RecipeService {
   private endpoint: string = 'http://www.tastyboutique.tk:5341/api/v1/recipe';
   private endpoint2: string = 'http://www.tastyboutique.tk:5341/api/v1/collections';
 
+  public bla: Observable<number>;
+
   private recipes: RecipesGetModel[]=[];
   private httpOptions = {
 

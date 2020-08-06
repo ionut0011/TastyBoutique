@@ -1,12 +1,12 @@
-import { Component, OnInit,OnDestroy } from '@angular/core';
-import { LoginModel } from '../models/login.model';
+import { Component} from '@angular/core';
 import { RegisterModel } from '../models/register.model';
 import { AuthentificationService } from '../services/authentification.service';
 import {Router} from '@angular/router'
-import { Subscription } from 'rxjs';
 import { UserService } from '../../shared/services';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {Validators} from '@angular/forms'
+import {ToastrService} from 'ngx-toastr'
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -27,6 +27,7 @@ export class RegisterComponent  {
   public form: FormGroup;
 
   constructor(
+    private toastr: ToastrService,
     private readonly authentificationService:AuthentificationService,
     private router:Router,
     private readonly userService:UserService,
@@ -73,6 +74,10 @@ export class RegisterComponent  {
       localStorage.setItem('userToken', JSON.stringify(logData.token));
       localStorage.setItem('email', JSON.stringify(logData.email));
       this.router.navigate(['dashboard']);
+      this.toastr.success("Successfully registered");
+    },
+    (error)=>{
+      this.toastr.error("Something went wrong");
     });
     console.log(this.form.value);
     console.log(this.form.valid);

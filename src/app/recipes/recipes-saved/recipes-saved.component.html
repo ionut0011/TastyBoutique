@@ -12,7 +12,54 @@
           </h1>
           <div class="details">
         </div>
-        <app-stars-review></app-stars-review>
+        <div class="stars">
+          <li>
+            <p>Rating: {{recipe.averageReview}}/5</p>
+            <div *ngIf="recipe.averageReview == 0">
+              <i class="fa fa-star-o"></i>
+              <i class="fa fa-star-o"></i>
+              <i class="fa fa-star-o"></i>
+              <i class="fa fa-star-o"></i>
+              <i class="fa fa-star-o"></i>
+            </div>
+
+            <div *ngIf="recipe.averageReview == 1">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-o"></i>
+              <i class="fa fa-star-o"></i>
+              <i class="fa fa-star-o"></i>
+              <i class="fa fa-star-o"></i>
+            </div>
+            <div *ngIf="recipe.averageReview == 2">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-o"></i>
+              <i class="fa fa-star-o"></i>
+              <i class="fa fa-star-o"></i>
+            </div>
+            <div *ngIf="recipe.averageReview == 3">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-o"></i>
+              <i class="fa fa-star-o"></i>
+            </div>
+            <div *ngIf="recipe.averageReview == 4">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-o"></i>
+            </div>
+            <div *ngIf="recipe.averageReview == 5">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+            </div>
+          </li>
+        </div>
           <p class="info">{{recipe.description}}</p>
           <div class="btn lets-cook-btn" (click)="goToRecipe(recipe.id)">Let's Cook!</div>
         </div>

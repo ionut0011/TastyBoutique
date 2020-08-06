@@ -4,6 +4,8 @@ import { AuthentificationService } from '../services/authentification.service';
 import { LoginModel } from '../models/login.model';
 import { UserService } from 'src/app/shared/services';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import * as JWT from 'jwt-decode';
+import {ToastrService} from 'ngx-toastr'
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,10 @@ export class LoginComponent  {
 
   public form: FormGroup;
 
+  loggedIn: boolean = true;
   constructor(
+    private toastr: ToastrService,
+
     private readonly authentificationService:AuthentificationService,
     private router: Router,
     private readonly userService:UserService,
@@ -30,7 +35,7 @@ export class LoginComponent  {
       this.userService.username.next('');
      }
 
-  
+
      ngOnInit(): void {
         localStorage.clearItem('email');
         localStorage.clearItem('userToken');
@@ -42,12 +47,35 @@ export class LoginComponent  {
 
     const data: LoginModel = this.form.getRawValue();
 
-    this.authentificationService.login(data).subscribe((logData:any) => {
-      localStorage.setItem('userToken', JSON.stringify(logData.token));
-      localStorage.setItem('email', JSON.stringify(logData.email));
-      this.userService.username.next(data.email.split('@')[0]);
-      this.router.navigate(['dashboard']);
-    });
+    this.authentificationService.login(data).subscribe(
+      (logData:any) => {
+        localStorage.setItem('userToken', JSON.stringify(logData.token));
+        localStorage.setItem('email', JSON.stringify(logData.email));
+        this.userService.username.next(logData.username);
+        let decoded = JWT(logData.token);
+        localStorage.setItem('idUser', decoded['idUse']);
+        this.router.navigate(['dashboard']);
+        this.loggedIn = true;
+        if(this.loggedIn)
+        {
+          this.toastr.success("Successfully logged in");
+        }
+      },
+      (error) => {
+        this.loggedIn = false;
+        this.toastr.error("Wrong email or password");
+      }
+    );
+
+    console.log(this.loggedIn);
+  }
+
+  errorMessage() :void
+  {
+    if(this.loggedIn == false)
+    {
+      this.toastr.error("Wrong email or password");
+    }
   }
 
   public goToPage(page: string): void {

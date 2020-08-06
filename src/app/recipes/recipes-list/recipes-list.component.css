@@ -152,3 +152,9 @@ i{
 li{
   margin-left: 30px;
 }
+span{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+

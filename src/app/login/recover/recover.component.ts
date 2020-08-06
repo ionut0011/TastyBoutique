@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {Router} from '@angular/router';
 import { AuthentificationService } from '../services/authentification.service';
-import { Subscription } from 'rxjs';
-import { LoginModel } from '../models/login.model';
 import { RecoverModel } from '../models/recover.model';
 import { UserService } from '../../shared/services';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {ToastrService} from 'ngx-toastr'
+
 @Component({
   selector: 'app-recover',
   templateUrl: './recover.component.html',
@@ -20,6 +20,7 @@ export class RecoverComponent implements OnInit,OnDestroy {
 
 
   constructor(
+    private toastr: ToastrService,
     private readonly authentificationService:AuthentificationService,
     private router: Router,
     private readonly userService:UserService,
@@ -47,10 +48,12 @@ export class RecoverComponent implements OnInit,OnDestroy {
 
     console.log('s-a apasat change password');
     const data: RecoverModel = this.formGroup.getRawValue();
-
     this.authentificationService.recover(data).subscribe(() => {
-
       this.router.navigate(['login']);
+      this.toastr.success("Successfully changed password");
+    },
+    (error)=>{
+      this.toastr.error("Something went wrong");
     });
   }
 
