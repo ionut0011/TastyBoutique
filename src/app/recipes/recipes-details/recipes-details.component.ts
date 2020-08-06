@@ -24,7 +24,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   photos: Blob[] = [];
   ratingNumber: number = 0;
   public commentsList: CommentModel[];
-  public recipeList: RecipesModel[];
+  public recipeList: RecipesModel[]=[];
   private routeSub: Subscription = new Subscription();
 
   get description(): string {
@@ -66,7 +66,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
 
 
   typeesList: string[] = ['Food', 'Drink'];
-  foodordrink:string[] =[];
+
 
   uploadedImage: FileList;
 
@@ -104,8 +104,10 @@ onImageChange(event) {
     reader.onload = (event: any) => {
       this.imageUrl = event.target.result;
       console.log("imgurl=",this.imageUrl);
+
     }
 
+    reader.readAsDataURL(this.fileToUpload);
 
 
 
@@ -159,8 +161,9 @@ onImageChange(event) {
       this.routeSub = this.activatedRoute.params.subscribe(params => {
         //Getting details for the trip with the id found
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
-          this.test2.setValue(data.filtersList[0].name);
-          this.test3.setValue(data.type);
+          console.log(data.filters);
+         // this.test2.setValue(data.filters[0].name);
+          //this.test3.setValue(data.type);
           this.formGroup.patchValue(data);
           console.log(data);
         })

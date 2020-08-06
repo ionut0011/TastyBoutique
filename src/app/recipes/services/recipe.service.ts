@@ -102,4 +102,11 @@ export class RecipeService {
     return this.http.delete<any>(`${this.endpoint2}/${recipeId.idRecipe}`, this.httpOptions);
   }
 
+  searchIngredients(ingredientsList:string[]): Observable<RecipesGetModel[]> {
+    return this.http.get<RecipesGetModel[]>(`http://www.tastyboutique.tk:5341/api/v1/search`,this.httpOptions);
+  }
+  searchFilters(filter:string): Observable<RecipesGetModel[]> {
+    return this.http.get<RecipesGetModel[]>(`http://www.tastyboutique.tk:5341/api/v1/search/${filter}`,this.httpOptions);
+  }
+
 }

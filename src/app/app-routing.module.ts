@@ -9,6 +9,7 @@ import { RecoverComponent } from './login/recover/recover.component';
 import { SharedModule } from './shared/shared.module';
 import { RecipesSavedComponent } from './recipes/recipes-saved/recipes-saved.component';
 
+
 const routes: Routes = [
 
 {
