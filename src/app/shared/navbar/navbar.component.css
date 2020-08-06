@@ -1,7 +1,6 @@
 .topnav {
   overflow: hidden;
   display: flex;
-  justify-content: space-between;
   flex-direction: center;
   align-items: center;
   background: #ef3e36;
