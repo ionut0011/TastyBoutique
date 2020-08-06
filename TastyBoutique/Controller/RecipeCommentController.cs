@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TastyBoutique.Business.Models.RecipeComment;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
@@ -13,10 +15,12 @@ namespace TastyBoutique.API.Controller
     public sealed class RecipeCommentController : ControllerBase
     {
         private readonly IRecipeCommentService _commentsService;
+        private readonly IHttpContextAccessor _accessor;
 
-        public RecipeCommentController(IRecipeCommentService commentsService)
+        public RecipeCommentController(IRecipeCommentService commentsService, IHttpContextAccessor accessor)
         {
             _commentsService = commentsService;
+            _accessor = accessor;
         }
 
         [HttpGet("{recipeId}/comments")]
@@ -31,7 +35,8 @@ namespace TastyBoutique.API.Controller
 
         public async Task<IActionResult> Add([FromRoute] Guid recipeId, [FromBody] CreateRecipeCommentModel model)
         {
-            var result = await _commentsService.Add(recipeId, model);
+            var userId = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
+            var result = await _commentsService.Add(userId, recipeId, model);
 
             return Ok(result);
         }

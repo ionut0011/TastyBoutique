@@ -16,17 +16,14 @@ namespace TastyBoutique.Business.Services.Implementations
     {
         private readonly IRecipeRepo _repository;
         private readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _accessor;
 
-        public RecipeCommentService(IRecipeRepo _repository,IMapper _mapper, IHttpContextAccessor _accessor)
+        public RecipeCommentService(IRecipeRepo repository, IMapper mapper)
         {
-            this._repository = _repository;
-            this._mapper = _mapper;
-            this._accessor=_accessor;
+            this._repository = repository;
+            this._mapper = mapper;
         }
-        public async Task<RecipeCommentModel> Add(Guid idRecipe, CreateRecipeCommentModel model)
+        public async Task<RecipeCommentModel> Add(Guid idUser, Guid idRecipe, CreateRecipeCommentModel model)
         {
-            model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var comment = _mapper.Map<RecipeComment>(model);
             var recipe = await _repository.GetById(idRecipe);
             recipe.AddComment(comment);

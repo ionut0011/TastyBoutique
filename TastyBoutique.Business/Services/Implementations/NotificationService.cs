@@ -16,13 +16,12 @@ namespace TastyBoutique.Business.Services.Implementations
         private readonly ICollectionRepo _collectionRepo;
         private readonly IMapper _mapper;
         //private readonly IRecipeRepo _recipeRepo;
-        private readonly IHttpContextAccessor _accessor;
+        
 
-        public NotificationService(ICollectionRepo collectionRepo, IMapper mapper, IHttpContextAccessor accessor)
+        public NotificationService(ICollectionRepo collectionRepo, IMapper mapper)
         {
             _collectionRepo = collectionRepo;
             _mapper = mapper;
-            _accessor = accessor;
         }
 
         public async Task<PaginatedList<TotalRecipeModel>> GetAllByIdUser(Guid idUser)
@@ -37,10 +36,9 @@ namespace TastyBoutique.Business.Services.Implementations
         }
 
         // apelata cand userul apasa click pe notificare
-        public async Task Update(Guid IdRecipe)
+        public async Task Update(SavedRecipeModel model)
         {
-            Guid IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
-            var savedRecipe = await _collectionRepo.Get(IdUser, IdRecipe);
+            var savedRecipe = await _collectionRepo.Get(model.IdUser, model.IdRecipe);
             savedRecipe.NeedUpdate = false;
             await _collectionRepo.SaveChanges();
         }

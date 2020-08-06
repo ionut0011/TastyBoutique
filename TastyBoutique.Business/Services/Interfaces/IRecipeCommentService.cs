@@ -9,9 +9,9 @@ namespace TastyBoutique.Business.Recipes.Services.Interfaces
     {
         Task<IEnumerable<RecipeCommentModel>> Get(Guid idRecipe);
 
-        Task<RecipeCommentModel> Add(Guid IdRecipe, CreateRecipeCommentModel model);
+        Task<RecipeCommentModel> Add(Guid idUser, Guid idRecipe, CreateRecipeCommentModel model);
 
-        Task Delete(Guid IdRecipe, Guid commentId);
+        Task Delete(Guid idRecipe, Guid idComment);
 
     }
 }

@@ -18,21 +18,22 @@ namespace TastyBoutique.Business.Services.Implementation
     {
         private readonly ICollectionRepo _repository; 
         private readonly IMapper _mapper;
-        private readonly IRecipeRepo _recipeRepo;
-        
 
-        public CollectionService(ICollectionRepo repository, IRecipeRepo recipeRepo, IMapper mapper, IHttpContextAccessor accessor)
+        public CollectionService(ICollectionRepo repository, IMapper mapper)
         {
             _repository = repository;
-            _recipeRepo = recipeRepo;
             _mapper = mapper;
         }
 
         public async Task Add(SavedRecipeModel model)
         {
-            var recipe = _mapper.Map<SavedRecipes>(model);
-            await _repository.Add(recipe);
-            await _repository.SaveChanges();
+            var savedRecipes = await _repository.Get(model.IdUser, model.IdRecipe);
+            if (savedRecipes == null)
+            {
+                var recipe = _mapper.Map<SavedRecipes>(model);
+                await _repository.Add(recipe);
+                await _repository.SaveChanges();
+            }
         }
 
         public async Task Delete(SavedRecipeModel model)

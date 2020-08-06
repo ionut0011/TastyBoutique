@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TastyBoutique.Business.Implementations.Services.Interfaces;
+using TastyBoutique.Business.Models.Recipe;
 
 namespace TastyBoutique.API.Controller
 {
@@ -31,7 +32,11 @@ namespace TastyBoutique.API.Controller
         [HttpPatch("{idRecipe}")]
         public async Task<IActionResult> Update([FromRoute] Guid idRecipe)
         {
-            await _notificationService.Update(idRecipe);
+            var model = new SavedRecipeModel();
+            model.IdRecipe = idRecipe;
+            model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
+
+            await _notificationService.Update(model);
             return NoContent();
         }
 

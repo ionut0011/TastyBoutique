@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using LinqBuilder.Core;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,15 @@ namespace TastyBoutique.Persistance.Recipes
     public sealed class RecipeRepo : Repository<Models.Recipes>, IRecipeRepo
     {
         public RecipeRepo(TastyBoutiqueContext context) : base(context) { }
+
+        public async new Task<Models.Recipes> GetById(Guid id)
+           => await this.context.Recipes
+            .Include(r => r.RecipesFilters)
+            .ThenInclude(r => r.Filter)
+            .Include(r => r.RecipesIngredients)
+            .ThenInclude(r => r.Ingredient)
+            .FirstOrDefaultAsync(r => r.Id == id);
+
         public async Task<IList<Models.Recipes>> Get(Guid idUser)
             => await this.context.Recipes
             .Where(recipe => recipe.Access || recipe.IdUser == idUser)

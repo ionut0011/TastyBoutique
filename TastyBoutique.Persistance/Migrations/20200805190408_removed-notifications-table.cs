@@ -3,33 +3,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TastyBoutique.Persistance.Migrations
 {
-    public partial class Table_Recipe_Field_Review : Migration
+    public partial class removednotificationstable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<float>(
-                name: "AverageReview",
-                table: "Recipes",
-                nullable: false,
-                defaultValue: 0f);
-
-            migrationBuilder.AddColumn<int>(
-                name: "ReviewCount",
-                table: "Recipes",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.DropTable(
+                name: "Notifications");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "AverageReview",
-                table: "Recipes");
-
-            migrationBuilder.DropColumn(
-                name: "ReviewCount",
-                table: "Recipes");
-
             migrationBuilder.CreateTable(
                 name: "Notifications",
                 columns: table => new

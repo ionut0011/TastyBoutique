@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using LinqBuilder;
 using Microsoft.AspNetCore.Http;
 using TastyBoutique.Business.Models.Filter;
 using TastyBoutique.Business.Models.Ingredients;
@@ -36,12 +37,7 @@ namespace TastyBoutique.Business.Services.Implementations
         }
 
         public async Task<IList<TotalRecipeModel>> Get(SearchModel model)
-        {   /*
-            var spec = model.ToSpecification<Persistance.Models.Recipes>();
-
-            var entities = await _repository.Get(spec);
-            var recipes = _mapper.Map<IList<TotalRecipeModel>>(entities);
-            */
+        {   
             IList<Persistance.Models.Recipes> entities = null;
             var tmp = _accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "IdUser");
 
@@ -49,6 +45,8 @@ namespace TastyBoutique.Business.Services.Implementations
             {
                 Guid idUser = Guid.Parse(tmp.Value);
                 entities = await _repository.Get(idUser);
+                entities.ToList().ForEach(c => c.Ingredients = c.RecipesIngredients.Select(x => x.Ingredient).ToList());
+                entities.ToList().ForEach(c => c.Filters = c.RecipesFilters.Select(x => x.Filter).ToList());
             }
             else
                 entities = await _repository.GetAllPublic();
@@ -75,6 +73,9 @@ namespace TastyBoutique.Business.Services.Implementations
                 recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters(model.Filter)));
             else 
                 recipe.RecipesFilters.Add(new RecipesFilters(recipe, fil));
+            
+            recipe.Ingredients = recipe.RecipesIngredients.Select(x => x.Ingredient).ToList();
+            recipe.Filters = recipe.RecipesFilters.Select(x => x.Filter).ToList();
 
             await _repository.Add(recipe);
             await _repository.SaveChanges();
@@ -85,6 +86,8 @@ namespace TastyBoutique.Business.Services.Implementations
         public async Task<TotalRecipeModel> GetById(Guid id)
         {
             var entity = await _repository.GetById(id);
+            entity.Ingredients = entity.RecipesIngredients.Select(x => x.Ingredient).ToList();
+            entity.Filters = entity.RecipesFilters.Select(x => x.Filter).ToList();
             var recipe = _mapper.Map<TotalRecipeModel>(entity);
             return recipe;
         }
@@ -92,10 +95,31 @@ namespace TastyBoutique.Business.Services.Implementations
         public async Task Update(Guid id, UpsertRecipeModel model)
         {
             var recipe = await _repository.GetById(id);
+            recipe.RecipesIngredients.Clear();
+            recipe.RecipesFilters.Clear();
 
-            recipe.Update(model.Name, model.Access,model.Description, model.Image);
-            
+            recipe.Name = model.Name;
+            recipe.Access = model.Access;
+            recipe.Description = model.Description;
+            recipe.Image = model.Image;
+
+            foreach (var ingredient in model.IngredientsList)
+            {
+                var ing = await _ingredients.GetByName(ingredient);
+                if (ing == null)
+                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients(ingredient)));
+                else
+                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, ing));
+            }
+
+            var fil = await _filters.GetByName(model.Filter);
+            if (fil == null)
+                recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters(model.Filter)));
+            else
+                recipe.RecipesFilters.Add(new RecipesFilters(recipe, fil));
+
             await _collections.SetAllByIdRecipe(recipe.Id);
+            
             _repository.Update(recipe);
             await _repository.SaveChanges();
         }
