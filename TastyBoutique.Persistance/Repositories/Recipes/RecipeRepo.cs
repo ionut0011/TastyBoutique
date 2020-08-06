@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using LinqBuilder.Core;
@@ -29,6 +30,12 @@ namespace TastyBoutique.Persistance.Recipes
             .Include(r => r.RecipesIngredients)
             .ThenInclude(r => r.Ingredient)
             .ToListAsync();
+
+        public async void DeleteComment(Guid commentId)
+        {
+            this.context.RecipeComments.Remove(await this.context.RecipeComments
+                    .Where(x => x.Id == commentId).FirstOrDefaultAsync());
+        }
 
         public async Task<IList<Models.Recipes>> GetAllPublic()
             => await this.context.Recipes.

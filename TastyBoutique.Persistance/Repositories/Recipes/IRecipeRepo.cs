@@ -23,5 +23,7 @@ namespace TastyBoutique.Persistance.Recipes
         Task<List<Models.Recipes>> GetRecipiesByQuery(Guid idUser, IList<Models.Ingredients> ingredients, ISpecification<Models.Recipes> spec);
 
         Task<List<Models.Recipes>> GetRecipiesByFilter(Guid idUser, Filters filter, ISpecification<Models.Recipes> spec);
+
+        void DeleteComment(Guid commentId);
     }
 }

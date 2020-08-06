@@ -66,7 +66,6 @@ namespace TastyBoutique.Business.Services.Implementations
         {
             var spec = model.ToSpecification<Persistance.Models.Recipes>();
             var f = await _filtersRepo.GetByName(filter);
-
             var result = await _recipeRepo.GetRecipiesByFilter(idUser, f, spec);
 
             return new PaginatedList<TotalRecipeModel>(
