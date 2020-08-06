@@ -1,4 +1,4 @@
-import { Component, OnInit,OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FiltersModel } from '../models';
@@ -7,11 +7,9 @@ import { RecipesGetModel,CollectionsModel } from '../models';
 import { RecipeService} from '../services/recipe.service';
 import { CollectionsService } from '../services/collections.service';
 import { SearchService } from '../services/search.service';
+
 import { DomSanitizer } from '@angular/platform-browser';
-
 import { Ng2ImgMaxService } from 'ng2-img-max';
-
-import { UserService } from 'src/app/shared/services';
 import {CommentModel} from '../models/comment.model'
 import { FormControl } from '@angular/forms';
 
@@ -23,6 +21,7 @@ import { FormControl } from '@angular/forms';
 })
 
 export class RecipesListComponent implements OnInit {
+
   public recipeList: RecipesGetModel[];
   filterssList:FiltersModel;
   public collection: CollectionsModel={};
@@ -47,22 +46,18 @@ export class RecipesListComponent implements OnInit {
       this.filterssList = data;});
 
     this.service.getAll().subscribe((data: RecipesGetModel[]) => {
-      this.recipeList = data;
 
+      this.recipeList = data;
       this.recipeList.forEach(element => {
         if(element.image.length>5){
         let link:any = 'data:image/png;base64,'+element.image;
         element.image = link;
         }
       });
-      console.log(data);
 
       this.service.saveRecipes(this.recipeList);
-
-      console.log("commentList", this.commentList)
-
+      console.log("commentList", this.commentList);
     });
-
   }
 
   goToRecipe(id: string): void {
@@ -73,16 +68,14 @@ export class RecipesListComponent implements OnInit {
     this.service.deleteRecipe(id).subscribe(data => {
       console.log(data);});
       window.location.reload();
-
   }
 
-
   postCollections(id: string): void {
-
     this.collection.idRecipe=id;
     this.serviceCollections.postCollections(this.collection).subscribe(data => {
       console.log(data);});
   }
+
 
   public goToPage(page: string): void {
     this.router.navigate([page]);

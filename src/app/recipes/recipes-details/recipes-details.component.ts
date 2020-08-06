@@ -163,8 +163,10 @@ onImageChange(event) {
       this.routeSub = this.activatedRoute.params.subscribe(params => {
         //Getting details for the trip with the id found
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
+
           console.log(data.filters);
           this.test2.setValue(data.filters[0].name);
+
           this.test3.setValue(data.type);
           this.formGroup.patchValue(data);
           console.log(data);
@@ -233,6 +235,7 @@ onImageChange(event) {
     this.routeSub = this.activatedRoute.params.subscribe(params => {
       this.serviceComments.addComment(params['id'], commentsModel).subscribe((data: CommentModel) => {
         this.commentsList.push(data);
+
       });
         console.log("s-a adaugat commentul");
         console.log(commentsModel);

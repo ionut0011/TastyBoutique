@@ -12,7 +12,6 @@ export class RecipeService {
 
   private endpoint: string = 'http://www.tastyboutique.tk:5341/api/v1/recipe';
 
-
   private recipes: RecipesGetModel[]=[];
   private httpOptions = {
 
@@ -28,9 +27,17 @@ export class RecipeService {
   getAll(): Observable<RecipesGetModel[]> {
     return this.http.get<RecipesGetModel[]>(`http://www.tastyboutique.tk:5341/api/v1/recipe`, this.httpOptions);
   }
-
   get(recipeId: string): Observable<RecipesGetModel> {
     return this.http.get<RecipesGetModel>(`${this.endpoint}/${recipeId}`, this.httpOptions);
+  }
+  post(recipes: RecipesModel): Observable<any> {
+    return this.http.post<any>(`${this.endpoint}`, recipes, this.httpOptions);
+  }
+  patch(recipes: RecipesModel): Observable<any> {
+    return this.http.patch<any>(`${this.endpoint}/${recipes.id}`, recipes, this.httpOptions);
+  }
+  deleteRecipe(recipeId: string): Observable<RecipesModel> {
+    return this.http.delete<RecipesModel>(`${this.endpoint}/${recipeId}`, this.httpOptions);
   }
 
   post(recipes: RecipesModel): Observable<any> {
@@ -49,6 +56,7 @@ export class RecipeService {
   getAllFilters(): Observable<FiltersModel> {
     return this.http.get<FiltersModel>(`http://www.tastyboutique.tk:5341/api/v1/filter`, this.httpOptions);
   }
+
   addFilter(name: string):Observable<any>{
     return this.http.post<any>(`http://www.tastyboutique.tk:5341/api/v1/filter`,name, this.httpOptions);
   }
@@ -79,4 +87,10 @@ export class RecipeService {
   }
 
 
+  saveRecipes(recipes :RecipesGetModel[]){
+    this.recipes = recipes;
+  }
+  getRecipes(){
+    return this.recipes;
+  }
 }
