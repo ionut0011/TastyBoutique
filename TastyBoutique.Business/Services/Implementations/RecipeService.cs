@@ -76,7 +76,6 @@ namespace TastyBoutique.Business.Services.Implementations
             else 
                 recipe.RecipesFilters.Add(new RecipesFilters(recipe, fil));
 
-            recipe.RecipeType = new RecipeType(recipe, model.Type);
             await _repository.Add(recipe);
             await _repository.SaveChanges();
 

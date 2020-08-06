@@ -7,10 +7,11 @@ namespace TastyBoutique.Persistance.Models
 {
     public class Recipes : Entity
     {
-        public Recipes(string name, Boolean access, string description, byte[] image)
+        public Recipes(string name, string type, bool access, string description, byte[] image)
         {
             //IdUser = id;
             Name = name;
+            Type = type;
             Access = access;
             Description = description;
             Image = image;
@@ -23,14 +24,14 @@ namespace TastyBoutique.Persistance.Models
         }
         public Guid IdUser { get; set; }
         public string Name { get; set; }
-        public Boolean Access { get; set; }
+        public bool Access { get; set; }
         public string Description { get; set; }
         public byte[] Image { get; set; }
 
         public float AverageReview { get; set; }
 
         public int ReviewCount { get; set; }
-        public virtual RecipeType RecipeType { get; set; }
+        public string Type { get; set; }
 
         public ICollection<RecipeComment> RecipeComment { get; set; }
         public ICollection<SavedRecipes> SavedRecipes { get; set; }
