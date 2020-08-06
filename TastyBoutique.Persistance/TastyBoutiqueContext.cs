@@ -53,27 +53,6 @@ namespace TastyBoutique.Persistance.Models
                     .HasMaxLength(50);
             });
 
-            modelBuilder.Entity<Notifications>(entity =>
-            {
-                entity.HasIndex(e => e.IdRecipe);
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(250);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.HasOne(d => d.IdRecipeNavigation)
-                    .WithMany(p => p.NotificationsNavigation)
-                    .HasForeignKey(d => d.IdRecipe)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_Notifications_Recipes");
-            });
-
             modelBuilder.Entity<RecipeComment>(entity =>
             {
                 entity.HasIndex(e => e.IdRecipe);

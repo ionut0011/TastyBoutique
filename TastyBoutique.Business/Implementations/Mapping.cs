@@ -22,9 +22,11 @@ namespace TastyBoutique.Business.Recipes
 
             CreateMap<CreateIngredientModel, Persistance.Models.Ingredients>();
             CreateMap<Persistance.Models.Ingredients, IngredientModel>();
+            CreateMap<IngredientModel, Ingredients>();
 
             CreateMap<CreateFilterModel, Persistance.Models.Filters>();
             CreateMap<Persistance.Models.Filters, FilterModel>();
+            CreateMap<FilterModel, Filters>();
 
             CreateMap<Persistance.Models.Recipes, TotalRecipeModel>();
             CreateMap<Persistance.Models.Recipes, RecipeModel>();

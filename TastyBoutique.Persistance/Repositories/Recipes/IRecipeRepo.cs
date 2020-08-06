@@ -23,6 +23,5 @@ namespace TastyBoutique.Persistance.Recipes
 
         Task<List<Models.Recipes>> GetRecipiesByQuery(IList<Models.Ingredients> ingredients, IList<Filters> filters);
 
-      
     }
 }

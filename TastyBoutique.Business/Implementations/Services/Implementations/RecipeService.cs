@@ -76,7 +76,6 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
                     recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients(ingredient)));
                 else
                     recipe.RecipesIngredients.Add(new RecipesIngredients(recipe,ing));
-                
             }
             
             var fil = await _filters.GetByName(model.Filter);
@@ -107,10 +106,14 @@ namespace TastyBoutique.Business.Recipes.Services.Implementations
         public async Task Update(Guid id, UpsertRecipeModel model)
         {
             var recipe = await _repository.GetById(id);
-
+            var ingredients = _mapper.Map<IList<Ingredients>>(GetIngredientsByRecipeId(recipe.Id).Result.Results);
+            var filters = _mapper.Map<IList<Filters>>(GetFiltersByRecipeId(recipe.Id).Result.Results);
+            
+            
             recipe.Update(model.Name, model.Access,model.Description, model.Image);
             
             await _collections.SetAllByIdRecipe(recipe.Id);
+            
             _repository.Update(recipe);
             await _repository.SaveChanges();
         }

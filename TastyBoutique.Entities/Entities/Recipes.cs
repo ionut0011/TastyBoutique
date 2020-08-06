@@ -13,7 +13,7 @@ namespace TastyBoutique.Persistance.Models
             Access = access;
             Description = description;
             Image = image;
-            NotificationsNavigation = new HashSet<Notifications>();
+         
             RecipeComment = new HashSet<RecipeComment>();
             SavedRecipes = new HashSet<SavedRecipes>();
             RecipesIngredients = new HashSet<RecipesIngredients>();
@@ -26,7 +26,7 @@ namespace TastyBoutique.Persistance.Models
         public byte[] Image { get; set; }
         public virtual RecipeType RecipeType { get; set; }
 
-        public ICollection<Notifications> NotificationsNavigation { get; set; }
+        
         public ICollection<RecipeComment> RecipeComment { get; set; }
         public ICollection<SavedRecipes> SavedRecipes { get; set; }
 
