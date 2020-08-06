@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,11 @@ namespace TastyBoutique.API.Controller
         [HttpGet]
         public async Task<IActionResult> Search([FromQuery] IList<string> query, [FromQuery] SearchModel model)
         {
-            var idUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
+            Guid idUser = Guid.Parse("00000000-0000-0000-0000-000000000000");
+            if (_accessor.HttpContext.User.Claims.ToList().Count != 0)
+            {
+                idUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
+            }
             var result = await _searchService.GetRecipiesByQuery(idUser, query, model);
             return Ok(result.Results);
         }
@@ -31,7 +36,11 @@ namespace TastyBoutique.API.Controller
         [HttpGet("{filter}")]
         public async Task<IActionResult> Filter([FromRoute] string filter, [FromQuery] SearchModel model)
         {
-            var idUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
+            Guid idUser = Guid.Parse("00000000-0000-0000-0000-000000000000");
+            if (_accessor.HttpContext.User.Claims.ToList().Count != 0)
+            {
+                idUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
+            }
             var result = await _searchService.GetRecipiesByFilter(idUser, filter, model);
             return Ok(result.Results);
         }
