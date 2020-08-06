@@ -91,6 +91,8 @@ namespace TastyBoutique.Business.Services.Implementations
         public async Task<TotalRecipeModel> GetById(Guid id)
         {
             var entity = await _repository.GetById(id);
+            entity.Ingredients = entity.RecipesIngredients.Select(x => x.Ingredient).ToList();
+            entity.Filters = entity.RecipesFilters.Select(x => x.Filter).ToList();
             var recipe = _mapper.Map<TotalRecipeModel>(entity);
             return recipe;
         }

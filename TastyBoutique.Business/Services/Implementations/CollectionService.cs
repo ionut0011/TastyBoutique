@@ -32,9 +32,13 @@ namespace TastyBoutique.Business.Services.Implementation
         public async Task Add(SavedRecipeModel model)
         {
             model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
-            var recipe = _mapper.Map<SavedRecipes>(model);
-            await _repository.Add(recipe);
-            await _repository.SaveChanges();
+            var savedRecipes = await _repository.Get(model.IdUser, model.IdRecipe);
+            if (savedRecipes == null)
+            {
+                var recipe = _mapper.Map<SavedRecipes>(model);
+                await _repository.Add(recipe);
+                await _repository.SaveChanges();
+            }
         }
 
         public async Task Delete(Guid recipeId)

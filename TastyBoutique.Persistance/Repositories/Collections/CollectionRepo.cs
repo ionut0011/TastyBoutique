@@ -27,7 +27,7 @@ namespace TastyBoutique.Persistance
         public async Task<SavedRecipes> Get(Guid idUser, Guid idRecipe)
             => await this.context.SavedRecipes.Where(x => x.IdUser == idUser)
                 .Where(x => x.IdRecipe == idRecipe)
-                .FirstAsync();
+                .FirstOrDefaultAsync();
 
         public async Task SetAllByIdRecipe(Guid idRecipe)
         {
