@@ -20,7 +20,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique.Persistance",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique.Entities", "TastyBoutique.Entities\TastyBoutique.Entities.csproj", "{3F78CADD-3698-4463-B434-173EA26321BD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99.UnitTests", "99.UnitTests", "{D2637113-6583-40A4-9384-A8777431AC55}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99.Tests", "99.Tests", "{D2637113-6583-40A4-9384-A8777431AC55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TastyBoutique.UnitTesting", "TastyBoutique.UnitTesting\TastyBoutique.UnitTesting.csproj", "{6B12C2A0-0EA2-4B10-A579-B940C651B092}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{3F78CADD-3698-4463-B434-173EA26321BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F78CADD-3698-4463-B434-173EA26321BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F78CADD-3698-4463-B434-173EA26321BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B12C2A0-0EA2-4B10-A579-B940C651B092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B12C2A0-0EA2-4B10-A579-B940C651B092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B12C2A0-0EA2-4B10-A579-B940C651B092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B12C2A0-0EA2-4B10-A579-B940C651B092}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{66FC72FC-9D8A-4047-A42E-C4862D51E970} = {3C194489-6F4C-401B-B6A2-98C99BCEFB79}
 		{3356B325-B241-4FBB-971A-BEF02A8C370C} = {291C9BD2-E935-4B32-8A4B-F2B75E560AE1}
 		{3F78CADD-3698-4463-B434-173EA26321BD} = {291C9BD2-E935-4B32-8A4B-F2B75E560AE1}
+		{6B12C2A0-0EA2-4B10-A579-B940C651B092} = {D2637113-6583-40A4-9384-A8777431AC55}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F1A447D8-0AEC-4B35-B3AE-BF563591306B}
