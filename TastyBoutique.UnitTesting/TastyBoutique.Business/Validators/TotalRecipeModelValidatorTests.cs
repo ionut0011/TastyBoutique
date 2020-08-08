@@ -137,7 +137,7 @@ namespace TastyBoutique.UnitTesting.TastyBoutique.Business.Validators
         }
 
         [Fact]
-        public void GivenTotalRecipeModel_WhenHavingTypeGreaterThan50Characters_ThenResultShouldBeValid()
+        public void GivenTotalRecipeModel_WhenHavingTypeGreaterThan50Characters_ThenResultShouldBeInvalid()
         {
             var model = TotalRecipeModelFactory.WithTypeGreaterThan50Characters();
             var validator = new TotalRecipeModelValidator();
@@ -162,7 +162,7 @@ namespace TastyBoutique.UnitTesting.TastyBoutique.Business.Validators
 
 
         [Fact]
-        public void GivenTotalRecipeModel_WhenHavingNullRecipeIngrediens_ThenResultShouldBeValid()
+        public void GivenTotalRecipeModel_WhenHavingNullRecipeIngrediens_ThenResultShouldBeInvalid()
         {
             var model = TotalRecipeModelFactory.WithRecipeIngredientsNull();
             var validator = new TotalRecipeModelValidator();
@@ -173,7 +173,7 @@ namespace TastyBoutique.UnitTesting.TastyBoutique.Business.Validators
         }
 
         [Fact]
-        public void GivenTotalRecipeModel_WhenHavingEmptyRecipeIngrediens_ThenResultShouldBeValid()
+        public void GivenTotalRecipeModel_WhenHavingEmptyRecipeIngrediens_ThenResultShouldBeInvalid()
         {
             var model = TotalRecipeModelFactory.WithRecipeIngredientsEmpty();
             var validator = new TotalRecipeModelValidator();
