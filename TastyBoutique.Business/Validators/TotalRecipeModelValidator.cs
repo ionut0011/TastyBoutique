@@ -19,11 +19,11 @@ namespace TastyBoutique.Business.Validators
                 .MaximumLength(50)
                 .NotEmpty();
 
-            RuleFor(model => model.Ingredients)
+            RuleFor(model => model.RecipesIngredients)
                 .NotNull()
                 .NotEmpty();
 
-            RuleFor(model => model.Filters)
+            RuleFor(model => model.RecipesFilters)
                 .NotEmpty();
 
             RuleFor(model => model.AverageReview)

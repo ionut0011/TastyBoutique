@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using TastyBoutique.Business.Models.Filter;
 using TastyBoutique.Business.Models.Ingredients;
@@ -22,8 +24,8 @@ namespace TastyBoutique.Business.Mapping
             CreateMap<Filters, FilterModel>();
 
             CreateMap<Persistance.Models.Recipes, TotalRecipeModel>()
-            .ForMember(dest => dest.Filters, opt => opt.MapFrom(src => src.RecipesFilters))
-            .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.RecipesIngredients));
+            .ForMember(dest => dest.RecipesFilters, opt => opt.MapFrom(src => src.RecipesFilters))
+            .ForMember(dest => dest.RecipesIngredients, opt => opt.MapFrom(src => src.RecipesIngredients.AsEnumerable()));
 
             CreateMap<SavedRecipes, SavedRecipeModel>();
             CreateMap<SavedRecipeModel, SavedRecipes>();

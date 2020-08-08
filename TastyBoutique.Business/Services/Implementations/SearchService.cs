@@ -55,8 +55,8 @@ namespace TastyBoutique.Business.Services.Implementations
             }
 
             var result = await _recipeRepo.GetRecipiesByQuery(idUser, ingredients, spec);
-            result.ToList().ForEach(c => c.Ingredients = c.RecipesIngredients.Select(x => x.Ingredient).ToList());
-            result.ToList().ForEach(c => c.Filters = c.RecipesFilters.Select(x => x.Filter).ToList());
+            //result.ToList().ForEach(c => c.Ingredients = c.RecipesIngredients.Select(x => x.Ingredient).ToList());
+            //result.ToList().ForEach(c => c.Filters = c.RecipesFilters.Select(x => x.Filter).ToList());
 
             return new PaginatedList<TotalRecipeModel>(
                 model.PageIndex,

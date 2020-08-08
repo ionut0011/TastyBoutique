@@ -45,12 +45,13 @@ namespace TastyBoutique.Business.Services.Implementations
             {
                 Guid idUser = Guid.Parse(tmp.Value);
                 entities = await _repository.Get(idUser);
-                entities.ToList().ForEach(c => c.Ingredients = c.RecipesIngredients.Select(x => x.Ingredient).ToList());
-                entities.ToList().ForEach(c => c.Filters = c.RecipesFilters.Select(x => x.Filter).ToList());
+                //entities.ToList().ForEach(c => c.Ingredients = c.RecipesIngredients.Select(x => x.Ingredient).ToList());
+                //entities.ToList().ForEach(c => c.Filters = c.RecipesFilters.Select(x => x.Filter).ToList());
             }
             else
                 entities = await _repository.GetAllPublic();
 
+            //var test = _mapper.Map<IList<FilterModel>>(entities[0].RecipesFilters);
             var recipes = _mapper.Map<IList<TotalRecipeModel>>(entities);
             return recipes;
         }
@@ -74,8 +75,8 @@ namespace TastyBoutique.Business.Services.Implementations
             else 
                 recipe.RecipesFilters.Add(new RecipesFilters(recipe, fil));
             
-            recipe.Ingredients = recipe.RecipesIngredients.Select(x => x.Ingredient).ToList();
-            recipe.Filters = recipe.RecipesFilters.Select(x => x.Filter).ToList();
+            //recipe.Ingredients = recipe.RecipesIngredients.Select(x => x.Ingredient).ToList();
+            //recipe.Filters = recipe.RecipesFilters.Select(x => x.Filter).ToList();
 
             await _repository.Add(recipe);
             await _repository.SaveChanges();
@@ -86,8 +87,8 @@ namespace TastyBoutique.Business.Services.Implementations
         public async Task<TotalRecipeModel> GetById(Guid id)
         {
             var entity = await _repository.GetById(id);
-            entity.Ingredients = entity.RecipesIngredients.Select(x => x.Ingredient).ToList();
-            entity.Filters = entity.RecipesFilters.Select(x => x.Filter).ToList();
+            //entity.Ingredients = entity.RecipesIngredients.Select(x => x.Ingredient).ToList();
+            //entity.Filters = entity.RecipesFilters.Select(x => x.Filter).ToList();
             var recipe = _mapper.Map<TotalRecipeModel>(entity);
             return recipe;
         }

@@ -14,7 +14,6 @@ namespace TastyBoutique.Persistance.Models
         {
             Name = name;
             RecipesFilters = new HashSet<RecipesFilters>();
-
         }
         public string Name { get; set; }
 

@@ -21,8 +21,8 @@ namespace TastyBoutique.Persistance.Models
             SavedRecipes = new List<SavedRecipes>();
             RecipesIngredients = new List<RecipesIngredients>();
             RecipesFilters = new List<RecipesFilters>();
-            Ingredients = new List<Ingredients>();
-            Filters = new List<Filters>();
+            //Ingredients = new List<Ingredients>();
+            //Filters = new List<Filters>();
         }
         public Guid IdUser { get; set; }
         public string Name { get; set; }
@@ -35,8 +35,8 @@ namespace TastyBoutique.Persistance.Models
         public int ReviewCount { get; set; }
         public string Type { get; set; }
 
-        public ICollection<Ingredients> Ingredients { get; set; }
-        public ICollection<Filters> Filters { get; set; }
+       // public ICollection<Ingredients> Ingredients { get; set; }
+       // public ICollection<Filters> Filters { get; set; }
         public ICollection<RecipeComment> RecipeComment { get; set; }
         public ICollection<SavedRecipes> SavedRecipes { get; set; }
 
