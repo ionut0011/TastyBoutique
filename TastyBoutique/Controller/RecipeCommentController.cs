@@ -41,7 +41,7 @@ namespace TastyBoutique.API.Controller
             return Ok(result);
         }
 
-        [HttpDelete("{commentId}")]
+        [HttpDelete("comments/{commentId}")]
         public async Task<IActionResult> Delete([FromRoute] Guid commentId)
         {
             await _commentsService.Delete(commentId);
