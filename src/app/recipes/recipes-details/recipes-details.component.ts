@@ -160,12 +160,13 @@ onImageChange(event) {
         //Getting details for the trip with the id found
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
 
-          console.log(data.filters);
+          console.log("DATA FILTERS" , data.filters);
           this.test2.setValue(data.filters[0].name);
+          console.log("DATA.FILTERS[O].name", data.filters[0].name)
 
           this.test3.setValue(data.type);
           this.formGroup.patchValue(data);
-          console.log(data);
+          console.log("DATA" , data);
         })
         this.formGroup.disable();
       });
@@ -217,7 +218,13 @@ onImageChange(event) {
      );
      this.router.navigate(['list']);
     } else {
-      this.service.patch(finalRecipeModel).subscribe();
+      this.service.patch(finalRecipeModel).subscribe(()=>{
+        this.toastr.success("Updated")
+      },
+        (error)=>{
+          this.toastr.error("Something went wrong.")
+        }
+      );
       this.router.navigate(['list']);
     }
     this.photos.push(this.imageUrl);

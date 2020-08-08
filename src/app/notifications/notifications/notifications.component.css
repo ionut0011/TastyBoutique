@@ -13,6 +13,7 @@ h1 {
 .notifications-container ul {
   width: 40%;
   padding: 20px;
+  margin-top : 20px;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0px 0px 8px rgba(34, 37, 44, 0.08);

@@ -1,9 +1,13 @@
 <app-navbar></app-navbar>
 
 <div class="notifications-container">
-
   <ul>
-    <li>Notification 1</li>
-    <li>Notification 2</li>
+    <h1>Noutati</h1>
+    <div *ngFor="let recipe of notificationList">
+         <li class="list-group-item list-group-item-action" (click)="patchNotification(recipe.id)">{{recipe.name}} &nbsp;<span class="badge badge-secondary">New</span></li>
+    </div>
   </ul>
+
 </div>
+
+
