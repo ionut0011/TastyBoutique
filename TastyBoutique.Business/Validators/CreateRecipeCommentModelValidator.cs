@@ -14,7 +14,9 @@ namespace TastyBoutique.Business.Validators
                 .MinimumLength(5);
 
             RuleFor(model => model.Review)
-                .GreaterThanOrEqualTo(0);
+                .GreaterThanOrEqualTo(0)
+                .LessThanOrEqualTo(5);
+
         }
     }
 }
