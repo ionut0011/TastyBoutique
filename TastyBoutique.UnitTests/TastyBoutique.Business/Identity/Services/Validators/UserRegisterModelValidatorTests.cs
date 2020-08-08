@@ -78,9 +78,10 @@ namespace TastyBoutique.UnitTests.TastyBoutique.Business.Identity.Services.Valid
             result.Errors.Count.Should().Be(0);
 
         }
+        
 
         [Fact]
-        public void GiverUserRegister_WhenHavingAUsernameNull_ThenResultShouldBeInvalid()
+        public void GivenUserRegister_WhenHavingAUsernameNull_ThenResultShouldBeInvalid()
         {
             var model = UserRegisterModelFactory.WithUsernameNull();
             var validator = new UserRegisterModelValidator();
