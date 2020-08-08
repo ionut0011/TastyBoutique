@@ -1,7 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TastyBoutique.Business.Models.Recipe;
 
 namespace TastyBoutique.Business.Validators
