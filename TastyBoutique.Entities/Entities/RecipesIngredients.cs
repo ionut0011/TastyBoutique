@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TastyBoutique.Persistance.Models
 {
-    public partial class RecipesIngredients
+    public class RecipesIngredients
     {
         public RecipesIngredients()
         {
