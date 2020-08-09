@@ -18,7 +18,7 @@ namespace TastyBoutique.AutomationTests.PageObjects.Login
 
         #region Login section
         [FindsBy(How = How.Name, Using = "email")]
-        public IWebElement TxtUsername { get; set; }
+        public IWebElement TxtEmail { get; set; }
 
         [FindsBy(How = How.Name, Using = "password")]
         public IWebElement TxtPassword { get; set; }
@@ -26,14 +26,17 @@ namespace TastyBoutique.AutomationTests.PageObjects.Login
         [FindsBy(How = How.CssSelector, Using = "[type='button']")]
         public IWebElement BtnLogin { get; set; }
 
+        [FindsBy(How = How.ClassName, Using = "login-label")]
+        public IWebElement LoginInterface { get; set; }
+
         [FindsBy(How = How.CssSelector, Using = ".toast-message")]
         public IWebElement ErrInvalidCred { get; set; }
         #endregion
 
 
-        public void Login(string username, string password)
+        public void Login(string email, string password)
         {
-            TxtUsername.SendKeys(username);
+            TxtEmail.SendKeys(email);
             TxtPassword.SendKeys(password);
             BtnLogin.Click();
         }

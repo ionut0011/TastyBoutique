@@ -17,7 +17,7 @@ namespace TastyBoutique.AutomationTests.PageObjects.Dashboard
 
         #region Dashboard section
         [FindsBy(How = How.ClassName, Using = "headerLogo")]
-        public IWebElement AdminMenu { get; set; }
+        public IWebElement HeaderLogo { get; set; }
 
         #endregion
 

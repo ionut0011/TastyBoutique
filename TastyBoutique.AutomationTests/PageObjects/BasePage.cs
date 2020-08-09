@@ -11,7 +11,7 @@ namespace TastyBoutique.AutomationTests.PageObjects
         public IWebDriver driver;
         public void WaitForPageToLoad(string selector)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
             wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(selector)));
 
 
