@@ -23,7 +23,7 @@ namespace TastyBoutique.AutomationTests.Tests
         }
 
         [Fact]
-        public void RegisterAndLogin_With_Valid_Credentials()
+        public void Register_With_Valid_Credentials()
         {
             registerPage.Register("test1991@yahoo.com","TestAnonim23","TesterDeTeste","14");
             loginPage = new LoginPage(Driver);
