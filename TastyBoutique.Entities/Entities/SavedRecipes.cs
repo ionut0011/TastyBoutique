@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TastyBoutique.Persistance.Models
 {
-    public partial class SavedRecipes : Entity
+    public class SavedRecipes : Entity
     {
         public Guid IdRecipe { get; set; }
         public Guid IdUser { get; set; }

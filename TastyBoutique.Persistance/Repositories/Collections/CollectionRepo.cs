@@ -20,7 +20,7 @@ namespace TastyBoutique.Persistance
                 .Include(r => r.RecipesIngredients)
                 .ThenInclude(r => r.Ingredient)
                 .ToListAsync();
-
+        
         public async Task<IList<Models.Recipes>> GetAllNotificationsByIdUser(Guid idUser)
             =>  await context.SavedRecipes
                 .Where(recipe=>recipe.NeedUpdate && recipe.IdUser == idUser)

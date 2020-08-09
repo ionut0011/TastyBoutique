@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TastyBoutique.Persistance.Models
 {
-    public partial class Filters : Entity
+    public class Filters : Entity
     {
         public Filters()
         {

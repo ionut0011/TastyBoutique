@@ -94,7 +94,6 @@ namespace TastyBoutique.Persistance.Models
 
                 entity.Property(e => e.Description).HasMaxLength(300);
 
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -112,7 +111,7 @@ namespace TastyBoutique.Persistance.Models
                 entity.HasOne<Filters>(d => d.Filter)
                     .WithMany(d => d.RecipesFilters)
                     .HasForeignKey(d => d.FilterId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_RecipesFilters_Filters");
 
                 entity.HasOne<Recipes>(d => d.Recipe)
@@ -133,7 +132,7 @@ namespace TastyBoutique.Persistance.Models
                 entity.HasOne<Ingredients>(d => d.Ingredient)
                     .WithMany(d => d.RecipesIngredients)
                     .HasForeignKey(d => d.IngredientId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_RecipesIngredients_Ingredients");
 
                 entity.HasOne<Recipes>(d => d.Recipe)

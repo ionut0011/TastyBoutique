@@ -2,7 +2,7 @@
 
 namespace TastyBoutique.Persistance.Models
 {
-    public partial class RecipesFilters 
+    public class RecipesFilters 
     {
         public RecipesFilters()
         {
