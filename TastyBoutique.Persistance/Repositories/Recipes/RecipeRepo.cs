@@ -33,6 +33,7 @@ namespace TastyBoutique.Persistance.Recipes
 
         public async void DeleteComment(Guid commentId)
         {
+            //var entity = ;
             this.context.RecipeComments.Remove(await this.context.RecipeComments
                     .Where(x => x.Id == commentId).FirstOrDefaultAsync());
         }

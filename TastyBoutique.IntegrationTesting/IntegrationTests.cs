@@ -102,5 +102,25 @@ namespace TastyBoutique.IntegrationTesting
 
             return Guid.Parse(Regex.Match(str, guidPattern).Value);
         }
+
+        protected async Task<Recipes> AddRecipe()
+        {
+            var image = new byte[] { 1, 0, 0, 1, 8 };
+            var recipe = new Recipes("Cartofi copti", "meal", true, "Foarte buni", image);
+            recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients("cartofi")));
+            recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients("ulei")));
+            recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients("morcov")));
+            recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients("ceapa")));
+            recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters("vegan")));
+            recipe.IdUser = AuthenticatedUserId;
+
+            await ExecuteDatabaseAction(async (tastyBoutiqueContext) =>
+            {
+                await tastyBoutiqueContext.Recipes.AddAsync(recipe);
+                await tastyBoutiqueContext.SaveChangesAsync();
+            });
+
+            return recipe;
+        }
     }
 }

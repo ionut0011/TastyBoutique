@@ -36,8 +36,8 @@ namespace TastyBoutique.API.Controller
             {
                 return BadRequest("User exists or the password doesn't meet the requirements");
             }
-
-            return Created(result.IdUser.ToString(), null);
+            var temp = result.Id.ToString();
+            return Created(result.Id.ToString(), null);
         }
 
         [HttpPost("recover")]

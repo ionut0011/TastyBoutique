@@ -18,15 +18,8 @@ namespace TastyBoutique.IntegrationTesting
 {
     public class RecipeControllerIntegrationTests : IntegrationTests
     {
-        private Recipes recipe;
-
-        public RecipeControllerIntegrationTests()
-        {
-           
-        }
-
         [Fact]
-        public async Task Add_Recipe()
+        public async Task Post_Recipe()
         {
             //Arange
             var recipe = new UpsertRecipeModel
@@ -64,7 +57,7 @@ namespace TastyBoutique.IntegrationTesting
         public async Task Get_Recipes()
         {
             //Arange
-
+            var addedRecipe = await AddRecipe();
             //Act
             var response = await HttpClient.GetAsync($"api/v1/recipe");
 
@@ -130,10 +123,10 @@ namespace TastyBoutique.IntegrationTesting
         public async Task Delete_Recipe()
         {
             //Arrange
-            await AddRecipe();
+            var addedRecipe = await AddRecipe();
 
             //Act
-            var response = await HttpClient.DeleteAsync($"api/v1/recipe/{this.recipe.Id}");
+            var response = await HttpClient.DeleteAsync($"api/v1/recipe/{addedRecipe.Id}");
 
             //Assert
             response.IsSuccessStatusCode.Should().BeTrue();
@@ -145,7 +138,7 @@ namespace TastyBoutique.IntegrationTesting
                     .ThenInclude(r => r.Filter)
                     .Include(r => r.RecipesIngredients)
                     .ThenInclude(r => r.Ingredient)
-                    .FirstOrDefaultAsync(r => r.Id == this.recipe.Id);
+                    .FirstOrDefaultAsync(r => r.Id == addedRecipe.Id);
             });
 
             recipe.Should().BeNull();
@@ -155,10 +148,10 @@ namespace TastyBoutique.IntegrationTesting
         public async Task Get_Recipe_By_Id()
         {
             //Arange
-            await AddRecipe();
+            var addedRecipe = await AddRecipe();
 
             //Act
-            var response = await HttpClient.GetAsync($"api/v1/recipe/{this.recipe.Id}");
+            var response = await HttpClient.GetAsync($"api/v1/recipe/{addedRecipe.Id}");
 
             // Assert
             response.IsSuccessStatusCode.Should().BeTrue();
@@ -170,17 +163,17 @@ namespace TastyBoutique.IntegrationTesting
         public async Task Get_Recipes_Ingredients()
         {
             //Arrange
-            await AddRecipe();
+            var addedRecipe = await AddRecipe();
 
             //Act
-            var response = await HttpClient.GetAsync($"api/v1/recipe/{this.recipe.Id}/ingredients");
+            var response = await HttpClient.GetAsync($"api/v1/recipe/{addedRecipe.Id}/ingredients");
 
             // Assert
             response.IsSuccessStatusCode.Should().BeTrue();
             var ingredients = await response.Content.ReadAsAsync<IList<IngredientModel>>();
             ingredients.Should().NotBeNull();
-            ingredients.Count.Should().Be(this.recipe.RecipesIngredients.Count());
-            ingredients.Select(i => i.Name).All(name => recipe.RecipesIngredients.Select(r => r.Ingredient.Name).Contains(name))
+            ingredients.Count.Should().Be(addedRecipe.RecipesIngredients.Count());
+            ingredients.Select(i => i.Name).All(name => addedRecipe.RecipesIngredients.Select(r => r.Ingredient.Name).Contains(name))
                 .Should().BeTrue();
         }
 
@@ -188,36 +181,19 @@ namespace TastyBoutique.IntegrationTesting
         public async Task Get_Recipes_Filters()
         {
             //Arange
-            await AddRecipe();
+            var addedRecipe = await AddRecipe();
 
             //Act
-            var response = await HttpClient.GetAsync($"api/v1/recipe/{this.recipe.Id}/filters");
+            var response = await HttpClient.GetAsync($"api/v1/recipe/{addedRecipe.Id}/filters");
 
             // Assert
             response.IsSuccessStatusCode.Should().BeTrue();
             var filters = await response.Content.ReadAsAsync<IList<FilterModel>>();
             filters.Should().NotBeNull();
-            filters.Count.Should().Be(this.recipe.RecipesFilters.Count());
-            filters.Select(f => f.Name).All(name => recipe.RecipesFilters.Select(r => r.Filter.Name).Contains(name))
+            filters.Count.Should().Be(addedRecipe.RecipesFilters.Count());
+            filters.Select(f => f.Name).All(name => addedRecipe.RecipesFilters.Select(r => r.Filter.Name).Contains(name))
                 .Should().BeTrue();
         }
 
-        private async Task AddRecipe()
-        {
-            var image = new byte[] { 1, 0, 0, 1, 8 };
-            recipe = new Recipes("Cartofi copti", "meal", true, "Foarte buni", image);
-            recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients("cartofi")));
-            recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients("ulei")));
-            recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients("morcov")));
-            recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients("ceapa")));
-            recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters("vegan")));
-            recipe.IdUser = AuthenticatedUserId;
-
-            await ExecuteDatabaseAction(async (tastyBoutiqueContext) =>
-            {
-                await tastyBoutiqueContext.Recipes.AddAsync(recipe);
-                await tastyBoutiqueContext.SaveChangesAsync();
-            });
-        }
     }
 }
