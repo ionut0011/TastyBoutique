@@ -16,8 +16,9 @@ namespace TastyBoutique.AutomationTests.PageObjects.Dashboard
         }
 
         #region Dashboard section
-        [FindsBy(How = How.ClassName, Using = "headerLogo")]
-        public IWebElement HeaderLogo { get; set; }
+        
+        [FindsBy(How = How.CssSelector, Using = ".toast-message")]
+        public IWebElement LabelLoginSuccessfull { get; set; }
 
         #endregion
 

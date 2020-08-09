@@ -24,8 +24,8 @@ namespace TastyBoutique.AutomationTests.Tests
         {
             loginPage.Login("chelaru.george1998@yahoo.com", "Serioux22");
             dashboardPage = new DashboardPage(Driver);
-            dashboardPage.WaitForPageToLoad("[class='headerLogo']");
-            Assert.True(dashboardPage.HeaderLogo.Displayed);
+            dashboardPage.WaitForPageToLoad(".toast-message");
+            Assert.True(dashboardPage.LabelLoginSuccessfull.Displayed);
         }
 
         [Fact]
