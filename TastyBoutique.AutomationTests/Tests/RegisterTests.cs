@@ -13,7 +13,8 @@ namespace TastyBoutique.AutomationTests.Tests
     {
         public LoginPage loginPage;
         public RegisterPage registerPage;
-        
+        public DashboardPage dashboardPage;
+
         public RegisterTests() : base()
         {
             Driver.Navigate()
@@ -22,12 +23,15 @@ namespace TastyBoutique.AutomationTests.Tests
         }
 
         [Fact]
-        public void Register_With_Valid_Credentials()
+        public void RegisterAndLogin_With_Valid_Credentials()
         {
             registerPage.Register("test1991@yahoo.com","TestAnonim23","TesterDeTeste","14");
             loginPage = new LoginPage(Driver);
             loginPage.WaitForPageToLoad("[class='login-label']");
-            Assert.True(loginPage.LoginInterface.Displayed);
+            loginPage.Login("test1991@yahoo.com", "TestAnonim23");
+            dashboardPage = new DashboardPage(Driver);
+            dashboardPage.WaitForPageToLoad(".toast-message");
+            Assert.True(dashboardPage.LabelLoginSuccessfull.Displayed);
         }
 
         [Fact]
