@@ -51,7 +51,14 @@ namespace TastyBoutique.Business.Services.Implementations
             {
                 ingredients = new List<Ingredients>();
                 foreach (var ingredient in ingredientsList)
-                    ingredients.Add(await _ingredientsRepo.GetByName(ingredient));
+                {
+                    var temp = await _ingredientsRepo.GetByName(ingredient);
+                    if (temp != null)
+                        ingredients.Add(temp);
+                    else
+                        return new PaginatedList<TotalRecipeModel>(1, 0, 0, new List<TotalRecipeModel>());
+                }
+                   
             }
 
             var result = await _recipeRepo.GetRecipiesByQuery(idUser, ingredients, spec);
