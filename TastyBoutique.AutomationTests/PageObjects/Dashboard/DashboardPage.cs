@@ -39,10 +39,6 @@ namespace TastyBoutique.AutomationTests.PageObjects.Dashboard
             LabelRecipies.Click();
         }
 
-        public void Logout()
-        {
-            BtnLogout.Click();
-        }
 
         #endregion
 
