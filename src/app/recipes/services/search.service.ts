@@ -21,9 +21,11 @@ export class SearchService {
 
   constructor(private readonly http: HttpClient) { }
 
-  searchIngredients(ingredientsList:string[]): Observable<RecipesGetModel[]> {
-    return this.http.get<RecipesGetModel[]>(`${this.endpoint}`,this.httpOptions);
+  searchIngredients(ingredientsList:string[]): Observable<any> {
+    return this.http.get<RecipesGetModel[]>(`${this.endpoint}`,{headers:this.httpOptions.headers, params: {'query' : ingredientsList}});
   }
+
+  s
   searchFilters(filter:string): Observable<RecipesGetModel[]> {
     return this.http.get<RecipesGetModel[]>(`${this.endpoint}/${filter}`,this.httpOptions);
   }

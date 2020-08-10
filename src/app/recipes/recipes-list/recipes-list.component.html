@@ -3,8 +3,17 @@
 <div class="container">
   <div>
     <label>Ingredients: </label>
-    <input type="text" placeholder="Add ingredients">
-    <button (click)="SearchIngredients()">Search</button>
+
+
+    <div class="container">
+      <div class="input-group d-flex justify-content-center">
+            <span class="input-group-btn">
+              <input type="text" [formControl]='ingredientsList' >
+              <button class="btn btn-search" (click)="SearchIngredients()"type="button"><i class="fa fa-search fa-fw"></i> Search</button>
+            </span>
+        </div>
+      </div>
+
 
     <div class="container">
       <div class="input-group d-flex justify-content-center">

@@ -8,7 +8,7 @@ import {CommentModel} from '../models/comment.model'
 import {RecipesModel} from '../../recipes/models/recipes.model'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {ToastrService} from 'ngx-toastr'
-
+import { FilterModel,IngredientModel } from '../models';
 import { FiltersModel } from '../models';
 
 import { CollectionsService } from '../services/collections.service';
@@ -27,13 +27,13 @@ export class RecipesListComponent implements OnInit {
   public recipeList: RecipesGetModel[];
   filterssList:FiltersModel;
   public collection: CollectionsModel={};
-  public recipeeList: RecipesGetModel[];
   public addedToCollection : boolean = true;
   public deletedRecipe : boolean = false;
   private imageList: any = [];
+
   filter:FormControl=new FormControl();
   ingredientsList:FormControl=new FormControl([]);
-
+  ingredientsList2:FormControl=new FormControl([]);
   public commentList: CommentModel;
   public form : FormGroup;
 
@@ -51,14 +51,10 @@ export class RecipesListComponent implements OnInit {
   public ngOnInit(): void {
 
     this.service.getAllFilters().subscribe((data: FiltersModel) => {
-      this.filterssList = data;});
+      this.filterssList = data;
+    });
 
     this.service.getAll().subscribe((data: RecipesGetModel[]) => {
-      this.recipeList = data;
-      console.log("RECIPELIST", this.recipeList);
-      console.log(this.recipeeList);
-
-
       this.recipeList = data;
       this.recipeList.forEach(element => {
         if(element.image.length>5){
@@ -66,9 +62,9 @@ export class RecipesListComponent implements OnInit {
         element.image = link;
         }
       });
-      console.log(data);
+
       this.service.saveRecipes(this.recipeList);
-      console.log("commentList", this.commentList)
+
     });
   }
 
@@ -77,8 +73,7 @@ export class RecipesListComponent implements OnInit {
   }
 
   public DeleteRecipe(id:string): void{
-    console.log(this.recipeList);
-    console.log(id);
+
           this.service.deleteRecipe(id).subscribe(data => {
             this.deletedRecipe = true;
             this.toastr.success("Deleted");
@@ -91,7 +86,7 @@ export class RecipesListComponent implements OnInit {
   postCollections(id: string): void {
     this.collection.idRecipe=id;
     this.serviceCollections.postCollections(this.collection).subscribe(data => {
-      console.log(data);
+
       this.addedToCollection = true;
       this.toastr.success('Added to favorite list.')
 
@@ -112,30 +107,37 @@ export class RecipesListComponent implements OnInit {
   {
     this.serviceSearch.searchFilters(this.filter.value).subscribe(data => {
       this.recipeList = data;
-      console.log(data);
+
       this.recipeList.forEach(element => {
         if(element.image.length>5){
         let link:any = 'data:image/png;base64,'+element.image;
         element.image = link;
         }
       });
-      console.log(data);
+
       this.service.saveRecipes(this.recipeList);
     });
   }
 
   SearchIngredients():void
   {
-    this.serviceSearch.searchIngredients(this.ingredientsList.value).subscribe(data => {
-      this.recipeList = data;
-      console.log(data);
+    let splitted= this.ingredientsList.value.split(",");
+      splitted.forEach(element => {
+        this.ingredientsList2.value.push(element);
+      });
+      console.log(this.ingredientsList2);
+
+    this.serviceSearch.searchIngredients(splitted).subscribe(data=> {
+      this.recipeList =data;
+
+      console.log(this.recipeList);
       this.recipeList.forEach(element => {
         if(element.image.length>5){
         let link:any = 'data:image/png;base64,'+element.image;
         element.image = link;
         }
       });
-      console.log(data);
+
       this.service.saveRecipes(this.recipeList);
     });
 

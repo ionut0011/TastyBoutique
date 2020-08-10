@@ -17,4 +17,9 @@ export class NavbarComponent implements OnInit {
     this.router.navigate([page]);
   }
 
+  public goToPageList(page: string): void {
+    this.router.navigate([page]);
+    window.location.reload();
+  }
+
 }

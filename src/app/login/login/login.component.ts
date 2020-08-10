@@ -49,11 +49,11 @@ export class LoginComponent  {
         sessionStorage.setItem('email', JSON.stringify(logData.email));
         this.userService.username.next(logData.username);
         let decoded = JWT(logData.token);
-        sessionStorage.setItem('idUser', decoded['idUse']);
+        sessionStorage.setItem('idUser', decoded['idUser']);
         this.router.navigate(['dashboard']);
         this.loggedIn = true;
 
-        setTimeout(() => this.userService.username.next(logData.email.substring(1,logData.email.length-1).split('@')[0]), 0);
+        setTimeout(() => this.userService.username.next(logData.email.substring(0,logData.email.length-1).split('@')[0]), 0);
         if(this.loggedIn)
         {
           this.toastr.success("Successfully logged in");
