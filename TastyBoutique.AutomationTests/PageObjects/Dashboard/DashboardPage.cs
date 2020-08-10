@@ -20,6 +20,14 @@ namespace TastyBoutique.AutomationTests.PageObjects.Dashboard
         [FindsBy(How = How.CssSelector, Using = ".toast-message")]
         public IWebElement LabelLoginSuccessfull { get; set; }
 
+        [FindsBy(How=How.XPath,Using= "//app-root/app-dashboard//app-tile[@label='Create Recipe']//div[@class='header']//mat-icon[@role='img']")]
+        public IWebElement LabelCreateRecipe { get; set; }
+
+        public void ToCreateRecipe()
+        {
+            LabelCreateRecipe.Click();
+        }
+
         #endregion
 
 

@@ -17,20 +17,17 @@ namespace TastyBoutique.AutomationTests.Tests
         public RecoverTests() : base()
         {
             Driver.Navigate()
-                .GoToUrl("http://www.tastyboutique.tk/?fbclid=IwAR2lyNONegXkpDwizPAWYMh0zwiEDG9Ybtje6LZ_hlWjPx-gVYuSFJKe5P8#/recover");
+                .GoToUrl("http://www.tastyboutique.tk/#/recover");
             recoverPage = new RecoverPage(Driver);
         }
 
         [Fact]
         public void Recover_With_Valid_Credentials()
         {
-            recoverPage.Recover("chelaru.george1998@yahoo.com","Serioux33");
+            recoverPage.Recover("testing1234@yahoo.com","Serioux44");
             loginPage = new LoginPage(Driver);
-            loginPage.WaitForPageToLoad(".toast-message");
-            loginPage.Login("chelaru.george1998@yahoo.com", "Serioux33");
-            dashboardPage = new DashboardPage(Driver);
-            dashboardPage.WaitForPageToLoad(".toast-message");
-            Assert.True(dashboardPage.LabelLoginSuccessfull.Displayed);
+            loginPage.WaitForPageToLoad(".login-label");
+            Assert.True(loginPage.LoginInterface.Displayed);
         }
 
         [Fact]

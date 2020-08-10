@@ -15,7 +15,7 @@ namespace TastyBoutique.AutomationTests.Tests
         public LoginTests() : base()
         {
             Driver.Navigate()
-                .GoToUrl("http://www.tastyboutique.tk/?fbclid=IwAR2lyNONegXkpDwizPAWYMh0zwiEDG9Ybtje6LZ_hlWjPx-gVYuSFJKe5P8#/login");
+                .GoToUrl("http://www.tastyboutique.tk/#/login");
             loginPage = new LoginPage(Driver);
         }
 
