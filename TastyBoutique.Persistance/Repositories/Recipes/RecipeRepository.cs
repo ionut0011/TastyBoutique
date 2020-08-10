@@ -22,7 +22,7 @@ namespace TastyBoutique.Persistance.Recipes
 
         public async Task<IList<Models.Recipes>> Get(Guid idUser)
             => await this.context.Recipes
-            .Where(recipe => recipe.Access || recipe.IdUser == idUser)
+            .Where(recipe => !recipe.Access || recipe.IdUser == idUser)
             .Include(r => r.Filters)
             .ThenInclude(r => r.Filter)
             .Include(r => r.Ingredients)
@@ -36,13 +36,12 @@ namespace TastyBoutique.Persistance.Recipes
         public async void DeleteComment(Guid commentId)
         {
             this.context.RecipeComments.Remove(await this.context.RecipeComments.Where(x => x.Id == commentId).FirstAsync());
-            // this.context.RecipeComments.Remove(await this.context.RecipeComments
-            //    .Where(x => x.Id == commentId).FirstOrDefaultAsync());
+            
         }
 
         public async Task<IList<Models.Recipes>> GetAllPublic()
             => await this.context.Recipes.
-            Where(recipe => recipe.Access)
+            Where(recipe => !recipe.Access)
             .Include(r => r.Filters)
             .ThenInclude(r => r.Filter)
             .Include(r => r.Ingredients)
