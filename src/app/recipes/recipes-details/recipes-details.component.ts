@@ -160,11 +160,10 @@ onImageChange(event) {
         //Getting details for the trip with the id found
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
 
-          console.log("DATA FILTERS" , data.filters);
           this.test2.setValue(data.filters[0].name);
-          console.log("DATA.FILTERS[O].name", data.filters[0].name)
-
+          this.filter.setValue(data.filters[0].name);
           this.test3.setValue(data.type);
+          //this.ingredientsList.patchValue(this.test);
           this.formGroup.patchValue(data);
           console.log("DATA" , data);
         })
@@ -305,8 +304,11 @@ public deleteComment(recipeId: string, commentId :string) :void{
 
   additems():void
   {
-    this.ingredientsList.value.push(this.test.value);
-    this.test.setValue('');
+    let splitted= this.test.value.split(",");
+      splitted.forEach(element => {
+        this.ingredientsList.value.push(element);
+      });
+      console.log(this.ingredientsList);
 
   }
 
@@ -314,7 +316,6 @@ public deleteComment(recipeId: string, commentId :string) :void{
 
 
     this.filter.setValue(this.test2.value);
-
     console.log(this.filter);
    }
 

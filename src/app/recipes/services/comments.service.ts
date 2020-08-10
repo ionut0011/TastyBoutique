@@ -15,7 +15,7 @@ export class CommentsService {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
 
-      'Authorization': `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`
+      'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('userToken'))}`
     })
 
   };

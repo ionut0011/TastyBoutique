@@ -25,7 +25,7 @@ export class HeaderComponent{
 
     public ngOnInit(): void {
 
-      let user = localStorage.getItem('email');
+      let user = sessionStorage.getItem('email');
       if(user!=null)
       {
         setTimeout(() => this.userService.username.next(user.substring(1,user.length-1).split('@')[0]), 0);
@@ -35,9 +35,9 @@ export class HeaderComponent{
   public logout(): void {
 
     this.router.navigate(['login']);
-    localStorage.removeItem('userToken');
-    this.username = localStorage.getItem('email');
-    localStorage.removeItem('email');
+    sessionStorage.removeItem('userToken');
+    this.username = sessionStorage.getItem('email');
+    sessionStorage.removeItem('email');
 
   }
 

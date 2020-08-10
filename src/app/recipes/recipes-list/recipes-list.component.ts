@@ -32,7 +32,7 @@ export class RecipesListComponent implements OnInit {
   public deletedRecipe : boolean = false;
   private imageList: any = [];
   filter:FormControl=new FormControl();
-
+  ingredientsList:FormControl=new FormControl([]);
 
   public commentList: CommentModel;
   public form : FormGroup;
@@ -126,9 +126,18 @@ export class RecipesListComponent implements OnInit {
 
   SearchIngredients():void
   {
-    this.serviceSearch.searchIngredients(this.filter.value).subscribe(data => {
+    this.serviceSearch.searchIngredients(this.ingredientsList.value).subscribe(data => {
       this.recipeList = data;
-      console.log(data);});
+      console.log(data);
+      this.recipeList.forEach(element => {
+        if(element.image.length>5){
+        let link:any = 'data:image/png;base64,'+element.image;
+        element.image = link;
+        }
+      });
+      console.log(data);
+      this.service.saveRecipes(this.recipeList);
+    });
 
   }
 

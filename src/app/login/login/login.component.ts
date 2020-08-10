@@ -45,13 +45,15 @@ export class LoginComponent  {
 
     this.authentificationService.login(data).subscribe(
       (logData:any) => {
-        localStorage.setItem('userToken', JSON.stringify(logData.token));
-        localStorage.setItem('email', JSON.stringify(logData.email));
+        sessionStorage.setItem('userToken', JSON.stringify(logData.token));
+        sessionStorage.setItem('email', JSON.stringify(logData.email));
         this.userService.username.next(logData.username);
         let decoded = JWT(logData.token);
-        localStorage.setItem('idUser', decoded['idUse']);
+        sessionStorage.setItem('idUser', decoded['idUse']);
         this.router.navigate(['dashboard']);
         this.loggedIn = true;
+
+        setTimeout(() => this.userService.username.next(logData.email.substring(1,logData.email.length-1).split('@')[0]), 0);
         if(this.loggedIn)
         {
           this.toastr.success("Successfully logged in");
@@ -77,6 +79,10 @@ export class LoginComponent  {
   public goToPage(page: string): void {
     this.router.navigate([page]);
   }
+
+  public ngOnInit(): void {
+    sessionStorage.clear();
+   }
 
 
 }
