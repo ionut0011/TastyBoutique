@@ -24,8 +24,8 @@ namespace TastyBoutique.Business.Mapping
             CreateMap<Filters, FilterModel>();
 
             CreateMap<Persistance.Models.Recipes, TotalRecipeModel>()
-            .ForMember(dest => dest.RecipesFilters, opt => opt.MapFrom(src => src.RecipesFilters))
-            .ForMember(dest => dest.RecipesIngredients, opt => opt.MapFrom(src => src.RecipesIngredients.AsEnumerable()));
+            .ForMember(dest => dest.Filters, opt => opt.MapFrom(src => src.Filters))
+            .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.Ingredients.AsEnumerable()));
 
             CreateMap<SavedRecipes, SavedRecipeModel>();
             CreateMap<SavedRecipeModel, SavedRecipes>();
