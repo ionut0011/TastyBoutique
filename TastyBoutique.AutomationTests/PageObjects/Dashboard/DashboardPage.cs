@@ -23,9 +23,12 @@ namespace TastyBoutique.AutomationTests.PageObjects.Dashboard
         [FindsBy(How=How.XPath,Using= "//app-root/app-dashboard//app-tile[@label='Create Recipe']//div[@class='header']//mat-icon[@role='img']")]
         public IWebElement LabelCreateRecipe { get; set; }
 
-
+        
         [FindsBy(How = How.XPath, Using = "//app-root/app-dashboard[@class='ng-star-inserted']//app-tile[@label='Recipes']//div[@class='header']//mat-icon[@role='img']")]
         public IWebElement LabelRecipies { get; set; }
+
+
+
         public void ToCreateRecipe()
         {
             LabelCreateRecipe.Click();
@@ -34,6 +37,11 @@ namespace TastyBoutique.AutomationTests.PageObjects.Dashboard
         public void ToSeeRecipies()
         {
             LabelRecipies.Click();
+        }
+
+        public void Logout()
+        {
+            BtnLogout.Click();
         }
 
         #endregion

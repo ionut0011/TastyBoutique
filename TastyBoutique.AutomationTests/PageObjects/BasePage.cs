@@ -14,7 +14,6 @@ namespace TastyBoutique.AutomationTests.PageObjects
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
             wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(selector)));
 
-
         }
     }
 }

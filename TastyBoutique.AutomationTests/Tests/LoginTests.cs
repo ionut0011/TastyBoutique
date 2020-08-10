@@ -35,6 +35,7 @@ namespace TastyBoutique.AutomationTests.Tests
             loginPage.WaitForPageToLoad(".toast-message");
             Assert.Contains("Wrong email or password", loginPage.ErrInvalidCred.Text);
         }
+
         public void Dispose()
         {
             CloseBrowser();
