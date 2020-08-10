@@ -107,11 +107,11 @@ namespace TastyBoutique.IntegrationTesting
         {
             var image = new byte[] { 1, 0, 0, 1, 8 };
             var recipe = new Recipes("Cartofi copti", "meal", true, "Foarte buni", image);
-            recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients("cartofi")));
-            recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients("ulei")));
-            recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients("morcov")));
-            recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients("ceapa")));
-            recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters("vegan")));
+            recipe.Ingredients.Add(new RecipesIngredients(recipe, new Ingredients("cartofi")));
+            recipe.Ingredients.Add(new RecipesIngredients(recipe, new Ingredients("ulei")));
+            recipe.Ingredients.Add(new RecipesIngredients(recipe, new Ingredients("morcov")));
+            recipe.Ingredients.Add(new RecipesIngredients(recipe, new Ingredients("ceapa")));
+            recipe.Filters.Add(new RecipesFilters(recipe, new Filters("vegan")));
             recipe.IdUser = AuthenticatedUserId;
 
             await ExecuteDatabaseAction(async (tastyBoutiqueContext) =>

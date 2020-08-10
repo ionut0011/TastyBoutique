@@ -64,16 +64,16 @@ namespace TastyBoutique.Business.Services.Implementations
             {
                 var ing = await _ingredients.GetByName(ingredient);
                 if ( ing== null)
-                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients(ingredient)));
+                    recipe.Ingredients.Add(new RecipesIngredients(recipe, new Ingredients(ingredient)));
                 else
-                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe,ing));
+                    recipe.Ingredients.Add(new RecipesIngredients(recipe,ing));
             }
             
             var fil = await _filters.GetByName(model.Filter);
             if (fil == null) 
-                recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters(model.Filter)));
+                recipe.Filters.Add(new RecipesFilters(recipe, new Filters(model.Filter)));
             else 
-                recipe.RecipesFilters.Add(new RecipesFilters(recipe, fil));
+                recipe.Filters.Add(new RecipesFilters(recipe, fil));
             
             //recipe.Ingredients = recipe.RecipesIngredients.Select(x => x.Ingredient).ToList();
             //recipe.Filters = recipe.RecipesFilters.Select(x => x.Filter).ToList();
@@ -96,8 +96,8 @@ namespace TastyBoutique.Business.Services.Implementations
         public async Task Update(Guid id, UpsertRecipeModel model)
         {
             var recipe = await _repository.GetById(id);
-            recipe.RecipesIngredients.Clear();
-            recipe.RecipesFilters.Clear();
+            recipe.Ingredients.Clear();
+            recipe.Filters.Clear();
 
             recipe.Name = model.Name;
             recipe.Access = model.Access;
@@ -108,16 +108,16 @@ namespace TastyBoutique.Business.Services.Implementations
             {
                 var ing = await _ingredients.GetByName(ingredient);
                 if (ing == null)
-                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients(ingredient)));
+                    recipe.Ingredients.Add(new RecipesIngredients(recipe, new Ingredients(ingredient)));
                 else
-                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, ing));
+                    recipe.Ingredients.Add(new RecipesIngredients(recipe, ing));
             }
 
             var fil = await _filters.GetByName(model.Filter);
             if (fil == null)
-                recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters(model.Filter)));
+                recipe.Filters.Add(new RecipesFilters(recipe, new Filters(model.Filter)));
             else
-                recipe.RecipesFilters.Add(new RecipesFilters(recipe, fil));
+                recipe.Filters.Add(new RecipesFilters(recipe, fil));
 
             await _collections.SetAllByIdRecipe(recipe.Id);
             
