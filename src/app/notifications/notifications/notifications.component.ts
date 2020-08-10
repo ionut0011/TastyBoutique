@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {NotificationsService} from '../../recipes/services/notifications.service';
 import { Subscription } from 'rxjs';
-import { RecipesModel} from '../../../app/recipes/models';
+import { RecipesModel, RecipesGetModel} from '../../../app/recipes/models';
 import { Router } from '@angular/router';
 import {ToastrService} from 'ngx-toastr'
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 
 
 @Component({
@@ -14,11 +16,13 @@ import {ToastrService} from 'ngx-toastr'
 export class NotificationsComponent implements OnInit {
 
   private routeSub: Subscription = new Subscription();
-  public notificationList :RecipesModel;
+  public notificationList : RecipesGetModel;
 
 
   constructor(
     private toastr: ToastrService,
+    private readonly http :HttpClient,
+
 
     private service: NotificationsService,
     private router: Router,
@@ -26,7 +30,7 @@ export class NotificationsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.service.getNotification().subscribe((data : RecipesModel)=>{
+    this.service.getNotification().subscribe((data : RecipesGetModel)=>{
       this.notificationList = data;
       console.log(this.notificationList);
     })

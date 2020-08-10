@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { RecipesModel} from '../models';
+import { RecipesModel, RecipesGetModel} from '../models';
 import { Observable } from 'rxjs';
 
 
@@ -21,12 +21,12 @@ export class NotificationsService {
 
   constructor(private readonly http: HttpClient) { }
 
-  getNotification(): Observable<RecipesModel> {
-    return this.http.get<any>(`${this.endpoint}`, this.httpOptions);
+  getNotification(): Observable<RecipesGetModel> {
+    return this.http.get<RecipesGetModel>(`${this.endpoint}`, this.httpOptions);
   }
 
-  patchNotification(recipeId: string): Observable<any>{
-    return this.http.patch<any>(`${this.endpoint}/${recipeId}`, this.httpOptions);
+  patchNotification(idRecipe: string): Observable<any>{
+    return this.http.patch<any>(`${this.endpoint}/${idRecipe}`, idRecipe, this.httpOptions);
   }
 
 }

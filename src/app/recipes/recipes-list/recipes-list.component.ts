@@ -112,8 +112,16 @@ export class RecipesListComponent implements OnInit {
   {
     this.serviceSearch.searchFilters(this.filter.value).subscribe(data => {
       this.recipeList = data;
-      console.log(data);});
-
+      console.log(data);
+      this.recipeList.forEach(element => {
+        if(element.image.length>5){
+        let link:any = 'data:image/png;base64,'+element.image;
+        element.image = link;
+        }
+      });
+      console.log(data);
+      this.service.saveRecipes(this.recipeList);
+    });
   }
 
   SearchIngredients():void

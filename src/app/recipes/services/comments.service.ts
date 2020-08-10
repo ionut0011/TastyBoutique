@@ -31,6 +31,6 @@ export class CommentsService {
   }
 
   deleteComment(recipeId: string, commentId: string) :Observable<CommentModel>{
-    return this.http.delete<CommentModel>(`${this.endpoint}/${recipeId}/${commentId}`, this.httpOptions);
+    return this.http.delete<CommentModel>(`${this.endpoint}/comments/${commentId}`, this.httpOptions);
   }
 }

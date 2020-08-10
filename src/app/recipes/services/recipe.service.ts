@@ -38,6 +38,7 @@ export class RecipeService {
   patch(recipes: RecipesModel): Observable<any> {
     return this.http.patch<any>(`${this.endpoint}/${recipes.id}`, recipes, this.httpOptions);
   }
+
   deleteRecipe(recipeId: string): Observable<RecipesModel> {
     return this.http.delete<RecipesModel>(`${this.endpoint}/${recipeId}`, this.httpOptions);
   }
