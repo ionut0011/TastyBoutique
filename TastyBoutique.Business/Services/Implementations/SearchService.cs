@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using TastyBoutique.Business.Implementations.Services.Interfaces;
@@ -16,12 +15,12 @@ namespace TastyBoutique.Business.Services.Implementations
 {
     public class SearchService : ISearchService
     {
-        private readonly IIngredientsRepo _ingredientsRepo;
-        private readonly IFiltersRepo _filtersRepo;
-        private readonly IRecipeRepo _recipeRepo;
+        private readonly IIngredientsRepository _ingredientsRepo;
+        private readonly IFiltersRepository _filtersRepo;
+        private readonly IRecipeRepository _recipeRepo;
         private readonly IMapper _mapper;
 
-        public SearchService(IIngredientsRepo ingredientsRepo, IFiltersRepo filtersRepo, IRecipeRepo recipeRepo, IMapper mapper)
+        public SearchService(IIngredientsRepository ingredientsRepo, IFiltersRepository filtersRepo, IRecipeRepository recipeRepo, IMapper mapper)
         {
             _ingredientsRepo = ingredientsRepo;
             _filtersRepo = filtersRepo;

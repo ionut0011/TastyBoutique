@@ -2,16 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance.Repositories.Filters
 {
-    public sealed class FiltersRepo : Repository<Models.Filters>, IFiltersRepo 
+    public sealed class FiltersRepository : Repository<Models.Filters>, IFiltersRepository 
     {
-        public FiltersRepo(TastyBoutiqueContext context) : base(context) { }
+        public FiltersRepository(TastyBoutiqueContext context) : base(context) { }
 
         public async Task<IList<Models.Filters>> Get(ISpecification<Models.Filters> spec)
             => await this.context.Filters.ExeSpec(spec).ToListAsync();

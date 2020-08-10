@@ -1,10 +1,8 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -28,7 +26,7 @@ namespace TastyBoutique.IntegrationTesting
                 Access = true,
                 Description = "Simpla si gustoasa, perfecta pentru zilele de vara",
                 Filter = "Vegana",
-                IngredientsList = new List<string> { "ceapa", "ulei", "rosii", "varza", "castraveti" },
+                Ingredients = new List<string> { "ceapa", "ulei", "rosii", "varza", "castraveti" },
                 Type = "meal",
                 Image = new byte[] { 1, 0, 0, 1 }
             };
@@ -44,9 +42,9 @@ namespace TastyBoutique.IntegrationTesting
             await ExecuteDatabaseAction(async (tastyBoutiqueContext) =>
             {
                 existingRecipe = await tastyBoutiqueContext.Recipes
-                    .Include(r => r.RecipesFilters)
+                    .Include(r => r.Filters)
                     .ThenInclude(r => r.Filter)
-                    .Include(r => r.RecipesIngredients)
+                    .Include(r => r.Ingredients)
                     .ThenInclude(r => r.Ingredient)
                     .FirstOrDefaultAsync(r => r.Id == createdRecipeId);
             });
@@ -78,7 +76,7 @@ namespace TastyBoutique.IntegrationTesting
                 Access = true,
                 Description = "Simpla si gustoasa, perfecta pentru zilele de vara",
                 Filter = "Vegana",
-                IngredientsList = new List<string> { "ceapa", "ulei", "rosii", "varza", "castraveti" },
+                Ingredients = new List<string> { "ceapa", "ulei", "rosii", "varza", "castraveti" },
                 Type = "meal",
                 Image = new byte[] { 1, 0, 0, 1 }
             };
@@ -93,16 +91,16 @@ namespace TastyBoutique.IntegrationTesting
             await ExecuteDatabaseAction(async (tastyBoutiqueContext) =>
             {
                 existingRecipe = await tastyBoutiqueContext.Recipes
-                    .Include(r => r.RecipesFilters)
+                    .Include(r => r.Filters)
                     .ThenInclude(r => r.Filter)
-                    .Include(r => r.RecipesIngredients)
+                    .Include(r => r.Ingredients)
                     .ThenInclude(r => r.Ingredient)
                     .FirstOrDefaultAsync(r => r.Id == createdRecipeId);
             });
             existingRecipe.Should().NotBeNull();
 
             //Act
-            recipe.IngredientsList.Add("branza");
+            recipe.Ingredients.Add("branza");
             HttpContent httpContent = new StringContent(JsonSerializer.Serialize(recipe), Encoding.UTF8, "application/json-patch+json");
             response = await HttpClient.PatchAsync($"api/v1/recipe/{createdRecipeId}", httpContent);
 
@@ -111,12 +109,12 @@ namespace TastyBoutique.IntegrationTesting
             await ExecuteDatabaseAction(async (tastyBoutiqueContext) =>
             {
                 existingRecipe = await tastyBoutiqueContext.Recipes
-                    .Include(r => r.RecipesIngredients)
+                    .Include(r => r.Ingredients)
                     .ThenInclude(r => r.Ingredient)
                     .FirstOrDefaultAsync(r => r.Id == createdRecipeId);
             });
 
-            existingRecipe.RecipesIngredients.Select(ri => ri.Ingredient.Name).Should().Contain("branza");
+            existingRecipe.Ingredients.Select(ri => ri.Ingredient.Name).Should().Contain("branza");
         }
 
         [Fact]
@@ -134,9 +132,9 @@ namespace TastyBoutique.IntegrationTesting
             await ExecuteDatabaseAction(async (tastyBoutiqueContext) =>
             {
                 recipe = await tastyBoutiqueContext.Recipes
-                    .Include(r => r.RecipesFilters)
+                    .Include(r => r.Filters)
                     .ThenInclude(r => r.Filter)
-                    .Include(r => r.RecipesIngredients)
+                    .Include(r => r.Ingredients)
                     .ThenInclude(r => r.Ingredient)
                     .FirstOrDefaultAsync(r => r.Id == addedRecipe.Id);
             });
@@ -172,8 +170,8 @@ namespace TastyBoutique.IntegrationTesting
             response.IsSuccessStatusCode.Should().BeTrue();
             var ingredients = await response.Content.ReadAsAsync<IList<IngredientModel>>();
             ingredients.Should().NotBeNull();
-            ingredients.Count.Should().Be(addedRecipe.RecipesIngredients.Count());
-            ingredients.Select(i => i.Name).All(name => addedRecipe.RecipesIngredients.Select(r => r.Ingredient.Name).Contains(name))
+            ingredients.Count.Should().Be(addedRecipe.Ingredients.Count());
+            ingredients.Select(i => i.Name).All(name => addedRecipe.Ingredients.Select(r => r.Ingredient.Name).Contains(name))
                 .Should().BeTrue();
         }
 
@@ -190,8 +188,8 @@ namespace TastyBoutique.IntegrationTesting
             response.IsSuccessStatusCode.Should().BeTrue();
             var filters = await response.Content.ReadAsAsync<IList<FilterModel>>();
             filters.Should().NotBeNull();
-            filters.Count.Should().Be(addedRecipe.RecipesFilters.Count());
-            filters.Select(f => f.Name).All(name => addedRecipe.RecipesFilters.Select(r => r.Filter.Name).Contains(name))
+            filters.Count.Should().Be(addedRecipe.Filters.Count());
+            filters.Select(f => f.Name).All(name => addedRecipe.Filters.Select(r => r.Filter.Name).Contains(name))
                 .Should().BeTrue();
         }
 

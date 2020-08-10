@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using LinqBuilder;
 using Microsoft.AspNetCore.Http;
 using TastyBoutique.Business.Models.Filter;
 using TastyBoutique.Business.Models.Ingredients;
@@ -20,13 +19,13 @@ namespace TastyBoutique.Business.Services.Implementations
 {
     public sealed class RecipeService : IRecipeService
     {
-        private readonly IRecipeRepo _repository;  
+        private readonly IRecipeRepository _repository;  
         private readonly IMapper _mapper;
-        private readonly IIngredientsRepo _ingredients;
-        private readonly IFiltersRepo _filters;
-        private readonly ICollectionRepo _collections;
+        private readonly IIngredientsRepository _ingredients;
+        private readonly IFiltersRepository _filters;
+        private readonly ICollectionRepository _collections;
         private readonly IHttpContextAccessor _accessor;
-        public RecipeService(IRecipeRepo repo, IMapper mapper, IFiltersRepo filter, IIngredientsRepo ingredient, ICollectionRepo collection, IHttpContextAccessor accessor)
+        public RecipeService(IRecipeRepository repo, IMapper mapper, IFiltersRepository filter, IIngredientsRepository ingredient, ICollectionRepository collection, IHttpContextAccessor accessor)
         {
             _repository = repo;
             _mapper = mapper;
@@ -50,7 +49,7 @@ namespace TastyBoutique.Business.Services.Implementations
             }
             else
                 entities = await _repository.GetAllPublic();
-
+          
             //var test = _mapper.Map<IList<FilterModel>>(entities[0].RecipesFilters);
             var recipes = _mapper.Map<IList<TotalRecipeModel>>(entities);
             return recipes;
@@ -60,20 +59,20 @@ namespace TastyBoutique.Business.Services.Implementations
         {
             model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
-            foreach (var ingredient in model.IngredientsList)
+            foreach (var ingredient in model.Ingredients)
             {
                 var ing = await _ingredients.GetByName(ingredient);
                 if ( ing== null)
-                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients(ingredient)));
+                    recipe.Ingredients.Add(new RecipesIngredients(recipe, new Ingredients(ingredient)));
                 else
-                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe,ing));
+                    recipe.Ingredients.Add(new RecipesIngredients(recipe,ing));
             }
             
             var fil = await _filters.GetByName(model.Filter);
             if (fil == null) 
-                recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters(model.Filter)));
+                recipe.Filters.Add(new RecipesFilters(recipe, new Filters(model.Filter)));
             else 
-                recipe.RecipesFilters.Add(new RecipesFilters(recipe, fil));
+                recipe.Filters.Add(new RecipesFilters(recipe, fil));
             
             //recipe.Ingredients = recipe.RecipesIngredients.Select(x => x.Ingredient).ToList();
             //recipe.Filters = recipe.RecipesFilters.Select(x => x.Filter).ToList();
@@ -96,28 +95,32 @@ namespace TastyBoutique.Business.Services.Implementations
         public async Task Update(Guid id, UpsertRecipeModel model)
         {
             var recipe = await _repository.GetById(id);
-            recipe.RecipesIngredients.Clear();
-            recipe.RecipesFilters.Clear();
+            recipe.Ingredients.Clear();
+            recipe.Filters.Clear();
 
             recipe.Name = model.Name;
             recipe.Access = model.Access;
             recipe.Description = model.Description;
-            recipe.Image = model.Image;
-
-            foreach (var ingredient in model.IngredientsList)
+            
+            if (model.Image != null)
+                recipe.Image = model.Image;
+            
+            recipe.Type = model.Type;
+            model.Ingredients = model.Ingredients.Distinct().ToList();
+            foreach (var ingredient in model.Ingredients)
             {
                 var ing = await _ingredients.GetByName(ingredient);
                 if (ing == null)
-                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, new Ingredients(ingredient)));
+                    recipe.Ingredients.Add(new RecipesIngredients(recipe, new Ingredients(ingredient)));
                 else
-                    recipe.RecipesIngredients.Add(new RecipesIngredients(recipe, ing));
+                    recipe.Ingredients.Add(new RecipesIngredients(recipe, ing));
             }
 
             var fil = await _filters.GetByName(model.Filter);
             if (fil == null)
-                recipe.RecipesFilters.Add(new RecipesFilters(recipe, new Filters(model.Filter)));
+                recipe.Filters.Add(new RecipesFilters(recipe, new Filters(model.Filter)));
             else
-                recipe.RecipesFilters.Add(new RecipesFilters(recipe, fil));
+                recipe.Filters.Add(new RecipesFilters(recipe, fil));
 
             await _collections.SetAllByIdRecipe(recipe.Id);
             

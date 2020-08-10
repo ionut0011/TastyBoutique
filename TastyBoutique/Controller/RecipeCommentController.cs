@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TastyBoutique.Business.Models.RecipeComment;
@@ -9,7 +10,7 @@ using HttpDeleteAttribute = Microsoft.AspNetCore.Mvc.HttpDeleteAttribute;
 
 namespace TastyBoutique.API.Controller
 {
-
+    [Authorize]
     [ApiController]
     [Route("api/v1/recipe")]
     public sealed class RecipeCommentController : ControllerBase
@@ -23,7 +24,7 @@ namespace TastyBoutique.API.Controller
             _accessor = accessor;
         }
 
-        [HttpGet("{recipeId}/comments")]
+        [Microsoft.AspNetCore.Mvc.HttpGet("{recipeId}/comments")]
         public async Task<IActionResult> Get([FromRoute] Guid recipeId)
         {
             var result = await _commentsService.Get(recipeId);
@@ -31,9 +32,9 @@ namespace TastyBoutique.API.Controller
             return Ok(result);
         }
 
-        [HttpPost("{recipeId}/comments")]
+        [Microsoft.AspNetCore.Mvc.HttpPost("{recipeId}/comments")]
 
-        public async Task<IActionResult> Add([FromRoute] Guid recipeId, [FromBody] CreateRecipeCommentModel model)
+        public async Task<IActionResult> Add([FromRoute] Guid recipeId, [Microsoft.AspNetCore.Mvc.FromBody] CreateRecipeCommentModel model)
         {
             var userId = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var result = await _commentsService.Add(userId, recipeId, model);
@@ -44,9 +45,9 @@ namespace TastyBoutique.API.Controller
         [HttpDelete("comments/{commentId}")]
         public async Task<IActionResult> Delete([FromRoute] Guid commentId)
         {
-            await _commentsService.Delete(commentId);
-
-            return NoContent();
+            var userId = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
+            var delete = await _commentsService.Delete(commentId, userId);
+            return (delete) ? Ok("Deleted") : Ok("Not Deleted");
         }
     }
 }

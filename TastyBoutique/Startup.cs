@@ -51,18 +51,18 @@ namespace TastyBoutique
                 .AddSwaggerGen();
             services
                 .AddScoped<IRecipeService, RecipeService>()
-                .AddScoped<IRecipeRepo, RecipeRepo>()
+                .AddScoped<IRecipeRepository, RecipeRepository>()
                 .AddScoped<IRecipeCommentService, RecipeCommentService>()
                 .AddScoped<IPasswordHasher, PasswordHasher>()
                 .AddScoped<IAuthenticationService, Business.Identity.Services.Implementations.AuthenticationService>()
                 .AddScoped<ICollectionService, CollectionService>()
-                .AddScoped<ICollectionRepo,CollectionRepo>()
+                .AddScoped<ICollectionRepository,CollectionRepository>()
                 .AddScoped<INotificationService, NotificationService>()
                 .AddScoped<IUserRepository, UserRepository>()
-                .AddScoped<IIngredientsRepo, IngredientsRepo>()
+                .AddScoped<IIngredientsRepository, IngredientsRepository>()
                 .AddScoped<IIngredientService, IngredientService>()
                 .AddScoped<IRecipeCommentService, RecipeCommentService>()
-                .AddScoped<IFiltersRepo, FiltersRepo>()
+                .AddScoped<IFiltersRepository, FiltersRepository>()
                 .AddScoped<IFilterService, FilterService>()
                 .AddScoped<ISearchService, SearchService>()
                 .AddDbContext<TastyBoutiqueContext>(config =>

@@ -16,7 +16,7 @@ namespace TastyBoutique.Business.Models.Recipe
         [JsonIgnore]
         public Guid IdUser { get; set; }
 
-        public IList<string> IngredientsList { get; set; }
+        public IList<string> Ingredients { get; set; }
 
         public string Filter { get; set; }
     }

@@ -1,12 +1,9 @@
 ﻿using FluentAssertions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using TastyBoutique.Business.Models.Recipe;
-using TastyBoutique.Persistance.Models;
 using Xunit;
 
 namespace TastyBoutique.IntegrationTesting
@@ -39,7 +36,7 @@ namespace TastyBoutique.IntegrationTesting
             var recipe = await AddRecipe();
 
             //Act
-            string query = string.Join("query=", recipe.RecipesIngredients.Select(i => i.Ingredient.Name));
+            string query = string.Join("query=", recipe.Ingredients.Select(i => i.Ingredient.Name));
             var response = await HttpClient.GetAsync($"api/v1/search?{query}");
 
             //Assert
@@ -49,8 +46,8 @@ namespace TastyBoutique.IntegrationTesting
             result.Should().NotBeNull();
             result.Should().NotBeEmpty();
             result.Count.Should().Be(1);
-            var ingredients = result[0].RecipesIngredients;
-            ingredients.Select(i => i.Name).All(name => recipe.RecipesIngredients.Select(r => r.Ingredient.Name).Contains(name))
+            var ingredients = result[0].Ingredients;
+            ingredients.Select(i => i.Name).All(name => recipe.Ingredients.Select(r => r.Ingredient.Name).Contains(name))
                 .Should().BeTrue();
         }
 
@@ -61,7 +58,7 @@ namespace TastyBoutique.IntegrationTesting
             var recipe = await AddRecipe();
 
             //Act
-            string query = $"query={recipe.RecipesIngredients.ElementAt(0).Ingredient.Name}";
+            string query = $"query={recipe.Ingredients.ElementAt(0).Ingredient.Name}";
             var response = await HttpClient.GetAsync($"api/v1/search?{query}");
 
             //Assert
@@ -71,7 +68,7 @@ namespace TastyBoutique.IntegrationTesting
             result.Should().NotBeNull();
             result.Should().NotBeEmpty();
             result.Count.Should().Be(1);
-            result[0].RecipesIngredients.Select(ri => ri.Name).Should().Contain(recipe.RecipesIngredients.ElementAt(0).Ingredient.Name);
+            result[0].Ingredients.Select(ri => ri.Name).Should().Contain(recipe.Ingredients.ElementAt(0).Ingredient.Name);
         }
 
 
@@ -100,7 +97,7 @@ namespace TastyBoutique.IntegrationTesting
             var recipe = await AddRecipe();
 
             //Act
-            string filter = recipe.RecipesFilters.ElementAt(0).Filter.Name;
+            string filter = recipe.Filters.ElementAt(0).Filter.Name;
             var response = await HttpClient.GetAsync($"api/v1/search/{filter}");
 
             //Assert
@@ -110,7 +107,7 @@ namespace TastyBoutique.IntegrationTesting
             result.Should().NotBeNull();
             result.Should().NotBeEmpty();
             result.Count.Should().Be(1);
-            result[0].RecipesFilters.Select(ri => ri.Name).Should().Contain(filter);
+            result[0].Filters.Select(ri => ri.Name).Should().Contain(filter);
         }
 
         [Fact]

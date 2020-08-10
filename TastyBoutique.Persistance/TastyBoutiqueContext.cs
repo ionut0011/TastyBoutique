@@ -115,7 +115,7 @@ namespace TastyBoutique.Persistance.Models
                     .HasConstraintName("FK_RecipesFilters_Filters");
 
                 entity.HasOne<Recipes>(d => d.Recipe)
-                    .WithMany(d => d.RecipesFilters)
+                    .WithMany(d => d.Filters)
                     .HasForeignKey(d => d.RecipeId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_RecipesFilters_Recipes");
@@ -136,7 +136,7 @@ namespace TastyBoutique.Persistance.Models
                     .HasConstraintName("FK_RecipesIngredients_Ingredients");
 
                 entity.HasOne<Recipes>(d => d.Recipe)
-                    .WithMany(d => d.RecipesIngredients)
+                    .WithMany(d => d.Ingredients)
                     .HasForeignKey(d => d.RecipeId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_RecipesIngredients_Recipes");

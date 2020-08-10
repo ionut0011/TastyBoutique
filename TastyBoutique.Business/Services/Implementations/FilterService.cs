@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using TastyBoutique.Business.Extensions;
@@ -13,10 +12,10 @@ namespace TastyBoutique.Business.Services.Implementations
     public sealed class FilterService : IFilterService
     {
 
-        private readonly IFiltersRepo _repository;
+        private readonly IFiltersRepository _repository;
         private readonly IMapper _mapper;
 
-        public FilterService(IFiltersRepo repo, IMapper mapper)
+        public FilterService(IFiltersRepository repo, IMapper mapper)
         {
             _repository = repo;
             _mapper = mapper;

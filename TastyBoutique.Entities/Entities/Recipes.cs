@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 
 namespace TastyBoutique.Persistance.Models
 {
@@ -19,8 +19,8 @@ namespace TastyBoutique.Persistance.Models
             ReviewCount = 0;
             RecipeComment = new List<RecipeComment>();
             SavedRecipes = new List<SavedRecipes>();
-            RecipesIngredients = new List<RecipesIngredients>();
-            RecipesFilters = new List<RecipesFilters>();
+            Ingredients = new List<RecipesIngredients>();
+            Filters = new List<RecipesFilters>();
             //Ingredients = new List<Ingredients>();
             //Filters = new List<Filters>();
         }
@@ -39,10 +39,11 @@ namespace TastyBoutique.Persistance.Models
        // public ICollection<Filters> Filters { get; set; }
         public ICollection<RecipeComment> RecipeComment { get; set; }
         public ICollection<SavedRecipes> SavedRecipes { get; set; }
+       
+        [IgnoreMap]
+        public ICollection<RecipesIngredients> Ingredients { get; set; }
 
-        public ICollection<RecipesIngredients> RecipesIngredients { get; set; }
-
-        public ICollection<RecipesFilters> RecipesFilters { get; set; }
+        public ICollection<RecipesFilters> Filters { get; set; }
 
         public void AddComment(RecipeComment comment)
         {

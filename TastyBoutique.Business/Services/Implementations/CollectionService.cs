@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using TastyBoutique.Business.Extensions;
 using TastyBoutique.Business.Models.Recipe;
 using TastyBoutique.Business.Models.Shared;
 using TastyBoutique.Business.Services.Interfaces;
 using TastyBoutique.Persistance;
 using TastyBoutique.Persistance.Models;
-using TastyBoutique.Persistance.Recipes;
 
 namespace TastyBoutique.Business.Services.Implementation
 {
     public class CollectionService : ICollectionService
     {
-        private readonly ICollectionRepo _repository; 
+        private readonly ICollectionRepository _repository; 
         private readonly IMapper _mapper;
 
-        public CollectionService(ICollectionRepo repository, IMapper mapper)
+        public CollectionService(ICollectionRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using LinqBuilder;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TastyBoutique.Business.Models.RecipeComment;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
@@ -14,10 +11,10 @@ namespace TastyBoutique.Business.Services.Implementations
 {
     public sealed class RecipeCommentService : IRecipeCommentService
     {
-        private readonly IRecipeRepo _repository;
+        private readonly IRecipeRepository _repository;
         private readonly IMapper _mapper;
 
-        public RecipeCommentService(IRecipeRepo repository, IMapper mapper)
+        public RecipeCommentService(IRecipeRepository repository, IMapper mapper)
         {
             this._repository = repository;
             this._mapper = mapper;
@@ -36,11 +33,18 @@ namespace TastyBoutique.Business.Services.Implementations
             return _mapper.Map<RecipeCommentModel>(comment);
         }
 
-       
-        public async Task Delete(Guid commentId)
+
+        public async Task<bool> Delete(Guid commentId, Guid userId)
         {
-            _repository.DeleteComment(commentId);
-            await _repository.SaveChanges();
+            var comment = await _repository.GetRecipeComment(commentId);
+            if (comment != null && comment.IdUser == userId)
+            {
+                _repository.DeleteComment(commentId);
+                await _repository.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
 
 

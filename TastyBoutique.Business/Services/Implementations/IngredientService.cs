@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TastyBoutique.Business.Extensions;
@@ -12,10 +11,10 @@ namespace TastyBoutique.Business.Services.Implementations
 {
     public sealed class IngredientService : IIngredientService
     {
-        private readonly IIngredientsRepo _repository;
+        private readonly IIngredientsRepository _repository;
         private readonly IMapper _mapper;
 
-        public IngredientService(IIngredientsRepo repo, IMapper mapper)
+        public IngredientService(IIngredientsRepository repo, IMapper mapper)
         {
             _repository = repo;
             _mapper = mapper;
