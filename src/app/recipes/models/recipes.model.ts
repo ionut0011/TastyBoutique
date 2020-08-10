@@ -8,7 +8,7 @@ export type RecipesModel = {
   description: string;
   type:number;
   filtersList: string[];
-  ingredientsList:string[];
+  ingredients:string[];
   image:BinaryType[];
 
 };

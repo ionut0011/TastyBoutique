@@ -15,7 +15,11 @@
       <div>
         <p><span>Selected filter: </span><b>{{test2.value}}</b></p>
         <p><span>Selected type: </span><b>{{test3.value}}</b></p>
-      </div>
+
+
+
+        <!-- <p><span>Selected ingredients: </span><b>{{test.value}}</b></p> -->
+        </div>
       <div>
 
 
@@ -33,8 +37,9 @@
         <ng-template #notEditable>
 
           <div class="ingred">
-             <textarea class="recipe-description" contenteditable="true" placeholder="Enter ingredients" formControlName="test">{{ingredientsList}}</textarea>
-              <button (click)="additems()">Add</button>
+            <!-- <textarea *ngFor="let ingredient of test.value" [value]="ingredient.name" >{{ingredient.name}}</textarea> -->
+            <textarea class="recipe-description" contenteditable="true" placeholder="Enter ingredients" formControlName="test">{{ingredients}}</textarea>
+            <button (click)="additems()">Add</button>
           </div>
 
           <div>
@@ -60,16 +65,7 @@
       </div>
       <br>
 
-      <div class="photos">
-        <label class="photos-title">Photos</label>
-
-        <div class="photos-list">
-          <div *ngIf="photos.length > 0; else noPhotos">
-
-          </div>
-          <ng-template #noPhotos>
-            <label *ngIf="photos.length === 0">No photos available</label>
-          </ng-template>
+        <label *ngIf="!isFormDisabled">Photos</label>
 
           <div class="add-photos" *ngIf="!isFormDisabled">
             <div class="photo-file-container">
@@ -86,8 +82,7 @@
             <img class="photo-file" *ngFor="let photo of photos" [src]="photo">
           </div>
           <br>
-        </div>
-      </div>
+
       <br>
 
       <button type="button" *ngIf="isFormDisabled; else saveButton" (click)="startUpdating()"><span> Update

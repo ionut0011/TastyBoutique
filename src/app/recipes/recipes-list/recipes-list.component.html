@@ -2,13 +2,14 @@
 
 <div class="container">
   <div>
-    <label>Ingredients: </label>
 
 
+    <div class="flex">
     <div class="container">
       <div class="input-group d-flex justify-content-center">
             <span class="input-group-btn">
-              <input type="text" [formControl]='ingredientsList' >
+              <h3>Search by ingredient:</h3>
+              <input type="text" class="inputtext" [formControl]='ingredientsList' >
               <button class="btn btn-search" (click)="SearchIngredients()"type="button"><i class="fa fa-search fa-fw"></i> Search</button>
             </span>
         </div>
@@ -18,6 +19,7 @@
     <div class="container">
       <div class="input-group d-flex justify-content-center">
             <span class="input-group-btn">
+              <h3>Search by filter:</h3>
               <select [formControl]='filter'>
                 <option *ngFor="let filter of filterssList" [value]="filter.name">{{filter.name}}</option>
               </select>
@@ -26,6 +28,7 @@
         </div>
       </div>
   </div>
+</div>
   <div class="row recipes-container">
 
     <div *ngFor="let recipe of recipeList" class="col-12 col-md-4">

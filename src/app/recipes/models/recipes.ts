@@ -5,7 +5,7 @@ export class Recipes {
   public description: string;
   public backgroundImage?: string;
   public type:number;
-  public ingredientsList:string[] =[];
+  public ingredients:string[] =[];
   public filtersList: string[] = [];
 
 }

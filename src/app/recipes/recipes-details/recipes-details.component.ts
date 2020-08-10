@@ -42,9 +42,11 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     return this.formGroup.get('test') as FormControl;
   }
 
-  get ingredientsList(): FormControl {
-    return this.formGroup.get('ingredientsList') as FormControl;
+  get ingredients(): FormControl {
+    return this.formGroup.get('ingredients') as FormControl;
   }
+
+
 
   get test2(): FormControl {
     return this.formGroup.get('test2') as FormControl;
@@ -136,7 +138,7 @@ onImageChange(event) {
       description: new FormControl(),
       access: new FormControl(false),
       test: new FormControl(),
-      ingredientsList: new FormControl([]),
+      ingredients: new FormControl([]),
       test2: new FormControl(),
       filter: new FormControl(),
       type:new FormControl(),
@@ -163,7 +165,9 @@ onImageChange(event) {
           this.test2.setValue(data.filters[0].name);
           this.filter.setValue(data.filters[0].name);
           this.test3.setValue(data.type);
-          //this.ingredientsList.patchValue(this.test);
+          this.test.setValue(data.ingredients);
+          console.log(this.test);
+
           this.formGroup.patchValue(data);
           console.log("DATA" , data);
         })
@@ -196,7 +200,7 @@ onImageChange(event) {
     {
       // finalRecipeModel.image = '../../assets/images/food.jpg'
     }
-    finalRecipeModel.ingredientsList = this.validateIngredients(finalRecipeModel.ingredientsList);
+    finalRecipeModel.ingredients = this.validateIngredients(finalRecipeModel.ingredients);
     if (this.isAddMode)
     {
      this.service.post(finalRecipeModel).subscribe((data : RecipesModel) =>
@@ -304,13 +308,16 @@ public deleteComment(recipeId: string, commentId :string) :void{
 
   additems():void
   {
+
     let splitted= this.test.value.split(",");
       splitted.forEach(element => {
-        this.ingredientsList.value.push(element);
+        this.ingredients.value.push(element);
       });
-      console.log(this.ingredientsList);
+      console.log(this.ingredients);
+    }
 
-  }
+
+
 
   filterSelected(){
 

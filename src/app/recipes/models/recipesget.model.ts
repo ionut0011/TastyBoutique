@@ -9,6 +9,6 @@ export type RecipesGetModel = {
   type:number;
   averageReview : number;
   filters: FilterModel[];
-  ingredientsList:IngredientModel[];
+  ingredients:IngredientModel[];
   image:BinaryType[];
 };
