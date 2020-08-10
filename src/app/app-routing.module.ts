@@ -8,7 +8,7 @@ import { RegisterComponent } from './login/register/register.component';
 import { RecoverComponent } from './login/recover/recover.component';
 import { SharedModule } from './shared/shared.module';
 import { RecipesSavedComponent } from './recipes/recipes-saved/recipes-saved.component';
-
+import { UserlogGuard} from './shared/userlog.guard';
 
 const routes: Routes = [
 
@@ -26,7 +26,8 @@ const routes: Routes = [
 { path: 'login', component: LoginComponent },
 {
   path:'dashboard',
-  loadChildren: () => import('./dashboard/dashboard.module').then(m=>m.DashboardModule)
+  loadChildren: () => import('./dashboard/dashboard.module').then(m=>m.DashboardModule),
+  canActivate: [UserlogGuard]
 },
 {
   path: 'notifications',

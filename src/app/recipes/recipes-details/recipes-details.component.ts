@@ -29,6 +29,8 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   public commentsList: CommentModel[];
   public recipeList: RecipesModel[]=[];
   private routeSub: Subscription = new Subscription();
+  public recipesList: RecipesGetModel[];
+
 
   get description(): string {
     return this.formGroup.get('description').value;
@@ -132,6 +134,7 @@ onImageChange(event) {
   });
 
 
+
     this.formGroup = this.formBuilder.group({
       id: new FormControl(),
       name: new FormControl(),
@@ -165,8 +168,11 @@ onImageChange(event) {
           this.test2.setValue(data.filters[0].name);
           this.filter.setValue(data.filters[0].name);
           this.test3.setValue(data.type);
-          this.test.setValue(data.ingredients);
-          console.log(this.test);
+
+          console.log(data.ingredients);
+          this.test.setValue(data.ingredients.map(i =>i.name).join(','));
+
+          console.log(data.ingredients.map(i =>i.name).join(','));
 
           this.formGroup.patchValue(data);
           console.log("DATA" , data);
@@ -220,6 +226,7 @@ onImageChange(event) {
     }
      );
      this.router.navigate(['list']);
+     this.getAllRecipes();
     } else {
       this.service.patch(finalRecipeModel).subscribe(()=>{
         this.toastr.success("Updated")
@@ -234,6 +241,25 @@ onImageChange(event) {
     this.imageUrl = null;
     this.formGroup.disable();
     console.log(this.recipeList);
+  }
+
+
+  public getAllRecipes(): void{
+
+    this.service.getAll().subscribe((data: RecipesGetModel[]) => {
+      this.recipesList = data;
+      this.recipesList.forEach(element => {
+        if(element.image.length>5){
+        let link:any = 'data:image/png;base64,'+element.image;
+        element.image = link;
+        }
+      });
+
+      this.service.saveRecipes(this.recipesList);
+
+    });
+
+
   }
 
 

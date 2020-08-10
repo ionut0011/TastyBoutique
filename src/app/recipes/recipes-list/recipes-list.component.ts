@@ -54,6 +54,12 @@ export class RecipesListComponent implements OnInit {
       this.filterssList = data;
     });
 
+    this.getAllRecipes();
+
+  }
+
+  public getAllRecipes(): void{
+
     this.service.getAll().subscribe((data: RecipesGetModel[]) => {
       this.recipeList = data;
       this.recipeList.forEach(element => {
@@ -66,6 +72,8 @@ export class RecipesListComponent implements OnInit {
       this.service.saveRecipes(this.recipeList);
 
     });
+
+
   }
 
   goToRecipe(id: string): void {
@@ -77,6 +85,7 @@ export class RecipesListComponent implements OnInit {
           this.service.deleteRecipe(id).subscribe(data => {
             this.deletedRecipe = true;
             this.toastr.success("Deleted");
+            this.getAllRecipes();
         },
         (error)=>{
           this.toastr.error("Could not delete")
@@ -116,6 +125,7 @@ export class RecipesListComponent implements OnInit {
       });
 
       this.service.saveRecipes(this.recipeList);
+
     });
   }
 

@@ -2,7 +2,8 @@
   overflow: hidden;
   display: flex;
   flex-direction: center;
-  align-items: center;
+  justify-content: center;
+  align-items:center;
   background: #ef3e36;
 }
 
