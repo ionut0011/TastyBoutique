@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TastyBoutique.Business.Identity.Services.Interfaces
+﻿namespace TastyBoutique.Business.Identity.Services.Interfaces
 {
     public interface IPasswordHasher
     {

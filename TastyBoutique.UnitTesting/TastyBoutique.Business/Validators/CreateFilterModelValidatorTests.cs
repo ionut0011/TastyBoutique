@@ -1,5 +1,4 @@
-﻿
-using FluentAssertions;
+﻿using FluentAssertions;
 using TastyBoutique.Business.Validators;
 using TastyBoutique.UnitTesting.Shared.Factories;
 using Xunit;

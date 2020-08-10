@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TastyBoutique.Business.Models.Recipe;
 using TastyBoutique.Business.Models.Shared;
-using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Business.Implementations.Services.Interfaces
 {

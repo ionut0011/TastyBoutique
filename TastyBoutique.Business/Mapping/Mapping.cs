@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using TastyBoutique.Business.Models.Filter;
 using TastyBoutique.Business.Models.Ingredients;

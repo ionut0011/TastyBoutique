@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
-using TastyBoutique.API;
-using Moq;
 using Xunit;
 using TastyBoutique.Persistance.Models;
 using Microsoft.Extensions.DependencyInjection;

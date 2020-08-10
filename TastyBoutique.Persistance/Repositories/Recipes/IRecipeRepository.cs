@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LinqBuilder.Core;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance.Recipes

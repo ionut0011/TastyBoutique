@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TastyBoutique.Business.Models.Ingredients;
 using TastyBoutique.Business.Models.Shared;

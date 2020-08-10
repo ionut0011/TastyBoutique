@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TastyBoutique.Business.Identity.Models
+﻿namespace TastyBoutique.Business.Identity.Models
 {
     public sealed class UserRegisterModel
     {
