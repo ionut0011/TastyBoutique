@@ -24,11 +24,11 @@ namespace TastyBoutique.Business.Services.Implementations
             var comment = _mapper.Map<RecipeComment>(model);
             comment.IdUser = idUser;
             comment.IdRecipe = idRecipe;
-            
+
             var recipe = await _repository.GetById(idRecipe);
             recipe.AddComment(comment);
             _repository.Update(recipe);
-            
+
             await _repository.SaveChanges();
             return _mapper.Map<RecipeCommentModel>(comment);
         }
@@ -39,7 +39,7 @@ namespace TastyBoutique.Business.Services.Implementations
             var comment = await _repository.GetRecipeComment(commentId);
             if (comment != null && comment.IdUser == userId)
             {
-                _repository.DeleteComment(commentId);
+                await  _repository.DeleteComment(commentId);
                 await _repository.SaveChanges();
                 return true;
             }
@@ -51,9 +51,9 @@ namespace TastyBoutique.Business.Services.Implementations
         public async Task<IEnumerable<RecipeCommentModel>> Get(Guid idRecipe)
         {
             var recipe = await _repository.GetByIdWithComments(idRecipe);
-            
+
             return _mapper.Map<IEnumerable<RecipeCommentModel>>(recipe.RecipeComment);
         }
- 
+
     }
 }

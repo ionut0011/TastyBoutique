@@ -77,6 +77,13 @@ namespace TastyBoutique.Business.Services.Implementations
             var f = await _filtersRepo.GetByName(filter);
             var result = await _recipeRepo.GetRecipiesByFilter(idUser, f, spec);
 
+            if (result == null)
+                return new PaginatedList<TotalRecipeModel>(
+                1,
+                0,
+                0,
+                new List<TotalRecipeModel>());
+
             return new PaginatedList<TotalRecipeModel>(
                 model.PageIndex,
                 result.Count,

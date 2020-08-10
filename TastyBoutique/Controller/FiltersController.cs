@@ -30,7 +30,7 @@ namespace TastyBoutique.API.Controller
         public async Task<IActionResult> Add([FromBody] CreateFilterModel model)
         {
             var result = await _filterService.Add(model);
-            return Ok(result);
+            return Created(result.Id.ToString(), null);
         }
 
         //[HttpGet("{filterName}")]
