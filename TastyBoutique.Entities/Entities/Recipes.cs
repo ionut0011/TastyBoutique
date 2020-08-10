@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -39,7 +40,8 @@ namespace TastyBoutique.Persistance.Models
        // public ICollection<Filters> Filters { get; set; }
         public ICollection<RecipeComment> RecipeComment { get; set; }
         public ICollection<SavedRecipes> SavedRecipes { get; set; }
-
+       
+        [IgnoreMap]
         public ICollection<RecipesIngredients> Ingredients { get; set; }
 
         public ICollection<RecipesFilters> Filters { get; set; }

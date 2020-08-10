@@ -45,9 +45,8 @@ namespace TastyBoutique.API.Controller
         public async Task<IActionResult> Delete([FromRoute] Guid commentId)
         {
             var userId = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
-            await _commentsService.Delete(commentId, userId);
-
-            return NoContent();
+            var delete = await _commentsService.Delete(commentId, userId);
+            return (delete) ? Ok("Deleted") : Ok("Not Deleted");
         }
     }
 }

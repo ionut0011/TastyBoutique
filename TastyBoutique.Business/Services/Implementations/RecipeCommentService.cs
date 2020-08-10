@@ -36,11 +36,18 @@ namespace TastyBoutique.Business.Services.Implementations
             return _mapper.Map<RecipeCommentModel>(comment);
         }
 
-       
-        public async Task Delete(Guid commentId, Guid userId)
+
+        public async Task<bool> Delete(Guid commentId, Guid userId)
         {
-            _repository.DeleteComment(commentId, userId);
-            await _repository.SaveChanges();
+            var comment = await _repository.GetRecipeComment(commentId);
+            if (comment != null && comment.IdUser == userId)
+            {
+                _repository.DeleteComment(commentId);
+                await _repository.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
 
 

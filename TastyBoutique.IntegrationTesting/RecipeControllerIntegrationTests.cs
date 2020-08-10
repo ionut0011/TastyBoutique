@@ -28,7 +28,7 @@ namespace TastyBoutique.IntegrationTesting
                 Access = true,
                 Description = "Simpla si gustoasa, perfecta pentru zilele de vara",
                 Filter = "Vegana",
-                IngredientsList = new List<string> { "ceapa", "ulei", "rosii", "varza", "castraveti" },
+                Ingredients = new List<string> { "ceapa", "ulei", "rosii", "varza", "castraveti" },
                 Type = "meal",
                 Image = new byte[] { 1, 0, 0, 1 }
             };
@@ -78,7 +78,7 @@ namespace TastyBoutique.IntegrationTesting
                 Access = true,
                 Description = "Simpla si gustoasa, perfecta pentru zilele de vara",
                 Filter = "Vegana",
-                IngredientsList = new List<string> { "ceapa", "ulei", "rosii", "varza", "castraveti" },
+                Ingredients = new List<string> { "ceapa", "ulei", "rosii", "varza", "castraveti" },
                 Type = "meal",
                 Image = new byte[] { 1, 0, 0, 1 }
             };
@@ -102,7 +102,7 @@ namespace TastyBoutique.IntegrationTesting
             existingRecipe.Should().NotBeNull();
 
             //Act
-            recipe.IngredientsList.Add("branza");
+            recipe.Ingredients.Add("branza");
             HttpContent httpContent = new StringContent(JsonSerializer.Serialize(recipe), Encoding.UTF8, "application/json-patch+json");
             response = await HttpClient.PatchAsync($"api/v1/recipe/{createdRecipeId}", httpContent);
 

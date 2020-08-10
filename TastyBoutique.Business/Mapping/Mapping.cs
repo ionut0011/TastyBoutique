@@ -14,7 +14,8 @@ namespace TastyBoutique.Business.Mapping
     {
         public Mapping()
         {
-            CreateMap<UpsertRecipeModel, Persistance.Models.Recipes>();
+            CreateMap<UpsertRecipeModel, Persistance.Models.Recipes>()
+                .ForMember(x => x.Ingredients, opt => opt.Ignore());
 
             CreateMap<CreateIngredientModel, Ingredients>();
             CreateMap<Ingredients, IngredientModel>();
