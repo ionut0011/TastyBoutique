@@ -25,11 +25,8 @@ namespace TastyBoutique.IntegrationTesting
 
         protected Guid AuthenticatedUserId { get; private set; }
 
-        //protected Mock<IDomainLogger> MockLogger { get; private set; }
-
         protected IntegrationTests()
         {
-            //MockLogger = new Mock<IDomainLogger>();
             webApplicationFactory = new WebApplicationFactory<Startup>().WithWebHostBuilder(builder => {});
             HttpClient = webApplicationFactory.CreateClient();
         }
