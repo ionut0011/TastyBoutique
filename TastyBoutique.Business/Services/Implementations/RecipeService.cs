@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using LinqBuilder;
 using Microsoft.AspNetCore.Http;
 using TastyBoutique.Business.Models.Filter;
 using TastyBoutique.Business.Models.Ingredients;
@@ -50,7 +49,7 @@ namespace TastyBoutique.Business.Services.Implementations
             }
             else
                 entities = await _repository.GetAllPublic();
-
+          
             //var test = _mapper.Map<IList<FilterModel>>(entities[0].RecipesFilters);
             var recipes = _mapper.Map<IList<TotalRecipeModel>>(entities);
             return recipes;
@@ -60,7 +59,7 @@ namespace TastyBoutique.Business.Services.Implementations
         {
             model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
-            foreach (var ingredient in model.IngredientsList)
+            foreach (var ingredient in model.Ingredients)
             {
                 var ing = await _ingredients.GetByName(ingredient);
                 if ( ing== null)
@@ -102,9 +101,13 @@ namespace TastyBoutique.Business.Services.Implementations
             recipe.Name = model.Name;
             recipe.Access = model.Access;
             recipe.Description = model.Description;
-            recipe.Image = model.Image;
-
-            foreach (var ingredient in model.IngredientsList)
+            
+            if (model.Image != null)
+                recipe.Image = model.Image;
+            
+            recipe.Type = model.Type;
+            model.Ingredients = model.Ingredients.Distinct().ToList();
+            foreach (var ingredient in model.Ingredients)
             {
                 var ing = await _ingredients.GetByName(ingredient);
                 if (ing == null)

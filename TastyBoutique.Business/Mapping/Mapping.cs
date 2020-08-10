@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using TastyBoutique.Business.Models.Filter;
 using TastyBoutique.Business.Models.Ingredients;
@@ -14,7 +12,8 @@ namespace TastyBoutique.Business.Mapping
     {
         public Mapping()
         {
-            CreateMap<UpsertRecipeModel, Persistance.Models.Recipes>();
+            CreateMap<UpsertRecipeModel, Persistance.Models.Recipes>()
+                .ForMember(x => x.Ingredients, opt => opt.Ignore());
 
             CreateMap<CreateIngredientModel, Ingredients>();
             CreateMap<Ingredients, IngredientModel>();

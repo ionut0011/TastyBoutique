@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using LinqBuilder;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TastyBoutique.Business.Models.RecipeComment;
 using TastyBoutique.Business.Recipes.Services.Interfaces;
@@ -27,29 +24,36 @@ namespace TastyBoutique.Business.Services.Implementations
             var comment = _mapper.Map<RecipeComment>(model);
             comment.IdUser = idUser;
             comment.IdRecipe = idRecipe;
-            
+
             var recipe = await _repository.GetById(idRecipe);
             recipe.AddComment(comment);
             _repository.Update(recipe);
-            
+
             await _repository.SaveChanges();
             return _mapper.Map<RecipeCommentModel>(comment);
         }
 
-       
-        public async Task Delete(Guid commentId, Guid userId)
+
+        public async Task<bool> Delete(Guid commentId, Guid userId)
         {
-            await _repository.DeleteComment(commentId, userId);
-            await _repository.SaveChanges();
+            var comment = await _repository.GetRecipeComment(commentId);
+            if (comment != null && comment.IdUser == userId)
+            {
+                await  _repository.DeleteComment(commentId);
+                await _repository.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
 
 
         public async Task<IEnumerable<RecipeCommentModel>> Get(Guid idRecipe)
         {
             var recipe = await _repository.GetByIdWithComments(idRecipe);
-            
+
             return _mapper.Map<IEnumerable<RecipeCommentModel>>(recipe.RecipeComment);
         }
- 
+
     }
 }

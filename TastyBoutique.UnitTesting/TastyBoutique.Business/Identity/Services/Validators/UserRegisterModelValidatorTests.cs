@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentAssertions;
-using TastyBoutique.Business.Identity.Models;
+﻿using FluentAssertions;
 using TastyBoutique.Business.Identity.Services.Validators;
 using TastyBoutique.UnitTesting.Shared.Factories;
 using Xunit;

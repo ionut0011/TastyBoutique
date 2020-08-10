@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LinqBuilder.Core;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance.Recipes
@@ -24,6 +23,8 @@ namespace TastyBoutique.Persistance.Recipes
 
         Task<List<Models.Recipes>> GetRecipiesByFilter(Guid idUser, Filters filter, ISpecification<Models.Recipes> spec);
 
-        Task DeleteComment(Guid commentId, Guid userId);
+        Task DeleteComment(Guid commentId);
+
+        Task<RecipeComment> GetRecipeComment(Guid commentId);
     }
 }

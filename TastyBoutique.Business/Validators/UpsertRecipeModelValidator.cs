@@ -18,7 +18,7 @@ namespace TastyBoutique.Business.Validators
                 .MaximumLength(50)
                 .NotEmpty();
 
-            RuleFor(model => model.IngredientsList)
+            RuleFor(model => model.Ingredients)
                 .NotNull()
                 .NotEmpty();
 
