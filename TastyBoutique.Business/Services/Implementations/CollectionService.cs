@@ -16,10 +16,10 @@ namespace TastyBoutique.Business.Services.Implementation
 {
     public class CollectionService : ICollectionService
     {
-        private readonly ICollectionRepo _repository; 
+        private readonly ICollectionRepository _repository; 
         private readonly IMapper _mapper;
 
-        public CollectionService(ICollectionRepo repository, IMapper mapper)
+        public CollectionService(ICollectionRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

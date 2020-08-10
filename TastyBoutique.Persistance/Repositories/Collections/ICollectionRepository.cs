@@ -6,7 +6,7 @@ using LinqBuilder.Core;
 
 namespace TastyBoutique.Persistance
 {
-    public interface ICollectionRepo : IRepository<Models.SavedRecipes>
+    public interface ICollectionRepository : IRepository<Models.SavedRecipes>
     {
         Task<IList<Models.Recipes>> GetAllSavedByIdUser(Guid idUser, ISpecification<Models.Recipes> spec);
         Task<IList<Models.Recipes>> GetAllNotificationsByIdUser(Guid idUser);

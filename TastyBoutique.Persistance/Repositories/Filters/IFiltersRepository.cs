@@ -6,7 +6,7 @@ using LinqBuilder.Core;
 
 namespace TastyBoutique.Persistance.Repositories.Filters
 {
-    public interface IFiltersRepo : IRepository<Models.Filters>
+    public interface IFiltersRepository : IRepository<Models.Filters>
     {
         Task<IList<Models.Filters>> Get(ISpecification<Models.Filters> spec);
 

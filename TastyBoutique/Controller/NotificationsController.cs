@@ -29,11 +29,11 @@ namespace TastyBoutique.API.Controller
             return Ok(result.Results);
         }
 
-        [HttpPatch("{idRecipe}")]
-        public async Task<IActionResult> Update([FromRoute] Guid idRecipe)
+        [HttpPatch("{recipeId}")]
+        public async Task<IActionResult> Update([FromRoute] Guid recipeId)
         {
             var model = new SavedRecipeModel();
-            model.IdRecipe = idRecipe;
+            model.IdRecipe = recipeId;
             model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
 
             await _notificationService.Update(model);

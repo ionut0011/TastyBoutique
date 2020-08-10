@@ -8,9 +8,9 @@ using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance
 {
-    public sealed class CollectionRepo : Repository<SavedRecipes>, ICollectionRepo
+    public sealed class CollectionRepository : Repository<SavedRecipes>, ICollectionRepository
     {
-        public CollectionRepo(TastyBoutiqueContext context) : base(context) { }
+        public CollectionRepository(TastyBoutiqueContext context) : base(context) { }
 
         public async Task<IList<Models.Recipes>> GetAllSavedByIdUser(Guid idUser, ISpecification<Models.Recipes> spec)
             =>  await (from recipe in context.SavedRecipes where recipe.IdUser == idUser

@@ -10,9 +10,9 @@ using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance.Recipes
 {
-    public sealed class RecipeRepo : Repository<Models.Recipes>, IRecipeRepo
+    public sealed class RecipeRepository : Repository<Models.Recipes>, IRecipeRepository
     {
-        public RecipeRepo(TastyBoutiqueContext context) : base(context) { }
+        public RecipeRepository(TastyBoutiqueContext context) : base(context) { }
 
         public async new Task<Models.Recipes> GetById(Guid id)
            => await this.context.Recipes
@@ -31,11 +31,10 @@ namespace TastyBoutique.Persistance.Recipes
             .ThenInclude(r => r.Ingredient)
             .ToListAsync();
 
-        public async void DeleteComment(Guid commentId)
+        public async Task DeleteComment(Guid commentId, Guid userId)
         {
-            //var entity = ;
             this.context.RecipeComments.Remove(await this.context.RecipeComments
-                    .Where(x => x.Id == commentId).FirstOrDefaultAsync());
+                    .Where(x => x.Id == commentId && x.IdUser == userId).FirstOrDefaultAsync());
         }
 
         public async Task<IList<Models.Recipes>> GetAllPublic()

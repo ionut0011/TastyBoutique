@@ -9,9 +9,10 @@ using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance.Ingredients
 {
-    public sealed class IngredientsRepo : Repository<Models.Ingredients>, IIngredientsRepo
+    public sealed class IngredientsRepository : Repository<Models.Ingredients>, IIngredientsRepository
     {
-        public IngredientsRepo(TastyBoutiqueContext context) : base(context) { }
+
+        public IngredientsRepository(TastyBoutiqueContext context) : base(context) { }
 
         public async Task<IList<Models.Ingredients>> Get(ISpecification<Models.Ingredients> spec)
             => await this.context.Ingredients.ExeSpec(spec).ToListAsync();
