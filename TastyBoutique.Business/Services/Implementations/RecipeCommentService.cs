@@ -14,10 +14,10 @@ namespace TastyBoutique.Business.Services.Implementations
 {
     public sealed class RecipeCommentService : IRecipeCommentService
     {
-        private readonly IRecipeRepo _repository;
+        private readonly IRecipeRepository _repository;
         private readonly IMapper _mapper;
 
-        public RecipeCommentService(IRecipeRepo repository, IMapper mapper)
+        public RecipeCommentService(IRecipeRepository repository, IMapper mapper)
         {
             this._repository = repository;
             this._mapper = mapper;
@@ -37,9 +37,9 @@ namespace TastyBoutique.Business.Services.Implementations
         }
 
        
-        public async Task Delete(Guid commentId)
+        public async Task Delete(Guid commentId, Guid userId)
         {
-            _repository.DeleteComment(commentId);
+            _repository.DeleteComment(commentId, userId);
             await _repository.SaveChanges();
         }
 

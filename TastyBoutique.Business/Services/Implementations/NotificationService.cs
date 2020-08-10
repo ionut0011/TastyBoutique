@@ -13,12 +13,12 @@ namespace TastyBoutique.Business.Services.Implementations
 {
     public sealed class NotificationService : INotificationService
     {
-        private readonly ICollectionRepo _collectionRepo;
+        private readonly ICollectionRepository _collectionRepo;
         private readonly IMapper _mapper;
         //private readonly IRecipeRepo _recipeRepo;
         
 
-        public NotificationService(ICollectionRepo collectionRepo, IMapper mapper)
+        public NotificationService(ICollectionRepository collectionRepo, IMapper mapper)
         {
             _collectionRepo = collectionRepo;
             _mapper = mapper;

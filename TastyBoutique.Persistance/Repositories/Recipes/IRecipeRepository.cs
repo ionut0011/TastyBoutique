@@ -7,7 +7,7 @@ using TastyBoutique.Persistance.Models;
 
 namespace TastyBoutique.Persistance.Recipes
 {
-    public interface IRecipeRepo : IRepository<Models.Recipes>
+    public interface IRecipeRepository : IRepository<Models.Recipes>
     {
         Task<IList<Models.Recipes>> Get(Guid idUser);
 
@@ -24,6 +24,6 @@ namespace TastyBoutique.Persistance.Recipes
 
         Task<List<Models.Recipes>> GetRecipiesByFilter(Guid idUser, Filters filter, ISpecification<Models.Recipes> spec);
 
-        void DeleteComment(Guid commentId);
+        void DeleteComment(Guid commentId, Guid userId);
     }
 }

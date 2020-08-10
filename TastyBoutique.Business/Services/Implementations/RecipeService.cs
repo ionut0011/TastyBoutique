@@ -20,13 +20,13 @@ namespace TastyBoutique.Business.Services.Implementations
 {
     public sealed class RecipeService : IRecipeService
     {
-        private readonly IRecipeRepo _repository;  
+        private readonly IRecipeRepository _repository;  
         private readonly IMapper _mapper;
-        private readonly IIngredientsRepo _ingredients;
-        private readonly IFiltersRepo _filters;
-        private readonly ICollectionRepo _collections;
+        private readonly IIngredientsRepository _ingredients;
+        private readonly IFiltersRepository _filters;
+        private readonly ICollectionRepository _collections;
         private readonly IHttpContextAccessor _accessor;
-        public RecipeService(IRecipeRepo repo, IMapper mapper, IFiltersRepo filter, IIngredientsRepo ingredient, ICollectionRepo collection, IHttpContextAccessor accessor)
+        public RecipeService(IRecipeRepository repo, IMapper mapper, IFiltersRepository filter, IIngredientsRepository ingredient, ICollectionRepository collection, IHttpContextAccessor accessor)
         {
             _repository = repo;
             _mapper = mapper;
