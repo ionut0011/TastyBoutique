@@ -32,7 +32,42 @@ namespace TastyBoutique.AutomationTests.Tests
             Assert.True(recipeListPage.CommentPosted.Displayed);
         }
 
-       
+        [Fact]
+        public void Search_By_Ingredients()
+        {
+
+            loginPage.Login("testing123@yahoo.com", "Serioux44");
+            dashboardPage = new DashboardPage(Driver);
+            dashboardPage.ToSeeRecipies();
+            recipeListPage = new RecipeListPage(Driver);
+            recipeListPage.SearchByIngredients("paine");
+            Assert.True(recipeListPage.SuccesForSearchingByIngredients.Displayed);
+        }
+
+        [Fact]
+        public void Search_By_Filter()
+        {
+
+            loginPage.Login("testing123@yahoo.com", "Serioux44");
+            dashboardPage = new DashboardPage(Driver);
+            dashboardPage.ToSeeRecipies();
+            recipeListPage = new RecipeListPage(Driver);
+            recipeListPage.SearchByFilters();
+            Assert.True(recipeListPage.SuccesForSearchingByFilters.Displayed);
+        }
+
+        [Fact]
+        public void Add_To_Favorites()
+        {
+            loginPage.Login("testing123@yahoo.com", "Serioux44");
+            dashboardPage = new DashboardPage(Driver);
+            dashboardPage.ToSeeRecipies();
+            recipeListPage = new RecipeListPage(Driver);
+            recipeListPage.AddToFavorites();
+
+            Assert.True(recipeListPage.AddedToFavorites.Displayed);
+        }
+
         public void Dispose()
         {
             CloseBrowser();
