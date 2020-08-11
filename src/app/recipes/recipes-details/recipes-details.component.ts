@@ -1,5 +1,5 @@
 import { Component, OnInit,OnDestroy} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Observable, Observer } from 'rxjs';
 import { RecipesModel, RecipesGetModel,FilterModel,FiltersModel, IngredientModel } from '../models';
@@ -23,6 +23,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   formGroupComment : FormGroup;
   isAdmin: boolean;
   isAddMode: boolean;
+  validIngredients : boolean = false;
   photos: Blob[] = [];
   ratingNumber: number = 0;
   createdRecipe : boolean = false;
@@ -30,6 +31,9 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   public recipeList: RecipesModel[]=[];
   private routeSub: Subscription = new Subscription();
   public recipesList: RecipesGetModel[];
+  public selectedFilter : boolean = false;
+  public selectedType :  boolean = false;
+  public buttonDisabled : boolean = false;
 
 
   get description(): string {
@@ -48,7 +52,25 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     return this.formGroup.get('ingredients') as FormControl;
   }
 
+  public get ingredientsControl() :FormControl{
+    return this.formGroup.controls.ingredients as FormControl;
+  }
 
+  public get descriptionControl(): FormControl{
+    return this.formGroup.controls.description as FormControl;
+  }
+
+  public get nameControl(): FormControl{
+    return this.formGroup.controls.name as FormControl;
+  }
+
+  public get typeControl(): FormControl{
+    return this.formGroup.controls.test3 as FormControl;
+  }
+
+  public get  filterControl(): FormControl{
+    return this.formGroup.controls.test2 as FormControl;
+  }
 
   get test2(): FormControl {
     return this.formGroup.get('test2') as FormControl;
@@ -87,7 +109,23 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     private serviceComments: CommentsService,
     private ng2ImgMax: Ng2ImgMaxService,
     private readonly http :HttpClient
-    ) { }
+    ) {
+      this.formGroup = this.formBuilder.group({
+        id: new FormControl(),
+        name: new FormControl('', [Validators.required]),
+        description: new FormControl('', [Validators.required]),
+        age : new FormControl('',[]),
+        access: new FormControl(false),
+        test: new FormControl('', [Validators.required, Validators.pattern("^.*,*.*$")]),
+        ingredients: new FormControl([]),
+        test2: new FormControl('', [Validators.required]),
+        filter: new FormControl(),
+        type:new FormControl(),
+        test3:new FormControl('', [Validators.required]),
+
+     });
+
+    }
 
 
 onImageChange(event) {
@@ -124,7 +162,6 @@ onImageChange(event) {
       this.filterssList = data;
       console.log(this.filterssList);
       console.log("filtersList", data);
-
     });
     this.routeSub = this.activatedRoute.params.subscribe(params => {
     this.serviceComments.getComments(params['id']).subscribe((comments: CommentModel[]) =>{
@@ -135,19 +172,7 @@ onImageChange(event) {
 
 
 
-    this.formGroup = this.formBuilder.group({
-      id: new FormControl(),
-      name: new FormControl(),
-      description: new FormControl(),
-      access: new FormControl(false),
-      test: new FormControl(),
-      ingredients: new FormControl([]),
-      test2: new FormControl(),
-      filter: new FormControl(),
-      type:new FormControl(),
-      test3:new FormControl(),
 
-   });
 
 
     this.formGroupComment = this.formBuilder.group({
@@ -172,7 +197,7 @@ onImageChange(event) {
           console.log(data.ingredients);
           this.test.setValue(data.ingredients.map(i =>i.name).join(','));
 
-          console.log(data.ingredients.map(i =>i.name).join(','));
+          console.log("Ingrediente" ,data.ingredients.map(i =>i.name).join(','));
 
           this.formGroup.patchValue(data);
           console.log("DATA" , data);
@@ -219,14 +244,15 @@ onImageChange(event) {
       }
       this.recipeList.push(data);
       console.log("RecipeList:", this.recipeList);
+      this.router.navigate(['list']);
+     this.getAllRecipes();
      },
      (error) => {
       this.createdRecipe = false;
-      this.toastr.error("Couldn't create recipe");
+      this.toastr.error("Please fill all the required fields");
     }
      );
-     this.router.navigate(['list']);
-     this.getAllRecipes();
+
     } else {
       this.service.patch(finalRecipeModel).subscribe(()=>{
         this.toastr.success("Updated")
@@ -240,6 +266,7 @@ onImageChange(event) {
     this.photos.push(this.imageUrl);
     this.imageUrl = null;
     this.formGroup.disable();
+
     console.log(this.recipeList);
   }
 
@@ -300,21 +327,23 @@ public deleteComment(recipeId: string, commentId :string) :void{
   {
       console.log(this.commentsList[i].id);
       if(commentId == this.commentsList[i].id){
-        this.serviceComments.deleteComment(recipeId, commentId).subscribe(data => {
-          this.commentsList.splice(i,1);
-          console.log(data);
-          this.toastr.success('Comment deleted');
-
-        }
+        this.serviceComments.deleteComment(recipeId, commentId).subscribe(data => {}
         ,
         (error) =>{
-          this.toastr.error('Could not delete your comment.');
+          console.log(error.error.text)
+          if(error.error.text == "Deleted")
+          {
+            this.commentsList.splice(i,1);
+            this.toastr.success('Comment deleted');
+          }
+          else
+            this.toastr.error('You can\'t delete this comment.');
 
         })
     }
-
   }
 }
+
 
 
   validateIngredients(ingr :string[])
@@ -334,28 +363,62 @@ public deleteComment(recipeId: string, commentId :string) :void{
 
   additems():void
   {
+    var regexp = new RegExp("^.*,*.*$");
+     var test = regexp.test(this.test.value);
+     console.log(this.test.value);
+     console.log("TEST", test);
+     if(test)
+     {
+       this.validIngredients = true;
+     }else
+     {
+       this.validIngredients = false;
+       this.toastr.error("Wrong ingredient input")
+
+     }
+
+     if(this.test.value == "")
+     {
+       this.validIngredients = false;
+       this.toastr.error("Wrong ingredient input")
+     }
 
     let splitted= this.test.value.split(",");
+    console.log(this.ingredients);
       splitted.forEach(element => {
         this.ingredients.value.push(element);
       });
       console.log(this.ingredients);
-    }
 
-
-
+  }
 
   filterSelected(){
 
-
     this.filter.setValue(this.test2.value);
+    if(this.test2.value)
+    {
+      this.selectedFilter = true;
+    }
+    else{
+      this.selectedFilter = false;
+    }
     console.log(this.filter);
    }
 
   selected(){
 
     this.type.setValue(this.test3.value);
-    console.log(this.type.value);
+    console.log("ingredients test", this.test3.value);
+    if(this.test3.value)
+    {
+      this.selectedType = true;
+
+    }
+    else{
+      this.selectedType = false;
+    }
+    console.log(this.selectedType);
+    console.log("type", this.type.value);
    }
 
    public goToPage(page: string): void {

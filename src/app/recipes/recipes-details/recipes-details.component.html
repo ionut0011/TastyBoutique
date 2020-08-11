@@ -1,61 +1,82 @@
-<app-navbar></app-navbar>
 
+<app-navbar></app-navbar>
 <div class="d-flex justify-content-center justify-content-md-center">
   <section class="form-section">
     <form [formGroup]="formGroup">
       <div class="form-group">
-        <input type="text" class="title"
-          placeholder="Enter recipe name"
-          formControlName="name">
-      </div>
+        <div class="card-body">
+          <form class="was-validated" [formGroup]="formGroup">
+            <div class="input-group form-group">
+              <input type="text" formControlName="name" name="name" class="form-control" placeholder="Enter recipe name"
+                required />
+              <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+          </form>
+          </div>
 
+
+      </div>
       <div  *ngIf="isFormDisabled;">
-
-
-      <div>
-        <p><span>Selected filter: </span><b>{{test2.value}}</b></p>
-        <p><span>Selected type: </span><b>{{test3.value}}</b></p>
-
-
-
-        <!-- <p><span>Selected ingredients: </span><b>{{test.value}}</b></p> -->
+        <div>
+          <p><span>Selected filter: </span><b>{{test2.value}}</b></p>
+          <p><span>Selected type: </span><b>{{test3.value}}</b></p>
+          <p><span>Selected ingredients: </span><b>{{test.value}}</b></p>
         </div>
-      <div>
-
-
       </div>
-      </div>
-
-
-
 
       <div class="form-group">
-        <p *ngIf="isFormDisabled; else notEditable">{{description}}</p>
+        <p *ngIf="isFormDisabled; else notEditable"><span>Instructions: </span><b>{{description}}</b></p>
+             <ng-template #notEditable>
 
-
-
-        <ng-template #notEditable>
-
+          <label>Ingredients (Type as in this e.g: eggs,flour)</label>
           <div class="ingred">
-            <!-- <textarea *ngFor="let ingredient of test.value" [value]="ingredient.name" >{{ingredient.name}}</textarea> -->
-            <textarea class="recipe-description" contenteditable="true" placeholder="Enter ingredients" formControlName="test">{{ingredients}}</textarea>
-            <button (click)="additems()">Add</button>
+            <div class="card-body">
+              <form class="was-validated" [formGroup]="formGroup">
+                <div class="input-group form-group">
+                  <textarea class="recipe-ingredients" contenteditable="true" placeholder="Enter ingredients" formControlName="test" required>{{ingredients}}</textarea>
+                  <span *ngIf="!validIngredients">Please insert as in the example.</span>
+                  <br><br>
+                  <div class="add-button">
+                    <button type="button" (click)="additems()"><span>Save ingredients</span></button>
+                  </div>
+                </div>
+              </form>
+              </div>
           </div>
-
           <div>
-              <label>Filters: </label>
-              <select formControlName="test2" (change)="filterSelected()">
-                <option *ngFor="let filter of filterssList" [value]="filter.name">{{filter.name}}</option>
-              </select>
+            <br>
+              <b><label>Filters: </label></b>
+              <div class="input-group form-group">
+                <select formControlName="test2" (change)="filterSelected()" required>
+                  <option *ngFor="let filter of filterssList" [value]="filter.name">{{filter.name}}</option>
+                </select>
+                <div class="invalid-feedback">Please fill out this field.</div>
+                <h3 class="warning" *ngIf="!selectedFilter">Please fill out this field</h3>
+              </div>
           </div>
-          <div >
+          <div>
               <label>Select type:</label>
-               <select formControlName="test3" (change)="selected()" >
+               <select formControlName="test3" (change)="selected()" required>
                   <option  *ngFor="let typees of typeesList" [value]="typees" >{{typees}}</option>
                 </select>
+                <h3 class="warning" *ngIf="!selectedType">Please fill out this field</h3>
             </div>
-          <textarea class="recipe-description" contenteditable="true" placeholder="Enter recipe description"
-            formControlName="description">{{description}}</textarea>
+
+            <label>Recipe</label>
+            <br>
+            <div class="card-body">
+              <form class="was-validated" [formGroup]="formGroup">
+                <div class="input-group form-group">
+                  <textarea
+                  class="recipe-description" contenteditable="true" placeholder="Enter recipe description"
+                   formControlName="description" required>{{description}}</textarea>
+                     <div class="invalid-feedback"></div>
+                     <div *ngIf="!descriptionControl.valid">Please fill out this field.</div>
+                     <br>
+
+                </div>
+              </form>
+              </div>
         </ng-template>
       </div>
 
@@ -64,18 +85,13 @@
         <input type="checkbox" formControlName="access">
       </div>
       <br>
-
         <label *ngIf="!isFormDisabled">Photos</label>
-
           <div class="add-photos" *ngIf="!isFormDisabled">
             <div class="photo-file-container">
-
               <img class="photo-file" *ngFor="let photo of photos" [src]="photo">
             </div>
             <br>
-            <input #Image
-            type="file"
-            (change)="onImageChange($event)" /> <img class="photo-file" [src]="imageUrl">
+            <input #Image type="file" (change)="onImageChange($event)" /> <img class="photo-file" [src]="imageUrl">
           </div>
 
           <div class="added-photos" *ngIf="isFormDisabled">
@@ -88,7 +104,14 @@
       <button type="button" *ngIf="isFormDisabled; else saveButton" (click)="startUpdating()"><span> Update
           Recipe</span></button>
       <ng-template #saveButton>
-        <button type="button" (click)="save()"><span>Save Recipe</span></button>
+        <div *ngIf="!ingredientsControl.valid && !typeControl.valid && !nameControl.valid && !descriptionControl.valid; else enabledButton">
+          <button type="button" disabled (click)="save()"><span>Save Recipe</span></button>
+          <span>You haven't completed the required fields</span>
+        </div>
+        <ng-template #enabledButton>
+          <button type="button" (click)="save()"><span>Save Recipe</span></button>
+        </ng-template>
+
       </ng-template>
     </form>
 
@@ -96,10 +119,8 @@
     <div class="comments-title" *ngIf="isFormDisabled">
     </div>
 
-
-    <hr>
-
     <div class="comments-section">
+      <hr>
       <form [formGroup]="formGroupComment">
         <div class="comment-block" *ngIf="isFormDisabled">
           <div class="create_new_comment">
@@ -199,3 +220,6 @@
     </div>
 </section>
 </div>
+
+
+

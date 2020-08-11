@@ -19,8 +19,11 @@ export class NavbarComponent implements OnInit {
 
   public goToPageList(page: string): void {
 
-    this.router.navigate([page]);
-
+    if(page == this.router.url.split('/')[1])
+      window.location.reload()
+    else
+      this.router.navigate([page]);
+    }
   }
 
-}
+

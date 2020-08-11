@@ -1,5 +1,4 @@
 p {
-  height: 100px;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 5;

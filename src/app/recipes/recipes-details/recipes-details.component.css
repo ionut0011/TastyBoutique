@@ -87,9 +87,17 @@ li {
 
 }
 
+.recipe-ingredients {
+  width: 100%;
+  min-height: 30px;
+  font-family: "Open Sans";
+  font-size: 16px;
+  font-weight: 200;
+}
+
 .recipe-description {
   width: 80%;
-  min-height: 150px;
+  min-height: 120px;
   font-family: "Open Sans";
   font-size: 16px;
   font-weight: 200;
@@ -138,6 +146,8 @@ button {
   border-radius: 8px;
   font-family: "Open Sans";
   font-weight: bold;
+  border-top: 20px;
+  margin: 30px;
 }
 
 button span {
@@ -248,3 +258,56 @@ cursor: pointer;
   cursor: pointer;
 }
 
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.invalid-feedback{
+  color: red;
+}
+
+
+.input-group-prepend span{
+  width: 50px;
+  background-color: #161b1bd1;
+  color: #edfbff;
+  border: 0 !important;
+}
+
+input:focus{
+outline: 0 0 0 0  !important;
+box-shadow: 0 0 0 0 !important;
+}
+
+
+.form-section{
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+label{
+  font-weight: bold;
+}
+
+
+span{
+  color: red;
+}
+
+h3{
+  color: red;
+}
+
+.add-button{
+  display:flex;
+  padding-top: 25px;
+  justify-content: center;
+  align-items: center;
+}

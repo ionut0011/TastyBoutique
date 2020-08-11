@@ -80,6 +80,8 @@ export class LoginComponent  {
     this.router.navigate([page]);
   }
 
+
+
   public ngOnInit(): void {
     sessionStorage.clear();
    }
