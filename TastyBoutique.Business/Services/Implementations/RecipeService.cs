@@ -110,6 +110,7 @@ namespace TastyBoutique.Business.Services.Implementations
             model.Ingredients = model.Ingredients.Distinct().ToList();
             foreach (var ingredient in model.Ingredients)
             {
+                
                 var ing = await _ingredients.GetByName(ingredient);
                 if (ing == null)
                     recipe.Ingredients.Add(new RecipesIngredients(recipe, new Ingredients(ingredient)));
