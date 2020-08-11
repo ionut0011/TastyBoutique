@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.Validators;
 using TastyBoutique.Business.Models.Recipe;
 
 namespace TastyBoutique.Business.Validators
@@ -27,8 +28,9 @@ namespace TastyBoutique.Business.Validators
                 .NotEmpty();
 
             RuleFor(model => model.AverageReview)
-                .GreaterThanOrEqualTo(0);
-                
+                .GreaterThanOrEqualTo(0)
+                .LessThanOrEqualTo(5);
+
         }
     }
 }
