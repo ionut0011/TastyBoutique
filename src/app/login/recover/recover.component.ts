@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component} from '@angular/core';
 import {Router} from '@angular/router';
 import { AuthentificationService } from '../services/authentification.service';
 import { RecoverModel } from '../models/recover.model';
@@ -12,7 +12,7 @@ import {ToastrService} from 'ngx-toastr'
   styleUrls: ['./recover.component.css']
 })
 
-export class RecoverComponent implements OnInit,OnDestroy {
+export class RecoverComponent{
 
   public formGroup: FormGroup;
   public email:string=null;
@@ -34,18 +34,7 @@ export class RecoverComponent implements OnInit,OnDestroy {
 
      }
 
-
-  ngOnInit(): void {
-  }
-
-  ngOnDestroy():void
-  {
-    console.log("clicked recover");
-  }
-
-  clickedLogin():void{
-
-
+  clickedRecover():void{
     console.log('s-a apasat change password');
     const data: RecoverModel = this.formGroup.getRawValue();
     this.authentificationService.recover(data).subscribe(() => {

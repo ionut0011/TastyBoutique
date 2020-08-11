@@ -7,9 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class AuthentificationService {
 
-  public endpoint: string =
+  public endpoint: string ='http://www.tastyboutique.tk:5341/api/v1/auth';
 
-    'http://www.tastyboutique.tk:5341/api/v1/auth';
   constructor(private readonly httpClient: HttpClient) {}
 
   public register(data: unknown): Observable<unknown> {

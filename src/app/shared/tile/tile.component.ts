@@ -9,7 +9,6 @@ export class TileComponent implements OnInit {
   @Input() public label: string = '';
   @Input() public icon: string = '';
   @Input() public background: string = '';
-
   public hasPicture: boolean;
 
   ngOnInit(): void {

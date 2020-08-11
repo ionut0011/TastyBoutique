@@ -1,4 +1,3 @@
-
 <app-navbar></app-navbar>
 <div class="d-flex justify-content-center justify-content-md-center">
   <section class="form-section">
@@ -12,9 +11,7 @@
               <div class="invalid-feedback">Please fill out this field.</div>
             </div>
           </form>
-          </div>
-
-
+        </div>
       </div>
       <div  *ngIf="isFormDisabled;">
         <div>
@@ -23,86 +20,77 @@
           <p><span>Selected ingredients: </span><b>{{test.value}}</b></p>
         </div>
       </div>
-
       <div class="form-group">
         <p *ngIf="isFormDisabled; else notEditable"><span>Instructions: </span><b>{{description}}</b></p>
-             <ng-template #notEditable>
-
-          <label>Ingredients (Type as in this e.g: eggs,flour)</label>
-          <div class="ingred">
-            <div class="card-body">
-              <form class="was-validated" [formGroup]="formGroup">
-                <div class="input-group form-group">
-                  <textarea class="recipe-ingredients" contenteditable="true" placeholder="Enter ingredients" formControlName="test" required>{{ingredients}}</textarea>
-                  <span *ngIf="!validIngredients">Please insert as in the example.</span>
-                  <br><br>
-                  <div class="add-button">
-                    <button type="button" (click)="additems()"><span>Save ingredients</span></button>
-                  </div>
-                </div>
-              </form>
-              </div>
-          </div>
-          <div>
-            <br>
-              <b><label>Filters: </label></b>
+        <ng-template #notEditable>
+        <label>Ingredients (Type as in this e.g: eggs,flour)</label>
+        <div class="ingred">
+          <div class="card-body">
+            <form class="was-validated" [formGroup]="formGroup">
               <div class="input-group form-group">
-                <select formControlName="test2" (change)="filterSelected()" required>
-                  <option *ngFor="let filter of filterssList" [value]="filter.name">{{filter.name}}</option>
-                </select>
-                <div class="invalid-feedback">Please fill out this field.</div>
-                <h3 class="warning" *ngIf="!selectedFilter">Please fill out this field</h3>
-              </div>
-          </div>
-          <div>
-              <label>Select type:</label>
-               <select formControlName="test3" (change)="selected()" required>
-                  <option  *ngFor="let typees of typeesList" [value]="typees" >{{typees}}</option>
-                </select>
-                <h3 class="warning" *ngIf="!selectedType">Please fill out this field</h3>
-            </div>
-
-            <label>Recipe</label>
-            <br>
-            <div class="card-body">
-              <form class="was-validated" [formGroup]="formGroup">
-                <div class="input-group form-group">
-                  <textarea
-                  class="recipe-description" contenteditable="true" placeholder="Enter recipe description"
-                   formControlName="description" required>{{description}}</textarea>
-                     <div class="invalid-feedback"></div>
-                     <div *ngIf="!descriptionControl.valid">Please fill out this field.</div>
-                     <br>
-
+                <textarea class="recipe-ingredients" contenteditable="true" placeholder="Enter ingredients" formControlName="test" required>{{ingredients}}</textarea>
+                <span *ngIf="!validIngredients">Please insert as in the example.</span>
+                <br><br>
+                <div class="add-button">
+                    <button type="button" (click)="addIngredients()"><span>Save ingredients</span></button>
                 </div>
-              </form>
               </div>
-        </ng-template>
+            </form>
+          </div>
+        </div>
+        <div>
+          <br>
+          <b><label>Filters: </label></b>
+          <div class="input-group form-group">
+            <select formControlName="test2" (change)="filterSelected()" required>
+              <option *ngFor="let filter of filterssList" [value]="filter.name">{{filter.name}}</option>
+            </select>
+            <div class="invalid-feedback">Please fill out this field.</div>
+            <h3 class="warning" *ngIf="!selectedFilter">Please fill out this field</h3>
+          </div>
+        </div>
+        <div>
+          <label>Select type:</label>
+          <select formControlName="test3" (change)="typeSelected()" required>
+            <option  *ngFor="let typees of typeesList" [value]="typees" >{{typees}}</option>
+          </select>
+          <h3 class="warning" *ngIf="!selectedType">Please fill out this field</h3>
+        </div>
+        <label>Recipe</label>
+        <br>
+        <div class="card-body">
+          <form class="was-validated" [formGroup]="formGroup">
+            <div class="input-group form-group">
+              <textarea
+                class="recipe-description" contenteditable="true" placeholder="Enter recipe description"
+                formControlName="description" required>{{description}}</textarea>
+              <div class="invalid-feedback"></div>
+              <div *ngIf="!descriptionControl.valid">Please fill out this field.</div>
+              <br>
+            </div>
+          </form>
+        </div>
+      </ng-template>
       </div>
-
       <div class="form-group">
         <label> Is this a private recipe</label>
         <input type="checkbox" formControlName="access">
       </div>
       <br>
-        <label *ngIf="!isFormDisabled">Photos</label>
-          <div class="add-photos" *ngIf="!isFormDisabled">
-            <div class="photo-file-container">
-              <img class="photo-file" *ngFor="let photo of photos" [src]="photo">
-            </div>
-            <br>
-            <input #Image type="file" (change)="onImageChange($event)" /> <img class="photo-file" [src]="imageUrl">
-          </div>
-
-          <div class="added-photos" *ngIf="isFormDisabled">
+      <label *ngIf="!isFormDisabled">Photos</label>
+        <div class="add-photos" *ngIf="!isFormDisabled">
+        <div class="photo-file-container">
+          <img class="photo-file" *ngFor="let photo of photos" [src]="photo">
+        </div>
+        <br>
+        <input #Image type="file" (change)="onImageChange($event)" /> <img class="photo-file" [src]="imageUrl">
+        </div>
+        <div class="added-photos" *ngIf="isFormDisabled">
             <img class="photo-file" *ngFor="let photo of photos" [src]="photo">
-          </div>
-          <br>
-
+        </div>
+        <br>
       <br>
-
-      <button type="button" *ngIf="isFormDisabled; else saveButton" (click)="startUpdating()"><span> Update
-          Recipe</span></button>
+      <button type="button" *ngIf="isFormDisabled; else saveButton" (click)="startUpdating()"><span> Update Recipe</span></button>
       <ng-template #saveButton>
         <div *ngIf="!ingredientsControl.valid && !typeControl.valid && !nameControl.valid && !descriptionControl.valid; else enabledButton">
           <button type="button" disabled (click)="save()"><span>Save Recipe</span></button>
@@ -111,14 +99,11 @@
         <ng-template #enabledButton>
           <button type="button" (click)="save()"><span>Save Recipe</span></button>
         </ng-template>
-
       </ng-template>
     </form>
 
     <br>
-    <div class="comments-title" *ngIf="isFormDisabled">
-    </div>
-
+    <div class="comments-title" *ngIf="isFormDisabled"></div>
     <div class="comments-section">
       <hr>
       <form [formGroup]="formGroupComment">
@@ -141,7 +126,6 @@
               <input type="text" placeholder="Leave a comment" formControlName="comment">
               <div></div>
             </div>
-
             <br>
               <button type="button" class="button" *ngIf="isFormDisabled" (click)="postComment()">
                 <span>Add comment</span>
@@ -158,9 +142,7 @@
               <div class="comment_body">
                 <p>{{comment.comment}}</p>
               </div>
-
               Rating: {{comment.review}}/5
-
               <div class="delete-comment">
                 <i class="fa fa-trash-o" (click)="deleteComment(comment.idRecipe, comment.id)"></i>
               </div>
@@ -173,8 +155,6 @@
                     <i class="fa fa-star-o"></i>
                     <i class="fa fa-star-o"></i>
                   </div>
-
-
                   <div *ngIf="comment.review == 1">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star-o"></i>

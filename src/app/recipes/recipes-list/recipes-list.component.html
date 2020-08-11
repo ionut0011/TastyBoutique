@@ -1,19 +1,16 @@
 <app-navbar></app-navbar>
-
 <div class="container">
   <div>
-
     <div class="flex">
-    <div class="container">
-      <div class="input-group d-flex justify-content-center">
-            <span class="input-group-btn">
-              <h3>Search by ingredient:</h3>
-              <input type="text" class="inputtext" [formControl]='ingredientsList' >
-              <button class="btn btn-search" (click)="SearchIngredients()"type="button"><i class="fa fa-search fa-fw"></i> Search</button>
-            </span>
+      <div class="container">
+        <div class="input-group d-flex justify-content-center">
+          <span class="input-group-btn">
+            <h3>Search by ingredient:</h3>
+            <input type="text" class="inputtext" [formControl]='ingredientsList' >
+            <button class="btn btn-search" (click)="searchIngredients()"type="button"><i class="fa fa-search fa-fw"></i> Search</button>
+          </span>
         </div>
       </div>
-
 
     <div class="container">
       <div class="input-group d-flex justify-content-center">
@@ -22,17 +19,16 @@
               <select [formControl]='filter'>
                 <option *ngFor="let filter of filterssList" [value]="filter.name">{{filter.name}}</option>
               </select>
-              <button class="btn btn-search" (click)="SearchFilter()"type="button"><i class="fa fa-search fa-fw"></i> Search</button>
+              <button class="btn btn-search" (click)="searchFilter()"type="button"><i class="fa fa-search fa-fw"></i> Search</button>
             </span>
         </div>
       </div>
+    </div>
   </div>
-</div>
   <div class="row recipes-container">
-
     <div *ngFor="let recipe of recipeList" class="col-12 col-md-4">
       <div class="card">
-        <div class="btn delete-btn" (click)="DeleteRecipe(recipe.id)">Delete</div>
+        <div class="btn delete-btn" (click)="deleteRecipe(recipe.id)">Delete</div>
         <img src="{{recipe.image}}">
         <div class="text">
           <h1 class="food">
@@ -41,9 +37,7 @@
           <div class="icon">
             <i class="fa fa-heart-o" (click)="postCollections(recipe.id)"></i>
           </div>
-          <div class="details">
-          </div>
-
+          <div class="details"></div>
             <div class="stars">
               <li>
                 <p>Rating: {{recipe.averageReview}}/5</p>

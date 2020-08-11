@@ -1,14 +1,15 @@
 import { Component, OnInit,OnDestroy} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, Observable, Observer } from 'rxjs';
-import { RecipesModel, RecipesGetModel,FilterModel,FiltersModel, IngredientModel } from '../models';
+import { Subscription } from 'rxjs';
+import { RecipesModel, RecipesGetModel,FiltersModel } from '../models';
 import { RecipeService } from '../services/recipe.service';
 import { CommentsService } from '../services/comments.service';
 import {CommentModel} from '../models/comment.model';
 import { Ng2ImgMaxService } from 'ng2-img-max';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {ToastrService} from 'ngx-toastr'
+
 @Component({
   selector: 'app-recipes-details',
   templateUrl: './recipes-details.component.html',
@@ -16,7 +17,6 @@ import {ToastrService} from 'ngx-toastr'
 })
 export class RecipesDetailsComponent implements OnInit,OnDestroy
 {
-
   fileToUpload: any;
   imageUrl: any;
   formGroup: FormGroup;
@@ -27,6 +27,10 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   photos: Blob[] = [];
   ratingNumber: number = 0;
   createdRecipe : boolean = false;
+  filterssList:FiltersModel;
+  type1:FormControl=new FormControl();
+  typeesList: string[] = ['Food', 'Drink'];
+  uploadedImage: FileList;
   public commentsList: CommentModel[];
   public recipeList: RecipesModel[]=[];
   private routeSub: Subscription = new Subscription();
@@ -53,7 +57,7 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
   }
 
   public get ingredientsControl() :FormControl{
-    return this.formGroup.controls.ingredients as FormControl;
+    return this.formGroup.controls.test as FormControl;
   }
 
   public get descriptionControl(): FormControl{
@@ -88,18 +92,6 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
     return this.formGroup.get('test3') as FormControl;
   }
 
-
-  filterssList:FiltersModel;
-
-  type1:FormControl=new FormControl();
-
-
-  typeesList: string[] = ['Food', 'Drink'];
-
-
-  uploadedImage: FileList;
-
-
   constructor(
     private toastr: ToastrService,
     private router: Router,
@@ -122,17 +114,13 @@ export class RecipesDetailsComponent implements OnInit,OnDestroy
         filter: new FormControl(),
         type:new FormControl(),
         test3:new FormControl('', [Validators.required]),
-
      });
-
     }
 
-
-onImageChange(event) {
+  onImageChange(event) {
   //event='../../assets/images/food.jpg';
   let image = event.target.files.item(0);
   console.log(image);
-
 
   this.ng2ImgMax.resizeImage(image, 225, 225).subscribe(
     result => {
@@ -144,18 +132,15 @@ onImageChange(event) {
   );
 }
 
-
   handleFileInput(file: FileList) {
     this.fileToUpload = file;
     let reader = new FileReader();
     reader.onload = (event: any) => {
       this.imageUrl = event.target.result;
       console.log("imgurl=",this.imageUrl);
-
     }
     reader.readAsDataURL(this.fileToUpload);
   }
-
 
   ngOnInit(): void {
     this.service.getAllFilters().subscribe((data: FiltersModel) => {
@@ -170,17 +155,11 @@ onImageChange(event) {
     })
   });
 
-
-
-
-
-
     this.formGroupComment = this.formBuilder.group({
       idRecipe: new FormControl(),
       comment: new FormControl(),
       review: new FormControl()
     });
-
 
     if (this.router.url === '/create-recipe') {
       this.isAddMode = true;
@@ -189,18 +168,12 @@ onImageChange(event) {
       this.routeSub = this.activatedRoute.params.subscribe(params => {
         //Getting details for the trip with the id found
         this.service.get(params['id']).subscribe((data: RecipesGetModel) => {
-
           this.test2.setValue(data.filters[0].name);
           this.filter.setValue(data.filters[0].name);
           this.test3.setValue(data.type);
-
-          console.log(data.ingredients);
           this.test.setValue(data.ingredients.map(i =>i.name).join(','));
-
           console.log("Ingrediente" ,data.ingredients.map(i =>i.name).join(','));
-
           this.formGroup.patchValue(data);
-          console.log("DATA" , data);
         })
         this.formGroup.disable();
       });
@@ -218,13 +191,9 @@ onImageChange(event) {
   }
 
   save() {
-
    let finalRecipeModel:RecipesModel=this.formGroup.getRawValue();
-
-   console.log("urlimage=",this.imageUrl);
     if(this.imageUrl!=undefined)
     {
-
       finalRecipeModel.image = this.imageUrl.split(',')[1];
     }
     else
@@ -250,7 +219,7 @@ onImageChange(event) {
      (error) => {
       this.createdRecipe = false;
       this.toastr.error("Please fill all the required fields");
-    }
+      }
      );
 
     } else {
@@ -266,13 +235,9 @@ onImageChange(event) {
     this.photos.push(this.imageUrl);
     this.imageUrl = null;
     this.formGroup.disable();
-
-    console.log(this.recipeList);
   }
 
-
   public getAllRecipes(): void{
-
     this.service.getAll().subscribe((data: RecipesGetModel[]) => {
       this.recipesList = data;
       this.recipesList.forEach(element => {
@@ -281,15 +246,9 @@ onImageChange(event) {
         element.image = link;
         }
       });
-
-      this.service.saveRecipes(this.recipesList);
-
+    this.service.saveRecipes(this.recipesList);
     });
-
-
   }
-
-
 
   testStar(rating) {
     this.ratingNumber = rating;
@@ -298,8 +257,7 @@ onImageChange(event) {
 
   refresh(): void {
     window.location.reload();
-}
-
+  }
 
   postComment(){
     const commentsModel : CommentModel = this.formGroupComment.getRawValue();
@@ -316,15 +274,15 @@ onImageChange(event) {
         this.toastr.error('Something went wrong');
       }
       );
-        console.log("s-a adaugat commentul");
-        console.log(commentsModel);
-    });
+    console.log("s-a adaugat commentul");
+    console.log(commentsModel);
+  });
 }
 
-public deleteComment(recipeId: string, commentId :string) :void{
-  console.log("ID COMMENT:", commentId, "Id recipe:", recipeId);
-  for (let i=0;i<this.commentsList.length;i++)
-  {
+  public deleteComment(recipeId: string, commentId :string) :void{
+    console.log("ID COMMENT:", commentId, "Id recipe:", recipeId);
+    for (let i=0;i<this.commentsList.length;i++)
+    {
       console.log(this.commentsList[i].id);
       if(commentId == this.commentsList[i].id){
         this.serviceComments.deleteComment(recipeId, commentId).subscribe(data => {}
@@ -338,62 +296,52 @@ public deleteComment(recipeId: string, commentId :string) :void{
           }
           else
             this.toastr.error('You can\'t delete this comment.');
-
         })
+      }
     }
   }
-}
-
-
 
   validateIngredients(ingr :string[])
   {
     let ingredients :string[] = [];
     ingr.forEach(element => {
-      if(element['name']!=undefined || element['name']!=null)
-      {
-          ingredients.push(element['name']);
-      }
-      else
-        ingredients.push(element);
-
+    if(element['name']!=undefined || element['name']!=null)
+    {
+      ingredients.push(element['name']);
+    }
+    else
+      ingredients.push(element);
     });
     return ingredients;
   }
 
-  additems():void
+  addIngredients():void
   {
-    var regexp = new RegExp("^.*,*.*$");
-     var test = regexp.test(this.test.value);
-     console.log(this.test.value);
-     console.log("TEST", test);
-     if(test)
-     {
-       this.validIngredients = true;
-     }else
-     {
-       this.validIngredients = false;
-       this.toastr.error("Wrong ingredient input")
-
-     }
-
-     if(this.test.value == "")
-     {
-       this.validIngredients = false;
-       this.toastr.error("Wrong ingredient input")
-     }
-
+    let regexp = new RegExp("^.*,*.*$");
+    let test = regexp.test(this.test.value);
+    if(test)
+    {
+      this.validIngredients = true;
+    }
+    else
+    {
+      this.validIngredients = false;
+      this.toastr.error("Wrong ingredient input")
+    }
+    if(this.test.value == "")
+    {
+      this.validIngredients = false;
+      this.toastr.error("Wrong ingredient input")
+    }
     let splitted= this.test.value.split(",");
     console.log(this.ingredients);
-      splitted.forEach(element => {
-        this.ingredients.value.push(element);
-      });
-      console.log(this.ingredients);
-
+    splitted.forEach(element => {
+      this.ingredients.value.push(element);
+    });
+    console.log(this.ingredients);
   }
 
   filterSelected(){
-
     this.filter.setValue(this.test2.value);
     if(this.test2.value)
     {
@@ -403,25 +351,23 @@ public deleteComment(recipeId: string, commentId :string) :void{
       this.selectedFilter = false;
     }
     console.log(this.filter);
-   }
+  }
 
-  selected(){
-
+  typeSelected(){
     this.type.setValue(this.test3.value);
     console.log("ingredients test", this.test3.value);
     if(this.test3.value)
     {
       this.selectedType = true;
-
     }
     else{
       this.selectedType = false;
     }
     console.log(this.selectedType);
     console.log("type", this.type.value);
-   }
+  }
 
-   public goToPage(page: string): void {
+  public goToPage(page: string): void {
     this.router.navigate([page]);
   }
 }

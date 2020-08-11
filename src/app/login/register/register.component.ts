@@ -16,74 +16,13 @@ import {ToastrService} from 'ngx-toastr'
 export class RegisterComponent  {
 
   public isSetRegistered: boolean = false;
-  public isAdmin:boolean=true;
   public formGroup: FormGroup;
   public email: string = null;
   public password: string;
   public fullName: string;
   public age : number;
   public userName: string;
-
   public form: FormGroup;
-
-  constructor(
-    private toastr: ToastrService,
-    private readonly authentificationService:AuthentificationService,
-    private router:Router,
-    private readonly userService:UserService,
-    private readonly formBuilder: FormBuilder
-    )
-
-    {
-
-      this.form = new FormGroup({
-        email : new FormControl('',[Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
-        password :  new FormControl('',[Validators.required, Validators.minLength(8), Validators.pattern("(.*[A-Z].*[0-9].*)|(.*[0-9].*[A-Z].*)")]),
-        fullName :  new FormControl('',[]),
-        userName: new FormControl('', [Validators.required]),
-        age : new FormControl('',[]),
-
-      })
-
-    this.userService.username.next('');
-  }
-
-  public setRegister(): void {
-    this.isSetRegistered = !this.isSetRegistered;
-  }
-
-  setAdmin(): void {
-    this.isAdmin = !this.isAdmin;
-  }
-
-  authenticate() :void
-  {
-
-    console.log("ai dat click pe submit")
-
-    const data: RegisterModel = {
-      name: this.fullNameControl.value,
-      age: this.ageControl.value,
-      username:this.userNameControl.value,
-      email: this.emailControl.value,
-      password: this.passwordControl.value,
-    }
-    this.authentificationService.register(data).subscribe((logData:any) => {
-      this.toastr.success("Successfully registered");
-      this.router.navigate(['login']);
-    },
-    (error)=>{
-      this.toastr.error("Something went wrong");
-
-    });
-    console.log(this.form.value);
-    console.log(this.form.valid);
-  }
-
-
-  public goToPage(page: string): void {
-    this.router.navigate([page]);
-  }
 
   public get ageControl() :FormControl{
     return this.form.controls.age as FormControl;
@@ -107,5 +46,53 @@ export class RegisterComponent  {
   public get isFormValid(): boolean{
     return this.form.valid;
   }
+
+  constructor(
+    private toastr: ToastrService,
+    private readonly authentificationService:AuthentificationService,
+    private router:Router,
+    private readonly userService:UserService,
+    private readonly formBuilder: FormBuilder
+    ){
+      this.form = new FormGroup({
+        email : new FormControl('',[Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
+        password :  new FormControl('',[Validators.required, Validators.minLength(8), Validators.pattern("(.*[A-Z].*[0-9].*)|(.*[0-9].*[A-Z].*)")]),
+        fullName :  new FormControl('',[]),
+        userName: new FormControl('', [Validators.required]),
+        age : new FormControl('',[]),
+      })
+    this.userService.username.next('');
+  }
+
+  public setRegister(): void {
+    this.isSetRegistered = !this.isSetRegistered;
+  }
+
+  ClickRegister() :void
+  {
+    const data: RegisterModel = {
+      name: this.fullNameControl.value,
+      age: this.ageControl.value,
+      username:this.userNameControl.value,
+      email: this.emailControl.value,
+      password: this.passwordControl.value,
+    }
+    this.authentificationService.register(data).subscribe((logData:any) => {
+      this.toastr.success("Successfully registered");
+      this.router.navigate(['login']);
+    },
+    (error)=>{
+      this.toastr.error("Something went wrong");
+
+    });
+    console.log(this.form.value);
+    console.log(this.form.valid);
+  }
+
+  public goToPage(page: string): void {
+    this.router.navigate([page]);
+  }
+
+
 
 }

@@ -22,25 +22,20 @@ export class RecipesSavedComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-
-      this.serviceCollections.getAllCollections().subscribe((data: RecipesGetModel[]) => {
-        this.recipeList = data;
-        console.log(this.recipeList);
-        this.recipeList.forEach(element => {
-          if(element.image.length>5){
+    this.serviceCollections.getAllCollections().subscribe((data: RecipesGetModel[]) => {
+      this.recipeList = data;
+      this.recipeList.forEach(element => {
+        if(element.image.length>5){
           let link:any = 'data:image/png;base64,'+element.image;
           element.image = link;
-          }
-        });
-        console.log(data);
+        }
       });
-
+    });
   }
 
   goToRecipe(id: string): void {
     this.router.navigate([`/recipes/details/${id}`]);
   }
-
 
   public deleteRecipeCollection(id:string): void{
 
