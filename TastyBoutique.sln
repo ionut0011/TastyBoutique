@@ -28,27 +28,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique.IntegrationTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyBoutique.AutomationTests", "TastyBoutique.AutomationTests\TastyBoutique.AutomationTests.csproj", "{27000CD1-6B05-411C-AEB7-E01624B76A95}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "TastyBoutique.Web", "TastyBoutique.Web\", "{EFA57580-489C-48D7-86A8-FA46D05639D7}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_64898"
-		Debug.AspNetCompiler.PhysicalPath = "TastyBoutique.Web\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_64898\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_64898"
-		Release.AspNetCompiler.PhysicalPath = "TastyBoutique.Web\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_64898\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "64898"
-		SlnRelativePath = "TastyBoutique.Web\"
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,10 +62,6 @@ Global
 		{27000CD1-6B05-411C-AEB7-E01624B76A95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27000CD1-6B05-411C-AEB7-E01624B76A95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27000CD1-6B05-411C-AEB7-E01624B76A95}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EFA57580-489C-48D7-86A8-FA46D05639D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EFA57580-489C-48D7-86A8-FA46D05639D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EFA57580-489C-48D7-86A8-FA46D05639D7}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{EFA57580-489C-48D7-86A8-FA46D05639D7}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
