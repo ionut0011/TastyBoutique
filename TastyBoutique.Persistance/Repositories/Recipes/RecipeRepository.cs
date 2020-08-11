@@ -73,12 +73,12 @@ namespace TastyBoutique.Persistance.Recipes
         public async Task<List<Models.Recipes>> GetRecipiesByQuery(Guid idUser, IList<Models.Ingredients> ingredients, ISpecification<Models.Recipes> spec)
         {
             var getRecipes = await this.context.Recipes.ExeSpec(spec)
-                 .Where(recipe => !recipe.Access || recipe.IdUser == idUser)
+                .Where(recipe => !recipe.Access || recipe.IdUser == idUser)
                  .Include(r=>r.Filters)
                  .ThenInclude(r=>r.Filter)
                  .Include(r=>r.Ingredients)
                  .ThenInclude(r=>r.Ingredient)
-                 .ToListAsync();
+                .ToListAsync();
 
             if (ingredients != null)
             {
@@ -95,7 +95,7 @@ namespace TastyBoutique.Persistance.Recipes
         public async Task<List<Models.Recipes>> GetRecipiesByFilter(Guid idUser, Filters filter, ISpecification<Models.Recipes> spec)
         {
             var getRecipes = await this.context.Recipes.ExeSpec(spec)
-                .Where(recipe => (recipe.Access || recipe.IdUser == idUser) && recipe.Filters.Select(f=>f.Filter).Contains(filter))
+                .Where(recipe => (!recipe.Access || recipe.IdUser == idUser) && recipe.Filters.Select(f=>f.Filter).Contains(filter))
                 .Include(r => r.Filters)
                 .ThenInclude(r => r.Filter)
                 .Include(r => r.Ingredients)

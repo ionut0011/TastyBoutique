@@ -39,7 +39,7 @@ namespace TastyBoutique.Business.Services.Implementations
             var comment = await _repository.GetRecipeComment(commentId);
             if (comment != null && comment.IdUser == userId)
             {
-                await  _repository.DeleteComment(commentId);
+                await _repository.DeleteComment(commentId);
                 await _repository.SaveChanges();
                 return true;
             }
