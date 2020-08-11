@@ -129,12 +129,20 @@ namespace TastyBoutique.Business.Services.Implementations
             await _repository.SaveChanges();
         }
 
-        public async Task Delete(Guid id)
+        public async Task<bool> Delete(Guid id)
         {
+            var userId = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var recipe = await _repository.GetById(id);
-            _repository.Delete(recipe);
-            await _repository.SaveChanges();
+            if (recipe.IdUser == userId)
+            {
+                _repository.Delete(recipe);
+                await _repository.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
+
         public async Task<PaginatedList<FilterModel>> GetFiltersByRecipeId(Guid id)
         {
             var filters = _repository.GetFiltersByRecipeId(id);

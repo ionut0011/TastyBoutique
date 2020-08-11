@@ -14,7 +14,7 @@ namespace TastyBoutique.Business.Recipes.Services.Interfaces
         Task<TotalRecipeModel> GetById(Guid id);
         Task <IList<TotalRecipeModel>> Get(SearchModel model);
         Task Update(Guid id, UpsertRecipeModel model);
-        Task Delete(Guid id);
+        Task<bool> Delete(Guid id);
         Task<PaginatedList<FilterModel>> GetFiltersByRecipeId(Guid id);
 
         Task<PaginatedList<IngredientModel>> GetIngredientsByRecipeId(Guid id);

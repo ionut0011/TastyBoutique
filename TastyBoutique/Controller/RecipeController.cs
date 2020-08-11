@@ -14,7 +14,6 @@ namespace TastyBoutique.API.Controller
     public sealed class RecipeController : ControllerBase
     {
         private readonly IRecipeService _recipeService;
-
         public RecipeController(IRecipeService recipeService)
         {
             _recipeService = recipeService;
@@ -55,8 +54,9 @@ namespace TastyBoutique.API.Controller
         [HttpDelete("{recipeId}")]
         public async Task<IActionResult> Delete([FromRoute] Guid recipeId)
         {
-            await _recipeService.Delete(recipeId);
-            return NoContent();
+           
+            var result = await _recipeService.Delete(recipeId);
+            return (result) ? Ok("Deleted") : Ok("Not Deleted");
         }
         [HttpGet("{recipeId}/ingredients")]
         public async Task<IActionResult> GetIngredients([FromRoute] Guid recipeId)
