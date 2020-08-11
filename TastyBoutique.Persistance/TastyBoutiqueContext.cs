@@ -92,7 +92,7 @@ namespace TastyBoutique.Persistance.Models
                     .IsRequired()
                     .HasMaxLength(25);
 
-                entity.Property(e => e.Description).HasMaxLength(300);
+                entity.Property(e => e.Description).HasMaxLength(1000);
 
                 entity.Property(e => e.Name)
                     .IsRequired()

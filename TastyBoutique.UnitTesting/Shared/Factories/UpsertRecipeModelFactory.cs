@@ -14,7 +14,7 @@ namespace TastyBoutique.UnitTesting.Shared.Factories
             return new UpsertRecipeModel()
             {
                 Access = true, Description = "buntare", Filter = "mancare", Name = "test", Type = "asd",IdUser = new Guid(),
-                IngredientsList = new List<string> {"apa", "mere"}
+                Ingredients = new List<string> {"apa", "mere"}
             };
 
         }

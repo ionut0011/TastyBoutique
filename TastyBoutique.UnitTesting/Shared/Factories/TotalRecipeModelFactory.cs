@@ -18,7 +18,7 @@ namespace TastyBoutique.UnitTesting.Shared.Factories
             {
                 Access = true, AverageReview = 3, Description = "categorie",
                 Name = "Test", Type = "mancare",
-                RecipesIngredients = new IngredientModel[2],RecipesFilters = new FilterModel[2]
+                Ingredients = new IngredientModel[2],Filters = new FilterModel[2]
             };
         }
 

@@ -59,6 +59,7 @@ namespace TastyBoutique.Business.Services.Implementations
         {
             model.IdUser = Guid.Parse(_accessor.HttpContext.User.Claims.First(c => c.Type == "IdUser").Value);
             var recipe = _mapper.Map<Persistance.Models.Recipes>(model);
+            model.Ingredients = model.Ingredients.Distinct().ToList();
             foreach (var ingredient in model.Ingredients)
             {
                 var ing = await _ingredients.GetByName(ingredient);

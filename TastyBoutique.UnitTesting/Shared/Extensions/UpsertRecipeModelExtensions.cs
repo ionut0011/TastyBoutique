@@ -26,7 +26,7 @@ namespace TastyBoutique.UnitTesting.Shared.Extensions
 
         public static UpsertRecipeModel WithIngredientsList(this UpsertRecipeModel model, List<string> ingredientsList)
         {
-            model.IngredientsList = ingredientsList;
+            model.Ingredients = ingredientsList;
             return model;
         }
 

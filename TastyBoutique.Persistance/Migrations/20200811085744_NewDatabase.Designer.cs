@@ -10,7 +10,7 @@ using TastyBoutique.Persistance.Models;
 namespace TastyBoutique.Persistance.Migrations
 {
     [DbContext(typeof(TastyBoutiqueContext))]
-    [Migration("20200808085222_NewDatabase")]
+    [Migration("20200811085744_NewDatabase")]
     partial class NewDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,12 +31,7 @@ namespace TastyBoutique.Persistance.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<Guid?>("RecipesId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RecipesId");
 
                     b.ToTable("Filters");
                 });
@@ -51,12 +46,7 @@ namespace TastyBoutique.Persistance.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<Guid?>("RecipesId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RecipesId");
 
                     b.ToTable("Ingredients");
                 });
@@ -104,8 +94,8 @@ namespace TastyBoutique.Persistance.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(300)")
-                        .HasMaxLength(300);
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.Property<Guid>("IdUser")
                         .HasColumnType("uniqueidentifier");
@@ -246,20 +236,6 @@ namespace TastyBoutique.Persistance.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("TastyBoutique.Persistance.Models.Filters", b =>
-                {
-                    b.HasOne("TastyBoutique.Persistance.Models.Recipes", null)
-                        .WithMany("Filters")
-                        .HasForeignKey("RecipesId");
-                });
-
-            modelBuilder.Entity("TastyBoutique.Persistance.Models.Ingredients", b =>
-                {
-                    b.HasOne("TastyBoutique.Persistance.Models.Recipes", null)
-                        .WithMany("Ingredients")
-                        .HasForeignKey("RecipesId");
-                });
-
             modelBuilder.Entity("TastyBoutique.Persistance.Models.RecipeComment", b =>
                 {
                     b.HasOne("TastyBoutique.Persistance.Models.Recipes", "IdRecipeNavigation")
@@ -282,10 +258,11 @@ namespace TastyBoutique.Persistance.Migrations
                         .WithMany("RecipesFilters")
                         .HasForeignKey("FilterId")
                         .HasConstraintName("FK_RecipesFilters_Filters")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TastyBoutique.Persistance.Models.Recipes", "Recipe")
-                        .WithMany("RecipesFilters")
+                        .WithMany("Filters")
                         .HasForeignKey("RecipeId")
                         .HasConstraintName("FK_RecipesFilters_Recipes")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -298,10 +275,11 @@ namespace TastyBoutique.Persistance.Migrations
                         .WithMany("RecipesIngredients")
                         .HasForeignKey("IngredientId")
                         .HasConstraintName("FK_RecipesIngredients_Ingredients")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TastyBoutique.Persistance.Models.Recipes", "Recipe")
-                        .WithMany("RecipesIngredients")
+                        .WithMany("Ingredients")
                         .HasForeignKey("RecipeId")
                         .HasConstraintName("FK_RecipesIngredients_Recipes")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using TastyBoutique.Business.Models.Filter;
 using TastyBoutique.Business.Models.Ingredients;
 using TastyBoutique.Business.Models.Recipe;
-using TastyBoutique.Persistance.Models;
+
 
 namespace TastyBoutique.UnitTesting.Shared.Extensions
 {
@@ -30,18 +28,18 @@ namespace TastyBoutique.UnitTesting.Shared.Extensions
         }
         public static TotalRecipeModel WithRecipesIngredients(this TotalRecipeModel model, IngredientModel[] recipeIngredients)
         {
-            model.RecipesIngredients = recipeIngredients;
+            model.Ingredients = recipeIngredients;
             return model;
         }
         public static TotalRecipeModel WithRecipesFilters(this TotalRecipeModel model, FilterModel[] recipeFilters)
         {
-            model.RecipesFilters = recipeFilters;
+            model.Filters = recipeFilters;
             return model;
         }
 
         public static TotalRecipeModel WithAverageReview(this TotalRecipeModel model, double averageReview)
         {
-            model.AverageReview = averageReview;
+            model.AverageReview = Int16.Parse(""+averageReview);
             return model;
         }
     }
